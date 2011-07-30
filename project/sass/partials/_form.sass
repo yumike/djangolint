@@ -29,24 +29,30 @@ $default-text-shadow-blur: 0
   text-decoration: none
 
 .dialogue .report
-  margin: 0 0 0 2em
+  margin: 1em 0 0 2em
+  font-size: 1.4em
 
-  li
+  p
     background:
       image: image-url("action-waiting.png")
       repeat: no-repeat
-      position: 0 27px
-    padding: 25px 0 0 22px
+      position: 0 15px
+    padding: 10px 0 0 22px
     color: #bbb
 
   .done
     background:
       image: image-url("action-done.png")
     color: $dark-color
-  
+
   .working
     background:
       image: image-url("action-working.png")
+    color: $dark-color
+
+  .error
+    background:
+      image: image-url("action-error.png")
     color: $dark-color
 
 .result

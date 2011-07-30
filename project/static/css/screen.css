@@ -192,28 +192,34 @@ p {
 
 /* line 31, ../../sass/partials/_form.sass */
 .dialogue .report {
-  margin: 0 0 0 2em;
+  margin: 1em 0 0 2em;
+  font-size: 1.4em;
 }
-/* line 34, ../../sass/partials/_form.sass */
-.dialogue .report li {
+/* line 35, ../../sass/partials/_form.sass */
+.dialogue .report p {
   background-image: url('/static/images/action-waiting.png?1312010126');
   background-repeat: no-repeat;
-  background-position: 0 27px;
-  padding: 25px 0 0 22px;
+  background-position: 0 15px;
+  padding: 10px 0 0 22px;
   color: #bbbbbb;
 }
-/* line 42, ../../sass/partials/_form.sass */
+/* line 43, ../../sass/partials/_form.sass */
 .dialogue .report .done {
   background-image: url('/static/images/action-done.png?1312004913');
   color: #23272a;
 }
-/* line 47, ../../sass/partials/_form.sass */
+/* line 48, ../../sass/partials/_form.sass */
 .dialogue .report .working {
   background-image: url('/static/images/action-working.png?1312009784');
   color: #23272a;
 }
+/* line 53, ../../sass/partials/_form.sass */
+.dialogue .report .error {
+  background-image: url('/static/images/action-error.png');
+  color: #23272a;
+}
 
-/* line 52, ../../sass/partials/_form.sass */
+/* line 58, ../../sass/partials/_form.sass */
 .result {
   margin: 2em 0 0 2em;
 }

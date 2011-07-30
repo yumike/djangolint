@@ -6,12 +6,12 @@
       <input type="text" class="url-field" value="https://github.com/" />
       <input type="submit" value="Go" class="button" />
     </form>
-    <ul class="report">
-      <li class="done">Adding your project to the task queue</li>
-      <li class="working">Cloning your repository...</li>
-      <li>Parsing the source code</li>
-      <li>Analyzing your code</li>
-    </ul>
+    <div class="report">
+      <p id="adding" class="done">Adding your project to the task queue</p>
+      <p id="cloning" class="error">Cloning error</p>
+      <p id="parsing" class="working">Parsing the source code...</p>
+      <p id="analyzing">Analyzing your code</p>
+    </div>
   </div>
-  <div class="result">Done! You can see the results <a href="#">here</a>.</div>
+  <div id="result" class="result">Done! You can see the results <a href="#">here</a>.</div>
 {% endblock %}
