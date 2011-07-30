@@ -1,5 +1,6 @@
 *.pyc
 *.pyo
 project/public
+project/cloned_repos
 project/settings_local.py
 project/sqlite.db

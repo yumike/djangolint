@@ -1,5 +1,7 @@
 from .test_models import ReportTestCase
 from .test_parsers import ParserTests
+from .test_tasks import TasksTests
+
 from .test_analyzers_code import CodeTests
 from .test_analyzers_result import ResultTests
 
