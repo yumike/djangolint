@@ -13,14 +13,7 @@
   <h2>Fixes:</h2>
   {% with report.fixes.all as fixes %}
   {% for fix in fixes %}
-  <div class="description">
-    <h3{% if forloop.first %} class="first"{% endif %}>{{ fix.path }}</h3>
-    <p>{{ fix.description }}</p>
-    {% results_fix fix.source %}
-    {% if fix.solution %}
-      {% results_fix fix.solution %}
-    {% endif %}
-  </div>
+    {% results_fix fix %}
   {% endfor %}
   {% endwith %}
 {% endblock %}

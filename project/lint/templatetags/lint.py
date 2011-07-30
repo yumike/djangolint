@@ -13,14 +13,19 @@ def report_create_form():
 
 
 @register.inclusion_tag('lint/tags/results_fix.html')
-def results_fix(data):
-    lines = json.loads(data, )
-    result = []
-    for line_info in lines:
-        result.append({
+def results_fix(fix):
+    source_result, solution_result = [], []
+    for line_info in json.loads(fix.source):
+        source_result.append({
             'number': line_info[0],
             'is_significant': line_info[1],
             'text': line_info[2],
         })
-    return {'result': result}
-
+    for line_info in json.loads(fix.solution):
+        solution_result.append({
+            'number': line_info[0],
+            'is_significant': line_info[1],
+            'text': line_info[2],
+        })
+    return {'source_result': source_result, 'fix': fix,
+            'solution_result': solution_result}

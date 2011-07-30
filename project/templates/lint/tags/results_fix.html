@@ -1,5 +1,18 @@
-{% for line in result %}
-{% if forloop.first %}<ol class="fix{% if solution %} yes{% endif %}" start="{{ line.number }}">{% endif %}
-<li{% if line.is_significant %} class="significant"{% endif %}><pre><code>{{ line.text }}</code></pre></li>
-{% if froloop.last %}</ol>{% endif %}
-{% endfor %}
+<div class="description">
+  <h3{% if forloop.first %} class="first"{% endif %}>{{ fix.path }}</h3>
+  <p>{{ fix.description }}</p>
+
+  {% for line in source_result %}
+    {% if forloop.first %}<ol class="fix" start="{{ line.number }}">{% endif %}
+    <li{% if line.is_significant %} class="significant"{% endif %}><pre><code>{{ line.text }}</code></pre></li>
+    {% if froloop.last %}</ol>{% endif %}
+  {% endfor %}
+  {% if fix.solution %}
+
+  {% for line in solution_result %}
+    {% if forloop.first %}<ol class="fix yes" start="{{ line.number }}">{% endif %}
+    <li{% if line.is_significant %} class="significant"{% endif %}><pre><code>{{ line.text }}</code></pre></li>
+    {% if froloop.last %}</ol>{% endif %}
+  {% endfor %}
+  {% endif %}
+</div>
