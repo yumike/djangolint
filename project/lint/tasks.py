@@ -1,6 +1,6 @@
 import os
-from subprocess import Popen, PIPE, call
 import time
+from subprocess import Popen, PIPE
 
 from celery.task import task
 from django.conf import settings
