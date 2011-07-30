@@ -337,6 +337,7 @@ p {
 }
 /* line 23, ../../sass/partials/_header.sass */
 .header-bg .header {
+  display: block;
   width: 700px;
   height: 67px;
   margin: 0 auto;
@@ -344,15 +345,16 @@ p {
   background-image: url('/static/images/icon.png?1311994493');
   background-repeat: no-repeat;
   background-position: 0 7px;
+  border: 0;
 }
-/* line 33, ../../sass/partials/_header.sass */
+/* line 35, ../../sass/partials/_header.sass */
 .header-bg .header h1 {
   margin: 0;
   color: white;
   font-size: 2.1em;
   font-weight: normal;
 }
-/* line 39, ../../sass/partials/_header.sass */
+/* line 41, ../../sass/partials/_header.sass */
 .header-bg .header p {
   color: #7b8184;
   font-size: 0.8em;
