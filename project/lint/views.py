@@ -36,7 +36,8 @@ def get_status(request):
             result[stage_index] = 'error'
         data = {'queue': result[0], 'cloning': result[1],
                 'parsing': result[2], 'analyzing': result[3]}
-    return HttpResponse(json.dumps(data), mimetype='application/json')
+        return HttpResponse(json.dumps(data), mimetype='application/json')
+    return HttpResponse()
 
 
 def results(request, hash):
