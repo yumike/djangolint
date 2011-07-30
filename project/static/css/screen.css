@@ -252,13 +252,17 @@ p {
   margin-left: 1em;
 }
 /* line 16, ../../sass/partials/_results.sass */
+.description a {
+  font-size: 0.9em;
+}
+/* line 19, ../../sass/partials/_results.sass */
 .description p {
   margin-bottom: 5px;
   font-size: 0.7em;
   line-height: 1.5em;
-  color: #7b8184;
+  color: #23272a;
 }
-/* line 22, ../../sass/partials/_results.sass */
+/* line 25, ../../sass/partials/_results.sass */
 .description .fix {
   font-size: 0.7em;
   line-height: 1.6em;
@@ -274,34 +278,34 @@ p {
   -khtml-border-radius: 3px;
   border-radius: 3px;
 }
-/* line 32, ../../sass/partials/_results.sass */
+/* line 35, ../../sass/partials/_results.sass */
 .description .fix li {
   list-style-position: inside;
   overflow: hidden;
   text-overflow: clip;
 }
-/* line 37, ../../sass/partials/_results.sass */
+/* line 40, ../../sass/partials/_results.sass */
 .description .fix li code {
   color: #aaaaaa;
 }
-/* line 40, ../../sass/partials/_results.sass */
+/* line 43, ../../sass/partials/_results.sass */
 .description .fix .significant {
   color: #bd2500;
 }
-/* line 43, ../../sass/partials/_results.sass */
+/* line 46, ../../sass/partials/_results.sass */
 .description .fix .significant code {
   color: #bd2500;
 }
-/* line 46, ../../sass/partials/_results.sass */
+/* line 49, ../../sass/partials/_results.sass */
 .description .yes {
   background: rgba(102, 152, 80, 0.1);
   border-color: #476a39;
 }
-/* line 50, ../../sass/partials/_results.sass */
+/* line 53, ../../sass/partials/_results.sass */
 .description .yes .significant {
   color: #476a39;
 }
-/* line 53, ../../sass/partials/_results.sass */
+/* line 56, ../../sass/partials/_results.sass */
 .description .yes .significant code {
   color: #476a39;
 }
