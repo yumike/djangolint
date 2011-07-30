@@ -26,7 +26,7 @@ class Report(models.Model):
     created_on = models.DateTimeField(default=datetime.now)
 
     hash = models.CharField(unique=True, max_length=40)
-    url = models.URLField()
+    url = models.URLField(verify_exists=False)
     stage = models.CharField(max_length=10, choices=STAGES,
                              default='waiting')
     error = models.TextField(blank=True, null=True)
