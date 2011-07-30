@@ -1,10 +1,12 @@
 # Django settings for project project.
 import os
+import string
+from random import choice
 
 
-PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__))
+PROJECT_ROOT = os.path.join(os.path.abspath(os.path.dirname(__file__)), '..')
 
-DEBUG = True
+DEBUG = False
 TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
@@ -84,8 +86,14 @@ STATICFILES_FINDERS = (
 #    'django.contrib.staticfiles.finders.DefaultStorageFinder',
 )
 
-# Make this unique, and don't share it with anybody.
-SECRET_KEY = 'c^oxp36ifs$egy%t&=eiwe7*ia0&jr3err-*wdkbygc*70nfdm'
+SECRET_KEY_FILE = os.path.join(PROJECT_ROOT, 'secret.txt')
+if not os.path.exists(SECRET_KEY_FILE):
+    SECRET_KEY = ''.join([choice(string.letters + string.digits + string.punctuation) for i in range(50)])
+    with open(SECRET_KEY_FILE, 'w') as f:
+        f.write(SECRET_KEY)
+else:
+    with open(SECRET_KEY_FILE) as f:
+        SECRET_KEY = f.read()
 
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (
@@ -147,13 +155,3 @@ LOGGING = {
 
 import djcelery
 djcelery.setup_loader()
-
-
-BROKER_BACKEND = "djkombu.transport.DatabaseTransport"
-CELERY_RESULTS_BACKEND = "djkombu.transport.DatabaseTransport"
-
-
-try:
-    from settings_local import *
-except ImportError:
-    pass
