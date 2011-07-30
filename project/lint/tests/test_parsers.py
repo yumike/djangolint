@@ -4,7 +4,7 @@ import ast
 import os
 
 from django.test import TestCase
-from .base import TESTS_ROOT
+from .base import TESTS_ROOT, EXAMPLE_PROJECT_FILES
 from ..parsers import Parser
 
 
@@ -12,19 +12,6 @@ class ParserTests(TestCase):
 
     def setUp(self):
         self.example_project = os.path.join(TESTS_ROOT, 'example_project')
-        self.filepath_list = [
-            '__init__.py',
-            'app/__init__.py',
-            'app/admin.py',
-            'app/forms.py',
-            'app/models.py',
-            'app/tests.py',
-            'app/urls.py',
-            'app/views.py',
-            'bad_code.py',
-            'good_code.py',
-            'syntax_error.py',
-        ]
 
     def test_init_with_absolute_path(self):
         parser = Parser(self.example_project)
@@ -38,7 +25,7 @@ class ParserTests(TestCase):
         parser = Parser(self.example_project)
         self.assertItemsEqual(
             parser.walk(),
-            [os.path.join(self.example_project, x) for x in self.filepath_list]
+            [os.path.join(self.example_project, x) for x in EXAMPLE_PROJECT_FILES]
         )
 
     def test_relpath(self):
@@ -70,4 +57,4 @@ class ParserTests(TestCase):
         parser = Parser(self.example_project)
         code = parser.parse()
         self.assertIsInstance(code, dict)
-        self.assertItemsEqual(parser.parse(), self.filepath_list)
+        self.assertItemsEqual(parser.parse(), EXAMPLE_PROJECT_FILES)
