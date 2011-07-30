@@ -10,7 +10,7 @@ from .tasks import process_report
 
 @require_POST
 def create(request):
-    form = ReportForm(data=request.POST or None)
+    form = ReportForm(data=request.POST)
     if form.is_valid():
         report = form.save()
         request.session['report_pk'] = report.pk
