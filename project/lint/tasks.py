@@ -1,10 +1,11 @@
 import os
-import subprocess
+from subprocess import Popen, PIPE, call
 import time
 
 from celery.task import task
 from django.conf import settings
 
+from .parsers import Parser
 from .settings import CONFIG
 
 
@@ -14,23 +15,17 @@ class CloningError(Exception):
 
 def clone(url, hash):
     clone_path = os.path.join(CONFIG['CLONES_ROOT'], hash)
-    error = subprocess.call(['git', 'clone', url, clone_path])
+    error = Popen(['git', 'clone', url, clone_path], stdout=PIPE, stderr=PIPE).wait()
     if error:
         raise CloningError('Cloning %s repository failed' % url) 
     return clone_path
 
 
-def parse(report, path):
-    report.stage = 'parsing'
-    report.save()
-    time.sleep(5)
-    result = 'ast'
-    return result
+def parse(path):
+    return Parser(path).parse()
 
 
-def analyze(report, ast_tree):
-    report.stage = 'testing'
-    report.save()
+def analyze(ast_tree):
     time.sleep(5)
     result = 'fixes'
     return result
@@ -43,10 +38,16 @@ def process_report(report):
     try:
         path = clone(report.url, report.hash)
     except CloningError, e:
-        report.error = e.text
+        report.error = e.message
         report.save()
         return
-    ast_trees = parse(report, path)
-    fixes = analyze(report, ast_trees)
-    report.stage = 'finished'
+
+    report.stage = 'parsing'
+    report.save()
+    ast_trees = parse(path)
+
+    report.stage = 'testing'
+    report.save()
+    fixes = analyze(ast_trees)
+    report.stage = 'done'
     report.save()

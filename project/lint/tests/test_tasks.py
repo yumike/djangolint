@@ -17,7 +17,10 @@ class TasksTests(TestCase):
         self.report2 = Report.objects.create(url='example.com')
 
     def tearDown(self):
-        shutil.rmtree(CONFIG['CLONES_ROOT'])
+        try:
+            shutil.rmtree(CONFIG['CLONES_ROOT'])
+        except OSError:
+            pass
 
     def test_clone(self):
         path = clone(self.report1.url, self.report1.hash)
