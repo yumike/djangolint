@@ -1,5 +1,6 @@
 *.pyc
 *.pyo
+.vagrant
 project/.sass-cache/
 project/cloned_repos
 project/public
