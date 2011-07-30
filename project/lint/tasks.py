@@ -9,19 +9,16 @@ from django.utils import simplejson as json
 from .analyzers import registry
 from .models import Fix
 from .parsers import Parser
-from .settings import CONFIG
 
 
 class CloningError(Exception):
     pass
 
 
-def clone(url, hash):
-    clone_path = os.path.join(CONFIG['CLONES_ROOT'], hash)
+def clone(url, clone_path):
     error = Popen(['git', 'clone', url, clone_path], stdout=PIPE, stderr=PIPE).wait()
     if error:
         raise CloningError('Cloning %s repository failed' % url) 
-    return clone_path
 
 
 def parse(path):
@@ -49,8 +46,9 @@ def save_results(report, results):
 def process_report(report):
     report.stage = 'cloning'
     report.save()
+    path = report.get_repo_path()
     try:
-        path = clone(report.url, report.hash)
+        clone(report.url, path)
     except CloningError, e:
         report.error = e.message
         report.save()

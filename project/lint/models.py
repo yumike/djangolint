@@ -1,8 +1,12 @@
+import os
 import random
+import shutil
 import time
+
 from datetime import datetime, timedelta
 
 from django.db import models
+from django.dispatch import receiver
 from django.utils.hashcompat import sha_constructor
 
 from .managers import ReportManager
@@ -50,6 +54,11 @@ class Report(models.Model):
         expiration_date = timedelta(days=EXPIRATION_DAYS) + self.created_on
         return datetime.now() > expiration_date
 
+    def get_repo_path(self):
+        if self.hash:
+            return os.path.join(CONFIG['CLONES_ROOT'], self.hash)
+        return None
+
 
 class Fix(models.Model):
 
@@ -59,3 +68,16 @@ class Fix(models.Model):
     line = models.PositiveIntegerField()
     source = models.TextField()
     solution = models.TextField()
+
+
+@receiver(models.signals.post_save, sender=Report)
+def delete_unused_repos(sender=Report, **kwargs):
+    if kwargs.get('raw', False):
+        return
+    report = kwargs['instance']
+    if report.stage == 'done' or report.error:
+        path = report.get_repo_path()
+        try:
+            shutil.rmtree(path)
+        except OSError:
+            pass
