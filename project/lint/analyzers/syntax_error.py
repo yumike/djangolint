@@ -1,5 +1,5 @@
 import os
-from .base import BaseAnalyzer, Code, Result
+from .base import BaseAnalyzer, Result
 
 
 class SyntaxErrorAnalyzer(BaseAnalyzer):
