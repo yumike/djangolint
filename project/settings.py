@@ -117,6 +117,8 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'lint',
     'south',
+    'djcelery',
+    'djkombu',
 )
 
 # A sample logging configuration. The only tangible logging
@@ -141,6 +143,15 @@ LOGGING = {
         },
     }
 }
+
+
+import djcelery
+djcelery.setup_loader()
+
+
+BROKER_BACKEND = "djkombu.transport.DatabaseTransport"
+CELERY_RESULTS_BACKEND = "djkombu.transport.DatabaseTransport"
+
 
 try:
     from settings_local import *
