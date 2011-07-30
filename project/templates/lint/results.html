@@ -5,15 +5,20 @@
   <div class="description">
     {{ report.url|urlize }}
   </div>
-  
+
   <h2>Results url:</h2>
   <div class="description">
     <a href="{{ report.get_absolute_url }}">http://djangolint.trilandev.com{{ report.get_absolute_url }}</a>
   </div>
+
   <h2>Fixes:</h2>
   {% with report.fixes.all as fixes %}
   {% for fix in fixes %}
     {% results_fix fix %}
+  {% empty %}
+    <div class="description">
+      Congratulations! We didn't find the bad code.
+    </div>
   {% endfor %}
   {% endwith %}
 {% endblock %}
