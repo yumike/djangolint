@@ -22,7 +22,7 @@ def create(request):
 
 
 def get_status(request):
-    pk = request.session.get('report_pk', None)
+    pk = request.session.get('report_pk')
     if pk is not None:
         result = ['waiting', 'waiting', 'waiting', 'waiting']
         report = get_object_or_404(Report, pk=pk)
