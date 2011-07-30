@@ -192,7 +192,7 @@ p {
 
 /* line 31, ../../sass/partials/_form.sass */
 .dialogue .report {
-  margin: 1em 0 0 2em;
+  margin: 1em 0 0 0;
   font-size: 1.4em;
 }
 /* line 35, ../../sass/partials/_form.sass */
@@ -215,13 +215,13 @@ p {
 }
 /* line 53, ../../sass/partials/_form.sass */
 .dialogue .report .error {
-  background-image: url('/static/images/action-error.png');
+  background-image: url('/static/images/action-error.png?1312013270');
   color: #23272a;
 }
 
 /* line 58, ../../sass/partials/_form.sass */
 .result {
-  margin: 2em 0 0 2em;
+  margin: 2em 0 0 0;
 }
 
 /* line 11, ../../sass/partials/_footer.sass */
