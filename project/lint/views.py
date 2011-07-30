@@ -13,7 +13,7 @@ def create(request):
     form = ReportForm(data=request.POST or None)
     if form.is_valid():
         report = form.save()
-        request.session['report_hash'] = report.hash
+        request.session['report_pk'] = report.pk
         process_report.delay(report)
         result = {'status': 'ok'}
     else:
@@ -22,10 +22,10 @@ def create(request):
 
 
 def get_status(request):
-    hash = request.session.get('report_hash', None)
-    result = ['waiting', 'waiting', 'waiting', 'waiting']
-    if hash is not None:
-        report = get_object_or_404(Report, hash=hash)
+    pk = request.session.get('report_pk', None)
+    if pk is not None:
+        result = ['waiting', 'waiting', 'waiting', 'waiting']
+        report = get_object_or_404(Report, pk=pk)
         stage = report.stage
         stage_index = STAGES.index(stage)
         for status in range(stage_index):
