@@ -1,11 +1,8 @@
-{% extends "base.html" %}
+{% extends "base.html" %}{% load lint %}
 
 {% block content %}
   <div class="dialogue">
-    <form action="/" method="post" class="url-container">
-      <input type="text" class="url-field" value="https://github.com/" />
-      <input type="submit" value="Go" class="button" />
-    </form>
+    {% report_create_form %}
     <p class="info-text">You'll have access to the results within 30 days</p>
     <div class="report">
       <p id="adding" class="done">Adding your project to the task queue</p>

@@ -1,0 +1,5 @@
+<form action="{% url lint_report_create %}" method="post" class="url-container">
+  {% csrf_token %}
+  {{ form.url }}
+  <input type="submit" value="Go" class="button" />
+</form>
