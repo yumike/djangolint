@@ -239,6 +239,12 @@ p {
 /* line 58, ../../sass/partials/_form.sass */
 .result {
   margin: 2em 0 0 0;
+  display: none;
+}
+
+/* line 62, ../../sass/partials/_form.sass */
+.view {
+  display: block;
 }
 
 /* line 13, ../../sass/partials/_results.sass */
