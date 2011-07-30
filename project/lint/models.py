@@ -54,6 +54,7 @@ class Report(models.Model):
 class Fix(models.Model):
 
     report = models.ForeignKey(Report, related_name='fixes')
+    description = models.TextField()
     path = models.CharField(max_length=255)
     line = models.PositiveIntegerField()
     source = models.TextField()
