@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <div class="dialogue">
+    <form action="/" method="post" class="url-container">
+      <input type="text" class="url-field" value="https://github.com/" />
+      <input type="submit" value="Go" class="button" />
+    </form>
+    <ul class="report">
+      <li class="done">Adding your project to the task queue</li>
+      <li class="working">Cloning your repository...</li>
+      <li>Parsing the source code</li>
+      <li>Analyzing your code</li>
+    </ul>
+  </div>
+  <div class="result">Done! You can see the results <a href="#">here</a>.</div>
+{% endblock %}

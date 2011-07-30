@@ -1,0 +1,41 @@
+$content-width: 700px
+
+$color: #7B8184
+$dark-color: #23272A
+$light-color: #FFFFFF
+$ref-color: #BD2500
+
+$default-text-shadow-color: #414141
+$default-text-shadow-h-offset: 0
+$default-text-shadow-v-offset: 1px
+$default-text-shadow-blur: 0
+
+.header-bg
+  width: 100%
+  height: 105px
+  padding-top: 40px
+  background:
+    image: image-url("bg-top.png")
+    repeat: repeat-x
+    position: 5px 0
+    color: $dark-color
+  
+  .header
+    width: $content-width
+    height: 67px
+    margin: 0 auto
+    padding-left: 55px
+    background:
+      image: image-url("icon.png")
+      repeat: no-repeat
+      position: 0 7px
+  
+    h1
+      margin: 0
+      color: $light-color
+      font-size: 2.1em
+      font-weight: normal
+  
+    p
+      color: $color
+      font-size: 0.8em

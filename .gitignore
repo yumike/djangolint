@@ -1,5 +1,6 @@
 *.pyc
 *.pyo
+project/.sass-cache/
 project/public
 project/cloned_repos
 project/settings_local.py

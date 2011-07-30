@@ -1,0 +1,53 @@
+$color: #7B8184
+$dark-color: #23272A
+$light-color: #FFFFFF
+$ref-color: #BD2500
+
+$default-text-shadow-color: #414141
+$default-text-shadow-h-offset: 0
+$default-text-shadow-v-offset: 1px
+$default-text-shadow-blur: 0
+
+.dialogue .url-container *
+  font-size: 20px
+
+.dialogue .url-field
+  padding: 5px 3px
+  width: 580px
+  border: 1px solid #D9D9D9
+  border-top-color: silver
+  color: $dark-color
+
+.dialogue .button
+  padding: 5px 10px
+  background-color: #666
+  +linear-gradient(color-stops(#666, #444))
+  border: 1px solid #000
+  +border-radius(3px)
+  color: white
+  +single-text-shadow
+  text-decoration: none
+
+.dialogue .report
+  margin: 0 0 0 2em
+
+  li
+    background:
+      image: image-url("action-waiting.png")
+      repeat: no-repeat
+      position: 0 27px
+    padding: 25px 0 0 22px
+    color: #bbb
+
+  .done
+    background:
+      image: image-url("action-done.png")
+    color: $dark-color
+  
+  .working
+    background:
+      image: image-url("action-working.png")
+    color: $dark-color
+
+.result
+  margin: 2em 0 0 2em

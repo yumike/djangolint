@@ -1,0 +1,277 @@
+/* Welcome to Compass.
+ * In this file you should write your main styles. (or centralize your imports)
+ * Import this file using the following HTML or equivalent:
+ * <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css" /> */
+/* line 17, ../../../../../.virtualenvs/djangolint/gems/gems/compass-0.11.5/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
+
+/* line 20, ../../../../../.virtualenvs/djangolint/gems/gems/compass-0.11.5/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+body {
+  line-height: 1;
+}
+
+/* line 22, ../../../../../.virtualenvs/djangolint/gems/gems/compass-0.11.5/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+ol, ul {
+  list-style: none;
+}
+
+/* line 24, ../../../../../.virtualenvs/djangolint/gems/gems/compass-0.11.5/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+/* line 26, ../../../../../.virtualenvs/djangolint/gems/gems/compass-0.11.5/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+caption, th, td {
+  text-align: left;
+  font-weight: normal;
+  vertical-align: middle;
+}
+
+/* line 28, ../../../../../.virtualenvs/djangolint/gems/gems/compass-0.11.5/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+q, blockquote {
+  quotes: none;
+}
+/* line 101, ../../../../../.virtualenvs/djangolint/gems/gems/compass-0.11.5/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+q:before, q:after, blockquote:before, blockquote:after {
+  content: "";
+  content: none;
+}
+
+/* line 30, ../../../../../.virtualenvs/djangolint/gems/gems/compass-0.11.5/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+a img {
+  border: none;
+}
+
+/* line 114, ../../../../../.virtualenvs/djangolint/gems/gems/compass-0.11.5/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section, summary {
+  display: block;
+}
+
+/* line 13, ../../sass/partials/_base.sass */
+body {
+  font-family: Verdana, Arial, sans-serif;
+  font-size: 18px;
+}
+
+/* line 17, ../../sass/partials/_base.sass */
+h1 {
+  margin-top: 3em;
+  margin-bottom: 0.2em;
+  font-family: "Francois One", sans-serif;
+  font-size: 1.5em;
+  font-weight: bold;
+  line-height: 1.3em;
+  color: #23272a;
+  text-transform: uppercase;
+  text-shadow: #414141 0 1px 0;
+}
+
+/* line 28, ../../sass/partials/_base.sass */
+h2 {
+  margin-bottom: 0.3em;
+  font-family: "Francois One", sans-serif;
+  color: #23272a;
+  text-transform: uppercase;
+  font-size: 0.9em;
+  line-height: 1.3em;
+  text-shadow: #414141 0 1px 0;
+}
+
+/* line 37, ../../sass/partials/_base.sass */
+a {
+  color: #bd2500;
+  text-decoration: none;
+  border-bottom: 1px dashed #bd2500;
+}
+/* line 42, ../../sass/partials/_base.sass */
+a:hover {
+  color: #23272a;
+  border-color: #23272a;
+}
+
+/* line 46, ../../sass/partials/_base.sass */
+p {
+  color: #7b8184;
+  line-height: 1.4em;
+  margin-bottom: 1em;
+  font-size: 0.7em;
+}
+
+/* line 52, ../../sass/partials/_base.sass */
+.subtitle {
+  color: #62676a;
+  font-size: 0.8em;
+  font-style: italic;
+  margin-bottom: 2em;
+  line-height: 1.1em;
+}
+
+/* line 59, ../../sass/partials/_base.sass */
+.content-bg {
+  padding: 50px 0 60px;
+  background-image: url('/static/images/bg.png?1311988153');
+  background-repeat: repeat;
+  background-position: 0% 0%;
+  background-color: white;
+}
+/* line 67, ../../sass/partials/_base.sass */
+.content-bg .content {
+  width: 755px;
+  margin: 0 auto;
+}
+/* line 71, ../../sass/partials/_base.sass */
+.content-bg .content .title {
+  font-size: 1.5em;
+  text-align: center;
+}
+/* line 75, ../../sass/partials/_base.sass */
+.content-bg .content .title h1 {
+  margin-bottom: 0.3em;
+  margin-top: 0;
+  color: #3f464b;
+  font-size: 70px;
+  font-weight: bold;
+  text-shadow: #414141 0 1px 0;
+}
+
+/* line 11, ../../sass/partials/_form.sass */
+.dialogue .url-container * {
+  font-size: 20px;
+}
+
+/* line 14, ../../sass/partials/_form.sass */
+.dialogue .url-field {
+  padding: 5px 3px;
+  width: 580px;
+  border: 1px solid #d9d9d9;
+  border-top-color: silver;
+  color: #23272a;
+}
+
+/* line 21, ../../sass/partials/_form.sass */
+.dialogue .button {
+  padding: 5px 10px;
+  background-color: #666666;
+  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #666666), color-stop(100%, #444444));
+  background-image: -webkit-linear-gradient(top, #666666, #444444);
+  background-image: -moz-linear-gradient(top, #666666, #444444);
+  background-image: -o-linear-gradient(top, #666666, #444444);
+  background-image: -ms-linear-gradient(top, #666666, #444444);
+  background-image: linear-gradient(top, #666666, #444444);
+  border: 1px solid black;
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+  -o-border-radius: 3px;
+  -ms-border-radius: 3px;
+  -khtml-border-radius: 3px;
+  border-radius: 3px;
+  color: white;
+  text-shadow: #414141 0 1px 0;
+  text-decoration: none;
+}
+
+/* line 31, ../../sass/partials/_form.sass */
+.dialogue .report {
+  margin: 0 0 0 2em;
+}
+/* line 34, ../../sass/partials/_form.sass */
+.dialogue .report li {
+  background-image: url('/static/images/action-waiting.png?1312010126');
+  background-repeat: no-repeat;
+  background-position: 0 27px;
+  padding: 25px 0 0 22px;
+  color: #bbbbbb;
+}
+/* line 42, ../../sass/partials/_form.sass */
+.dialogue .report .done {
+  background-image: url('/static/images/action-done.png?1312004913');
+  color: #23272a;
+}
+/* line 47, ../../sass/partials/_form.sass */
+.dialogue .report .working {
+  background-image: url('/static/images/action-working.png?1312009784');
+  color: #23272a;
+}
+
+/* line 52, ../../sass/partials/_form.sass */
+.result {
+  margin: 2em 0 0 2em;
+}
+
+/* line 11, ../../sass/partials/_footer.sass */
+.footer-bg {
+  width: 100%;
+  height: 44px;
+  padding-top: 24px;
+  background-image: url('/static/images/bg-bottom.png?1311987942');
+  background-repeat: repeat-x;
+  background-position: 0% 0%;
+  background-color: #23272a;
+  -moz-box-shadow: 0px -4px 0px 0px rgba(35, 39, 42, 0.2);
+  -webkit-box-shadow: 0px -4px 0px 0px rgba(35, 39, 42, 0.2);
+  -o-box-shadow: 0px -4px 0px 0px rgba(35, 39, 42, 0.2);
+  box-shadow: 0px -4px 0px 0px rgba(35, 39, 42, 0.2);
+}
+/* line 22, ../../sass/partials/_footer.sass */
+.footer-bg .footer {
+  width: 600px;
+  margin: 0 auto;
+}
+/* line 26, ../../sass/partials/_footer.sass */
+.footer-bg .footer a:hover {
+  color: white;
+  border-color: white;
+}
+
+/* line 13, ../../sass/partials/_header.sass */
+.header-bg {
+  width: 100%;
+  height: 105px;
+  padding-top: 40px;
+  background-image: url('/static/images/bg-top.png?1311987982');
+  background-repeat: repeat-x;
+  background-position: 5px 0;
+  background-color: #23272a;
+}
+/* line 23, ../../sass/partials/_header.sass */
+.header-bg .header {
+  width: 700px;
+  height: 67px;
+  margin: 0 auto;
+  padding-left: 55px;
+  background-image: url('/static/images/icon.png?1311994493');
+  background-repeat: no-repeat;
+  background-position: 0 7px;
+}
+/* line 33, ../../sass/partials/_header.sass */
+.header-bg .header h1 {
+  margin: 0;
+  color: white;
+  font-size: 2.1em;
+  font-weight: normal;
+}
+/* line 39, ../../sass/partials/_header.sass */
+.header-bg .header p {
+  color: #7b8184;
+  font-size: 0.8em;
+}
