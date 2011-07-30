@@ -1,6 +1,6 @@
 import ast
 
-from .base import BaseAnalyzer, Code, Result, AttributeVisitor, ModuleVisitor
+from .base import BaseAnalyzer, Result, AttributeVisitor, ModuleVisitor
 from .context import Context
 
 
