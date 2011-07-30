@@ -1,5 +1,6 @@
 import ast
 import os
+from .context import Context
 
 
 class BaseAnalyzer(object):
@@ -81,3 +82,54 @@ class AttributeVisitor(ast.NodeVisitor):
         if not isinstance(node, ast.Attribute):
             self.is_usable = False
         ast.NodeVisitor.generic_visit(self, node)
+
+
+class ModuleVisitor(ast.NodeVisitor):
+    """
+    Collect interesting imported names during module nodes visiting.
+    """
+
+    interesting = {}
+
+    def __init__(self):
+        self.names = Context()
+
+    def update_names(self, aliases, get_path):
+        for alias in aliases:
+            path = get_path(alias.name)
+            if path not in self.interesting:
+                continue
+            if self.interesting[path]:
+                for attr in self.interesting[path]:
+                    name = '.'.join((alias.asname or alias.name, attr))
+                    self.names[name] = '.'.join((path, attr))
+            else:
+                name = alias.asname or alias.name
+                self.names[name] = path
+
+    def visit_Import(self, node):
+        self.update_names(node.names, lambda x: x)
+
+    def visit_ImportFrom(self, node):
+        self.update_names(node.names, lambda x: '.'.join((node.module, x)))
+
+    def visit_FunctionDef(self, node):
+        self.names.push()
+        self.generic_visit(node)
+        self.names.pop()
+
+    def visit_Assign(self, node):
+        visitor = AttributeVisitor()
+        visitor.visit(node.value)
+        if not visitor.is_usable:
+            return
+        name = visitor.get_name()
+        if name not in self.names:
+            return
+        for target in node.targets:
+            visitor = AttributeVisitor()
+            visitor.visit(target)
+            if not visitor.is_usable:
+                continue
+            target = visitor.get_name()
+            self.names[target] = self.names[name]

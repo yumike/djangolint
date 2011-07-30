@@ -1,72 +1,12 @@
 import ast
 
-from .base import BaseAnalyzer, Code, Result, AttributeVisitor
+from .base import BaseAnalyzer, Result, AttributeVisitor, ModuleVisitor
 from .context import Context
 
 
-class ModuleVisitor(ast.NodeVisitor):
+class GenericViewsVisitor(ModuleVisitor):
 
-    def __init__(self, interesting):
-        self.interesting = interesting
-        self.names = Context()
-        self.found = []
-
-    def update_names(self, aliases, get_path):
-        for alias in aliases:
-            path = get_path(alias.name)
-            if path not in self.interesting:
-                continue
-            if self.interesting[path]:
-                for attr in self.interesting[path]:
-                    name = '.'.join((alias.asname or alias.name, attr))
-                    self.names[name] = '.'.join((path, attr))
-            else:
-                name = alias.asname or alias.name
-                self.names[name] = path
-
-    def visit_Import(self, node):
-        self.update_names(node.names, lambda x: x)
-
-    def visit_ImportFrom(self, node):
-        self.update_names(node.names, lambda x: '.'.join((node.module, x)))
-
-    def visit_FunctionDef(self, node):
-        self.names.push()
-        self.generic_visit(node)
-        self.names.pop()
-
-    def visit_Assign(self, node):
-        visitor = AttributeVisitor()
-        visitor.visit(node.value)
-        if not visitor.is_usable:
-            return
-        name = visitor.get_name()
-        if name not in self.names:
-            return
-        for target in node.targets:
-            visitor = AttributeVisitor()
-            visitor.visit(target)
-            if not visitor.is_usable:
-                continue
-            target = visitor.get_name()
-            self.names[target] = self.names[name]
-
-    def visit_Attribute(self, node):
-        visitor = AttributeVisitor()
-        visitor.visit(node)
-        if visitor.is_usable:
-            name = visitor.get_name()
-            if name in self.names:
-                self.found.append((name, node))
-
-    def visit_Name(self, node):
-        if node.id in self.names:
-            self.found.append((node.id, node))
-
-
-class GenericViewsAnalyzer(BaseAnalyzer):
-
-    deprecated = {
+    interesting = {
         'django.views.generic.simple': ['direct_to_template', 'redirect_to'],
         'django.views.generic.simple.direct_to_template': None,
         'django.views.generic.simple.redirect_to': None,
@@ -93,10 +33,29 @@ class GenericViewsAnalyzer(BaseAnalyzer):
         'django.views.generic.create_update.delete_object': None,
     }
 
+    def __init__(self):
+        ModuleVisitor.__init__(self)
+        self.found = []
+
+    def visit_Attribute(self, node):
+        visitor = AttributeVisitor()
+        visitor.visit(node)
+        if visitor.is_usable:
+            name = visitor.get_name()
+            if name in self.names:
+                self.found.append((name, node))
+
+    def visit_Name(self, node):
+        if node.id in self.names:
+            self.found.append((node.id, node))
+
+
+class GenericViewsAnalyzer(BaseAnalyzer):
+
     def analyze_file(self, path, code):
         if not isinstance(code, ast.AST):
             return
-        visitor = ModuleVisitor(self.deprecated)
+        visitor = GenericViewsVisitor()
         visitor.visit(code)
         for name, node in visitor.found:
             result = Result('%r is deprecated' % name, path, node.lineno)

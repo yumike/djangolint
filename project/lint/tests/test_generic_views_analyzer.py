@@ -18,16 +18,16 @@ class GenericViewsAnalyzerTests(TestCase):
         results = list(self.analyzer.analyze())
         self.assertEqual(len(results), 5)
         self.assertItemsEqual(results[0].source, [
-            (5, False, ''),
-            (6, False, 'def index(request):'),
-            (7, True,  '    return django.views.generic.simple.direct_to_template('),
-            (8, False, '        request,'),
-            (9, False, "        template_name='messages/index.html')"),
+            (7,  False, ''),
+            (8,  False, 'def index(request):'),
+            (9,  True,  '    return django.views.generic.simple.direct_to_template('),
+            (10, False, '        request,'),
+            (11, False, "        template_name='messages/index.html')"),
         ])
         self.assertItemsEqual(results[1].source, [
-            (12, False, 'def redirect(request):'),
-            (13, False, '    view = django.views.generic.simple.redirect_to'),
-            (14, True,  "    return view(request, url='/messages/list/')"),
-            (15, False, ''),
-            (16, False, ''),
+            (14, False, 'def redirect(request):'),
+            (15, False, '    view = django.views.generic.simple.redirect_to'),
+            (16, True,  "    return view(request, url='/messages/list/')"),
+            (17, False, ''),
+            (18, False, ''),
         ])

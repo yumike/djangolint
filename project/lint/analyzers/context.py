@@ -39,5 +39,11 @@ class Context(object):
                 return True
         return False
 
+    def has_value(self, value):
+        dict_ = {}
+        for d in self.dicts:
+            dict_.update(d)
+        return value in dict_.values()
+
     def __contains__(self, key):
         return self.has_key(key)
