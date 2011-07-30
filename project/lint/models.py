@@ -13,13 +13,7 @@ from .managers import ReportManager
 from .settings import CONFIG
 
 
-STAGES = (
-    ('waiting', 'Waiting'),
-    ('cloning', 'Cloning'),
-    ('parsing', 'Parsing'),
-    ('testing', 'Testing'),
-    ('done', 'Done'),
-)
+STAGES = ('queue', 'cloning', 'parsing', 'analyzing', 'done')
 
 
 EXPIRATION_DAYS = CONFIG['REPORT_EXPIRATION_DAYS']
@@ -31,8 +25,7 @@ class Report(models.Model):
 
     hash = models.CharField(unique=True, max_length=40)
     url = models.URLField(verify_exists=False)
-    stage = models.CharField(max_length=10, choices=STAGES,
-                             default='waiting')
+    stage = models.CharField(max_length=10, default='queue')
     error = models.TextField(blank=True, null=True)
 
     objects = ReportManager()

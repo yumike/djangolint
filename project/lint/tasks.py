@@ -58,7 +58,7 @@ def process_report(report):
     report.save()
     parsed_code = parse(path)
 
-    report.stage = 'testing'
+    report.stage = 'analyzing'
     report.save()
     save_results(report, analyze(parsed_code, path))
     report.stage = 'done'
