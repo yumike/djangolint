@@ -27,10 +27,10 @@ class BaseAnalyzer(object):
                 yield result
 
 
-class Code(dict):
+class Code(list):
 
     def add_line(self, line, text, important=True):
-        self[(line, important)] = text
+        self.append((line, important, text))
 
 
 class Result(object):
