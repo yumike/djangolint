@@ -100,28 +100,26 @@ h2 {
 
 /* line 38, ../../sass/partials/_base.sass */
 h3 {
-  font-size: 0.9em;
   color: #23272a;
   padding: 7px 0;
   margin-bottom: 3px;
   margin-top: 1.5em;
   border-bottom: 1px dashed #7b8184;
-  text-shadow: #414141 0 1px 0;
 }
 
-/* line 47, ../../sass/partials/_base.sass */
+/* line 45, ../../sass/partials/_base.sass */
 a {
   color: #bd2500;
   text-decoration: none;
   border-bottom: 1px dashed #bd2500;
 }
-/* line 52, ../../sass/partials/_base.sass */
+/* line 50, ../../sass/partials/_base.sass */
 a:hover {
   color: #23272a;
   border-color: #23272a;
 }
 
-/* line 56, ../../sass/partials/_base.sass */
+/* line 54, ../../sass/partials/_base.sass */
 p {
   color: #7b8184;
   line-height: 1.4em;
@@ -129,17 +127,22 @@ p {
   font-size: 0.7em;
 }
 
-/* line 62, ../../sass/partials/_base.sass */
+/* line 60, ../../sass/partials/_base.sass */
 strong {
   font-weight: bold;
 }
 
-/* line 65, ../../sass/partials/_base.sass */
+/* line 63, ../../sass/partials/_base.sass */
+code {
+  font-family: Menlo, Monaco, monospace;
+}
+
+/* line 66, ../../sass/partials/_base.sass */
 .first {
   margin-top: 0;
 }
 
-/* line 68, ../../sass/partials/_base.sass */
+/* line 69, ../../sass/partials/_base.sass */
 .subtitle {
   color: #62676a;
   font-size: 0.8em;
@@ -148,7 +151,7 @@ strong {
   line-height: 1.1em;
 }
 
-/* line 75, ../../sass/partials/_base.sass */
+/* line 76, ../../sass/partials/_base.sass */
 .content-bg {
   padding: 50px 0 60px;
   background-image: url('/static/images/bg.png?1311988153');
@@ -156,17 +159,17 @@ strong {
   background-position: 0% 0%;
   background-color: white;
 }
-/* line 83, ../../sass/partials/_base.sass */
+/* line 84, ../../sass/partials/_base.sass */
 .content-bg .content {
   width: 755px;
   margin: 0 auto;
 }
-/* line 87, ../../sass/partials/_base.sass */
+/* line 88, ../../sass/partials/_base.sass */
 .content-bg .content .title {
   font-size: 1.5em;
   text-align: center;
 }
-/* line 91, ../../sass/partials/_base.sass */
+/* line 92, ../../sass/partials/_base.sass */
 .content-bg .content .title h1 {
   margin-bottom: 0.3em;
   margin-top: 0;
