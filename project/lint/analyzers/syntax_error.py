@@ -4,7 +4,7 @@ from .base import BaseAnalyzer, Result
 
 class SyntaxErrorAnalyzer(BaseAnalyzer):
     """
-    Returns notes for all fiels with syntax error.
+    Return notes for all fiels with syntax error.
     """
 
     def analyze_file(self, path, code):
