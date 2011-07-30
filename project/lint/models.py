@@ -5,6 +5,7 @@ from datetime import datetime, timedelta
 from django.db import models
 from django.utils.hashcompat import sha_constructor
 
+from .managers import ReportManager
 from .settings import CONFIG
 
 
@@ -18,14 +19,6 @@ STAGES = (
 
 
 EXPIRATION_DAYS = CONFIG['REPORT_EXPIRATION_DAYS']
-
-
-class ReportManager(models.Manager):
-
-    def delete_expired(self):
-        expiration_date = datetime.now() - timedelta(days=EXPIRATION_DAYS)
-        expired = self.filter(created__lt=expiration_date)
-        expired.delete()
 
 
 class Report(models.Model):
