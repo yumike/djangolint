@@ -1,62 +1,26 @@
-{% extends "base.html" %}
+{% extends "base.html" %}{% load lint %}
 
 {% block content %}
   <h2 class="first">Your project:</h2>
   <div class="description">
-    <a href="https://github.com/django/django">https://github.com/django/django</a>
+    {{ report.url|urlize }}
   </div>
   
   <h2>Results url:</h2>
   <div class="description">
-    <a href="http://djangolint.com/results/1">http://djangolint.com/results/1</a>
+    <a href="{{ report.get_absolute_url }}">http://djangolint.trilandev.com{{ report.get_absolute_url }}</a>
   </div>
-  
   <h2>Fixes:</h2>
+  {% with report.fixes.all as fixes %}
+  {% for fix in fixes %}
   <div class="description">
-    <h3 class="first">apps/test/models.py</h3>
-    <p>Error message for this fix.</p>
-    <ol class="fix" start="20">
-      <li><pre><code>class Report(models.Model):</code></pre></li>
-      <li><pre><code></code></pre></li>
-      <li class="significant"><pre><code>created_on = models.DateTimeField(default=datetime.now)</code></pre></li>
-      <li><pre><code></code></pre></li>
-    </ol>
-    <ol class="fix yes" start="20">
-      <li><pre><code>class Report(models.Model):</code></pre></li>
-      <li><pre><code></code></pre></li>
-      <li class="significant"><pre><code>created_on = models.DateTimeField(default=datetime.now)</code></pre></li>
-      <li><pre><code></code></pre></li>
-    </ol>
+    <h3{% if forloop.first %} class="first"{% endif %}>{{ fix.path }}</h3>
+    <p>{{ fix.description }}</p>
+    {% results_fix fix.source %}
+    {% if fix.solution %}
+      {% results_fix fix.solution %}
+    {% endif %}
   </div>
-  <div class="description">
-    <h3>apps/test/test.py</h3>
-    <p>Error message for this fix.</p>
-    <ol class="fix" start="20">
-      <li><pre><code>    hash = models.CharField(unique=True, max_length=40)</code></pre></li>
-      <li class="significant"><pre><code>    end = models.CharField(unique=True, max_length=40, unique=True, max_length=40, unique=True, max_length=40)</code></pre></li>
-      <li><pre><code></pre></li>
-    </ol>
-    <ol class="fix yes" start="20">
-      <li><pre><code>    hash = models.CharField(unique=True, max_length=40, unique=True, max_length=40)</code></pre></li>
-      <li class="significant"><pre><code>    end = models.CharField(unique=True, max_length=40)</code></pre></li>
-      <li><pre><code></pre></li>
-    </ol>
-  </div>
-  <div class="description">
-    <h3>utils/test/mytest.py</h3>
-    <p>Error message for this fix.</p>
-    <ol class="fix" start="20">
-      <li><pre><code>    def expired(self):</code></pre></li>
-      <li><pre><code>        expiration_date = timedelta(days=EXPIRATION_DAYS) + self.created_on</code></pre></li>
-      <li class="significant"><pre><code>        return datetime.now() > expiration_date</code></pre></li>
-      <li><pre><code></code></pre></li>
-    </ol>
-    <ol class="fix yes" start="20">
-      <li><pre><code>    def expired(self):</code></pre></li>
-      <li><pre><code>        expiration_date = timedelta(days=EXPIRATION_DAYS) + self.created_on</code></pre></li>
-      <li class="significant"><pre><code>        return datetime.now() > expiration_date</code></pre></li>
-      <li><pre><code></code></pre></li>
-    </ol>
-  </div>
-  
+  {% endfor %}
+  {% endwith %}
 {% endblock %}

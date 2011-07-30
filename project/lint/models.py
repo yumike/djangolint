@@ -52,6 +52,10 @@ class Report(models.Model):
             return os.path.join(CONFIG['CLONES_ROOT'], self.hash)
         return None
 
+    @models.permalink
+    def get_absolute_url(self):
+        return ('lint_results', (), {'hash': self.hash})
+
 
 class Fix(models.Model):
 
@@ -61,6 +65,9 @@ class Fix(models.Model):
     line = models.PositiveIntegerField()
     source = models.TextField()
     solution = models.TextField()
+
+    class Meta:
+        ordering = ['path']
 
 
 @receiver(models.signals.post_save, sender=Report)

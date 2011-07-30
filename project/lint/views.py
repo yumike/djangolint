@@ -15,7 +15,7 @@ def create(request):
         report = form.save()
         request.session['report_pk'] = report.pk
         process_report.delay(report)
-        result = {'status': 'ok'}
+        result = {'status': 'ok', 'hash': report.hash}
     else:
         result = {'status': 'error'}
     return HttpResponse(json.dumps(result), mimetype='application/json')
@@ -37,3 +37,10 @@ def get_status(request):
         data = {'queue': result[0], 'cloning': result[1],
                 'parsing': result[2], 'analyzing': result[3]}
     return HttpResponse(json.dumps(data), mimetype='application/json')
+
+
+def results(request, hash):
+    qs = Report.objects.filter(stage='done')
+    qs = qs.exclude(error='')
+    report = get_object_or_404(qs, hash=hash)
+    return render(request, 'lint/results.html', {'report': report})

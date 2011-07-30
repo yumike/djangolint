@@ -10,7 +10,6 @@ urlpatterns = patterns('',
         name='lint_report_create'),
     url(r'^get_status$', 'lint.views.get_status',
         name='lint_report_get_status'),
-    url(r'^results$',
-        TemplateView.as_view(template_name='lint/results.html'),
+    url(r'^results/(?P<hash>[a-f0-9]{40})$', 'lint.views.results',
         name='lint_results'),
 )
