@@ -23,7 +23,7 @@ EXPIRATION_DAYS = CONFIG['REPORT_EXPIRATION_DAYS']
 
 class Report(models.Model):
 
-    created = models.DateTimeField(default=datetime.now)
+    created_on = models.DateTimeField(default=datetime.now)
 
     hash = models.CharField(unique=True, max_length=40)
     url = models.URLField()
@@ -34,7 +34,7 @@ class Report(models.Model):
     objects = ReportManager()
 
     class Meta:
-        ordering = ['-created']
+        ordering = ['-created_on']
 
     def __unicode__(self):
         return self.url
@@ -47,7 +47,7 @@ class Report(models.Model):
         super(Report, self).save(*args, **kwargs)
 
     def expired(self):
-        expiration_date = timedelta(days=EXPIRATION_DAYS) + self.created
+        expiration_date = timedelta(days=EXPIRATION_DAYS) + self.created_on
         return datetime.now() > expiration_date
 
 
@@ -57,4 +57,4 @@ class Fix(models.Model):
     path = models.CharField(max_length=255)
     line = models.PositiveIntegerField()
     source = models.TextField()
-    error = models.TextField()
+    solution = models.TextField()

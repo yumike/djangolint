@@ -12,7 +12,7 @@ class ReportTestCase(TestCase):
         expiration_days = CONFIG['REPORT_EXPIRATION_DAYS']
         self.report1 = Report.objects.create(url='http://google.com/')
         expired_datetime = datetime.now() - timedelta(days=expiration_days+1)
-        self.report2 = Report.objects.create(url='http://yandex.ru/', created=expired_datetime)
+        self.report2 = Report.objects.create(url='http://yandex.ru/', created_on=expired_datetime)
 
     def tearDown(self):
         Report.objects.all().delete()

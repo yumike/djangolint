@@ -10,5 +10,5 @@ class ReportManager(models.Manager):
 
     def delete_expired(self):
         expiration_date = datetime.now() - timedelta(days=EXPIRATION_DAYS)
-        expired = self.filter(created__lt=expiration_date)
+        expired = self.filter(created_on__lt=expiration_date)
         expired.delete()
