@@ -2,14 +2,24 @@ from django.template import Library
 from django.utils import simplejson as json
 
 from ..forms import ReportForm
+from ..models import Report
 
 
 register = Library()
 
 
-@register.inclusion_tag('lint/tags/report_create_form.html')
-def report_create_form():
-    return {'form': ReportForm()}
+@register.inclusion_tag('lint/tags/report_create_form.html', takes_context=True)
+def report_create_form(context):
+    report_pk = context.get('report_pk')
+    initial_data = {}
+    if report_pk is not None:
+        try:
+            report = Report.objects.get(pk=report_pk)
+        except Report.DoesNotExist:
+            report = None
+        else:
+            initial_data['url'] = report.url
+    return {'form': ReportForm(initial=initial_data)}
 
 
 @register.inclusion_tag('lint/tags/results_fix.html')
