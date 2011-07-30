@@ -130,11 +130,16 @@ p {
 }
 
 /* line 62, ../../sass/partials/_base.sass */
+strong {
+  font-weight: bold;
+}
+
+/* line 65, ../../sass/partials/_base.sass */
 .first {
   margin-top: 0;
 }
 
-/* line 65, ../../sass/partials/_base.sass */
+/* line 68, ../../sass/partials/_base.sass */
 .subtitle {
   color: #62676a;
   font-size: 0.8em;
@@ -143,7 +148,7 @@ p {
   line-height: 1.1em;
 }
 
-/* line 72, ../../sass/partials/_base.sass */
+/* line 75, ../../sass/partials/_base.sass */
 .content-bg {
   padding: 50px 0 60px;
   background-image: url('/static/images/bg.png?1311988153');
@@ -151,17 +156,17 @@ p {
   background-position: 0% 0%;
   background-color: white;
 }
-/* line 80, ../../sass/partials/_base.sass */
+/* line 83, ../../sass/partials/_base.sass */
 .content-bg .content {
   width: 755px;
   margin: 0 auto;
 }
-/* line 84, ../../sass/partials/_base.sass */
+/* line 87, ../../sass/partials/_base.sass */
 .content-bg .content .title {
   font-size: 1.5em;
   text-align: center;
 }
-/* line 88, ../../sass/partials/_base.sass */
+/* line 91, ../../sass/partials/_base.sass */
 .content-bg .content .title h1 {
   margin-bottom: 0.3em;
   margin-top: 0;
@@ -238,11 +243,13 @@ p {
 
 /* line 58, ../../sass/partials/_form.sass */
 .result {
-  margin: 2em 0 0 0;
+  margin: 2.5em 0 0 0;
   display: none;
+  font-size: 1.1em;
+  text-align: center;
 }
 
-/* line 62, ../../sass/partials/_form.sass */
+/* line 64, ../../sass/partials/_form.sass */
 .view {
   display: block;
 }

@@ -1,9 +1,10 @@
 {% extends "base.html" %}{% load lint %}
 
 {% block content %}
-  <div class="dialogue">
+  {% csrf_token %}
+  <div id="dialogue" class="dialogue">
     {% report_create_form %}
-    <p class="info-text">You'll have access to the results within 30 days</p>
+    <p id="info" class="info-text">You'll have access to the results within 30 days</p>
     <div class="report">
       <p id="adding">Add the project to the task queue</p>
       <p id="cloning">Clone the project</p>
@@ -12,6 +13,13 @@
     </div>
   </div>
   <div id="result" class="result">
-    Done! You can see the results <a href="#">here</a>.
+    <strong>Done!</strong> You can see the results <a href="/">here</a>.
   </div>
+{% endblock %}
+
+{% block js %}
+  <script type="text/javascript" charset="utf-8">
+    var __get_status_url__ = "{% url lint_report_get_status %}";
+        __get_create_url__ = "{% url lint_report_create %}";
+  </script>
 {% endblock %}
