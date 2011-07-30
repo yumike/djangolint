@@ -1,3 +1,4 @@
+import ast
 import os
 
 
@@ -41,3 +42,42 @@ class Result(object):
         self.line = line
         self.source = Code()
         self.solution = Code()
+
+
+class AttributeVisitor(ast.NodeVisitor):
+    """
+    Process attribute node and build the name of the attribute if possible.
+
+    Currently only simple expressions are supported (like `foo.bar.baz`).
+    If it is not possible to get attribute name as string `is_usable` is
+    set to `True`.
+
+    After `visit()` method call `get_name()` method can be used to get
+    attribute name if `is_usable` == `True`.
+    """
+
+    def __init__(self):
+        self.is_usable = True
+        self.name = []
+
+    def get_name(self):
+        return '.'.join(self.name)
+
+    def visit_Attribute(self, node):
+        self.generic_visit(node)
+        self.name.append(node.attr)
+
+    def visit_Name(self, node):
+        self.name.append(node.id)
+
+    def visit_Load(self, node):
+        pass
+
+    def generic_visit(self, node):
+        """
+        If attribute node consists not only from nodes of types `Attribute`
+        and `Name` mark it as unusable.
+        """
+        if not isinstance(node, ast.Attribute):
+            self.is_usable = False
+        ast.NodeVisitor.generic_visit(self, node)

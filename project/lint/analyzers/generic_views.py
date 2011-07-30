@@ -1,32 +1,7 @@
 import ast
 
-from .base import BaseAnalyzer, Code, Result
+from .base import BaseAnalyzer, Code, Result, AttributeVisitor
 from .context import Context
-
-
-class AttributeVisitor(ast.NodeVisitor):
-
-    def __init__(self):
-        self.is_usable = True
-        self.name = []
-
-    def get_name(self):
-        return '.'.join(self.name)
-
-    def visit_Attribute(self, node):
-        self.generic_visit(node)
-        self.name.append(node.attr)
-
-    def visit_Name(self, node):
-        self.name.append(node.id)
-
-    def visit_Load(self, node):
-        pass
-
-    def generic_visit(self, node):
-        if not isinstance(node, ast.Attribute):
-            self.is_usable = False
-        ast.NodeVisitor.generic_visit(self, node)
 
 
 class ModuleVisitor(ast.NodeVisitor):
