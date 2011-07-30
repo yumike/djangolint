@@ -1,8 +1,12 @@
+"""Inspired by django.template.Context"""
+
+
 class ContextPopException(Exception):
-    pass
+    """pop() has been called more times than push()"""
 
 
 class Context(object):
+    """A stack container for imports and assignments."""
 
     def __init__(self):
         self.dicts = [{}]
@@ -37,9 +41,3 @@ class Context(object):
 
     def __contains__(self, key):
         return self.has_key(key)
-
-    def get(self, key, default=None):
-        try:
-            return self[key]
-        except KeyError:
-            return default
