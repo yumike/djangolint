@@ -4,7 +4,10 @@ import time
 
 from celery.task import task
 from django.conf import settings
+from django.utils import simplejson as json
 
+from .analyzers import registry
+from .models import Fix
 from .parsers import Parser
 from .settings import CONFIG
 
@@ -25,13 +28,24 @@ def parse(path):
     return Parser(path).parse()
 
 
-def analyze(ast_tree):
-    time.sleep(5)
-    result = 'fixes'
-    return result
+def analyze(code, path):
+    results = [] 
+    for analyzer in registry:
+        results.extend(analyzer(code, path).analyze())
+    return results
 
 
-@task(ignore_result=True)
+def save_results(report, results):
+    for result in results:
+        source = json.dumps(result.source)
+        solution = json.dumps(result.solution)
+        Fix.objects.create(
+            report=report, line=result.line, description=result.description,
+            path=result.path, source=source, solution=solution
+        )
+
+
+@task()
 def process_report(report):
     report.stage = 'cloning'
     report.save()
@@ -44,10 +58,10 @@ def process_report(report):
 
     report.stage = 'parsing'
     report.save()
-    ast_trees = parse(path)
+    parsed_code = parse(path)
 
     report.stage = 'testing'
     report.save()
-    fixes = analyze(ast_trees)
+    save_results(report, analyze(parsed_code, path))
     report.stage = 'done'
     report.save()
