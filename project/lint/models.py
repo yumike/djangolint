@@ -49,3 +49,12 @@ class Report(models.Model):
     def expired(self):
         expiration_date = timedelta(days=EXPIRATION_DAYS) + self.created
         return datetime.now() > expiration_date
+
+
+class Fix(models.Model):
+
+    report = models.ForeignKey(Report, related_name='fixes')
+    path = models.CharField(max_length=255)
+    line = models.PositiveIntegerField()
+    source = models.TextField()
+    error = models.TextField()
