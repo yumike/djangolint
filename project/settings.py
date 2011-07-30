@@ -116,6 +116,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'lint',
+    'south',
 )
 
 # A sample logging configuration. The only tangible logging
