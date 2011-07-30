@@ -1,1 +1,62 @@
 {% extends "base.html" %}
+
+{% block content %}
+  <h2 class="first">Your project:</h2>
+  <div class="description">
+    <a href="https://github.com/django/django">https://github.com/django/django</a>
+  </div>
+  
+  <h2>Results url:</h2>
+  <div class="description">
+    <a href="http://djangolint.com/results/1">http://djangolint.com/results/1</a>
+  </div>
+  
+  <h2>Fixes:</h2>
+  <div class="description">
+    <h3 class="first">apps/test/models.py</h3>
+    <p>Error message for this fix.</p>
+    <ol class="fix" start="20">
+      <li><pre><code>class Report(models.Model):</code></pre></li>
+      <li><pre><code></code></pre></li>
+      <li class="significant"><pre><code>created_on = models.DateTimeField(default=datetime.now)</code></pre></li>
+      <li><pre><code></code></pre></li>
+    </ol>
+    <ol class="fix yes" start="20">
+      <li><pre><code>class Report(models.Model):</code></pre></li>
+      <li><pre><code></code></pre></li>
+      <li class="significant"><pre><code>created_on = models.DateTimeField(default=datetime.now)</code></pre></li>
+      <li><pre><code></code></pre></li>
+    </ol>
+  </div>
+  <div class="description">
+    <h3>apps/test/test.py</h3>
+    <p>Error message for this fix.</p>
+    <ol class="fix" start="20">
+      <li><pre><code>    hash = models.CharField(unique=True, max_length=40)</code></pre></li>
+      <li class="significant"><pre><code>    end = models.CharField(unique=True, max_length=40, unique=True, max_length=40, unique=True, max_length=40)</code></pre></li>
+      <li><pre><code></pre></li>
+    </ol>
+    <ol class="fix yes" start="20">
+      <li><pre><code>    hash = models.CharField(unique=True, max_length=40, unique=True, max_length=40)</code></pre></li>
+      <li class="significant"><pre><code>    end = models.CharField(unique=True, max_length=40)</code></pre></li>
+      <li><pre><code></pre></li>
+    </ol>
+  </div>
+  <div class="description">
+    <h3>utils/test/mytest.py</h3>
+    <p>Error message for this fix.</p>
+    <ol class="fix" start="20">
+      <li><pre><code>    def expired(self):</code></pre></li>
+      <li><pre><code>        expiration_date = timedelta(days=EXPIRATION_DAYS) + self.created_on</code></pre></li>
+      <li class="significant"><pre><code>        return datetime.now() > expiration_date</code></pre></li>
+      <li><pre><code></code></pre></li>
+    </ol>
+    <ol class="fix yes" start="20">
+      <li><pre><code>    def expired(self):</code></pre></li>
+      <li><pre><code>        expiration_date = timedelta(days=EXPIRATION_DAYS) + self.created_on</code></pre></li>
+      <li class="significant"><pre><code>        return datetime.now() > expiration_date</code></pre></li>
+      <li><pre><code></code></pre></li>
+    </ol>
+  </div>
+  
+{% endblock %}

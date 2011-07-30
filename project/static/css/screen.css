@@ -89,27 +89,39 @@ h1 {
 /* line 28, ../../sass/partials/_base.sass */
 h2 {
   margin-bottom: 0.3em;
+  margin-top: 2em;
   font-family: "Francois One", sans-serif;
   color: #23272a;
   text-transform: uppercase;
-  font-size: 0.9em;
+  font-size: 1em;
   line-height: 1.3em;
   text-shadow: #414141 0 1px 0;
 }
 
-/* line 37, ../../sass/partials/_base.sass */
+/* line 38, ../../sass/partials/_base.sass */
+h3 {
+  font-size: 0.9em;
+  color: #23272a;
+  padding: 7px 0;
+  margin-bottom: 3px;
+  margin-top: 1.5em;
+  border-bottom: 1px dashed #7b8184;
+  text-shadow: #414141 0 1px 0;
+}
+
+/* line 47, ../../sass/partials/_base.sass */
 a {
   color: #bd2500;
   text-decoration: none;
   border-bottom: 1px dashed #bd2500;
 }
-/* line 42, ../../sass/partials/_base.sass */
+/* line 52, ../../sass/partials/_base.sass */
 a:hover {
   color: #23272a;
   border-color: #23272a;
 }
 
-/* line 46, ../../sass/partials/_base.sass */
+/* line 56, ../../sass/partials/_base.sass */
 p {
   color: #7b8184;
   line-height: 1.4em;
@@ -117,7 +129,12 @@ p {
   font-size: 0.7em;
 }
 
-/* line 52, ../../sass/partials/_base.sass */
+/* line 62, ../../sass/partials/_base.sass */
+.first {
+  margin-top: 0;
+}
+
+/* line 65, ../../sass/partials/_base.sass */
 .subtitle {
   color: #62676a;
   font-size: 0.8em;
@@ -126,7 +143,7 @@ p {
   line-height: 1.1em;
 }
 
-/* line 59, ../../sass/partials/_base.sass */
+/* line 72, ../../sass/partials/_base.sass */
 .content-bg {
   padding: 50px 0 60px;
   background-image: url('/static/images/bg.png?1311988153');
@@ -134,17 +151,17 @@ p {
   background-position: 0% 0%;
   background-color: white;
 }
-/* line 67, ../../sass/partials/_base.sass */
+/* line 80, ../../sass/partials/_base.sass */
 .content-bg .content {
   width: 755px;
   margin: 0 auto;
 }
-/* line 71, ../../sass/partials/_base.sass */
+/* line 84, ../../sass/partials/_base.sass */
 .content-bg .content .title {
   font-size: 1.5em;
   text-align: center;
 }
-/* line 75, ../../sass/partials/_base.sass */
+/* line 88, ../../sass/partials/_base.sass */
 .content-bg .content .title h1 {
   margin-bottom: 0.3em;
   margin-top: 0;
@@ -222,6 +239,65 @@ p {
 /* line 58, ../../sass/partials/_form.sass */
 .result {
   margin: 2em 0 0 0;
+}
+
+/* line 13, ../../sass/partials/_results.sass */
+.description {
+  margin-left: 1em;
+}
+/* line 16, ../../sass/partials/_results.sass */
+.description p {
+  margin-bottom: 5px;
+  font-size: 0.7em;
+  line-height: 1.5em;
+  color: #7b8184;
+}
+/* line 22, ../../sass/partials/_results.sass */
+.description .fix {
+  font-size: 0.7em;
+  line-height: 1.6em;
+  list-style-type: decimal;
+  color: #aaaaaa;
+  padding: 10px;
+  margin: 10px 0;
+  background: rgba(204, 71, 71, 0.1);
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+  -o-border-radius: 3px;
+  -ms-border-radius: 3px;
+  -khtml-border-radius: 3px;
+  border-radius: 3px;
+}
+/* line 32, ../../sass/partials/_results.sass */
+.description .fix li {
+  list-style-position: inside;
+  overflow: hidden;
+  text-overflow: clip;
+}
+/* line 37, ../../sass/partials/_results.sass */
+.description .fix li code {
+  color: #aaaaaa;
+}
+/* line 40, ../../sass/partials/_results.sass */
+.description .fix .significant {
+  color: #bd2500;
+}
+/* line 43, ../../sass/partials/_results.sass */
+.description .fix .significant code {
+  color: #bd2500;
+}
+/* line 46, ../../sass/partials/_results.sass */
+.description .yes {
+  background: rgba(102, 152, 80, 0.1);
+  border-color: #476a39;
+}
+/* line 50, ../../sass/partials/_results.sass */
+.description .yes .significant {
+  color: #476a39;
+}
+/* line 53, ../../sass/partials/_results.sass */
+.description .yes .significant code {
+  color: #476a39;
 }
 
 /* line 11, ../../sass/partials/_footer.sass */

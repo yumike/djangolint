@@ -1,0 +1,55 @@
+$color: #7B8184
+$dark-color: #23272A
+$light-color: #FFFFFF
+$ref-color: #BD2500
+$good-color: #476A39
+$code-color: #AAA
+
+$default-text-shadow-color: $color
+$default-text-shadow-h-offset: 0
+$default-text-shadow-v-offset: 1px
+$default-text-shadow-blur: 0
+
+.description
+  margin-left: 1em
+
+  p
+    margin-bottom: 5px
+    font-size: 0.7em
+    line-height: 1.5em
+    color: $color
+
+  .fix
+    font-size: 0.7em
+    line-height: 1.6em
+    list-style-type: decimal
+    color: $code-color
+    padding: 10px
+    margin: 10px 0
+    background: rgba(204, 71, 71, 0.1)
+    +border-radius(3px)
+
+    li
+      list-style-position: inside
+      overflow: hidden
+      text-overflow: clip
+
+      code
+        color: $code-color
+
+    .significant
+      color: $ref-color
+
+      code
+        color: $ref-color
+
+  .yes
+    background: rgba(102, 152, 80, 0.1)
+    border-color: $good-color
+    
+    .significant
+      color: $good-color
+      
+      code
+        color: $good-color
+      
