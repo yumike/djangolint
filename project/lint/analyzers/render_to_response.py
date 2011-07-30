@@ -44,10 +44,10 @@ class RenderToResponseVisitor(ModuleVisitor):
             pass
         visitor = CallVisitor()
         visitor.visit(node)
-        for name in visitor.names:
-            if name not in self.names:
+        for subname in visitor.names:
+            if subname not in self.names:
                 continue
-            if self.names[name] == 'django.template.RequestContext':
+            if self.names[subname] == 'django.template.RequestContext':
                 self.found.append((name, node))
 
 
