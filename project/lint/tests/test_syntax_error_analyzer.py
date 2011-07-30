@@ -16,4 +16,3 @@ class SyntaxErrorAnalyzerTests(TestCase):
         analyzer = SyntaxErrorAnalyzer(self.code, self.example_project)
         results = list(analyzer.analyze())
         self.assertEqual(len(results), 1)
-        print results
