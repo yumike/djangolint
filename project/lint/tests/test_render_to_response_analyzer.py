@@ -17,6 +17,7 @@ class RenderToResponseAnalyzerTests(TestCase):
     def test_analyze(self):
         results = list(self.analyzer.analyze())
         self.assertEqual(len(results), 1)
+        self.assertIn("this 'render_to_response'", results[0].description)
         self.assertItemsEqual(results[0].source, [
             (39, False, 'def random_message(request):'),
             (40, False, "    message = Message.objects.order_by('?')[0]"),
