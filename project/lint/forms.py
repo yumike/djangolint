@@ -4,7 +4,7 @@ from django import forms
 from .models import Report
 
 
-GITHUB_REGEXP = re.compile(r'^https:\/\/github.com\/[-\w]+\/[-\w]+(?:\.git|)$')
+GITHUB_REGEXP = re.compile(r'^https:\/\/github.com\/[-\w]+\/[-.\w]+$')
 
 
 class ReportForm(forms.ModelForm):
