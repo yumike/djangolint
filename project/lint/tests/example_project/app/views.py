@@ -1,4 +1,6 @@
 import django.views.generic.simple
+from django.shortcuts import render_to_response
+from django.template import RequestContext
 from django.views.generic import list_detail
 from django.views.generic.list_detail import object_detail, object_list
 
@@ -32,3 +34,14 @@ def create_message(request):
 def fake_create_message(request):
     create_object = lambda x: x
     return create_object(request)
+
+
+def random_message(request):
+    message = Message.objects.order_by('?')[0]
+    return render_to_response('messages/random.html', {'message': message},
+                              context_instance=RequestContext(request))
+
+
+def random_message_without_request_context(request):
+    message = Message.objects.order_by('?')[0]
+    return render_to_response('messages/random.html', {'message': message})
