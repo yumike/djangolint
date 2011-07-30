@@ -15,7 +15,7 @@ def create(request):
         report = form.save()
         request.session['report_pk'] = report.pk
         process_report.delay(report)
-        result = {'status': 'ok', 'hash': report.hash}
+        result = {'status': 'ok', 'url': report.get_absolute_url()}
     else:
         result = {'status': 'error'}
     return HttpResponse(json.dumps(result), mimetype='application/json')
