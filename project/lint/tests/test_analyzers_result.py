@@ -1,5 +1,5 @@
 from django.test import TestCase
-from ..analyzers.base import Result, Code
+from ..analyzers.base import Result, CodeSnippet
 
 
 class ResultTests(TestCase):
@@ -9,5 +9,5 @@ class ResultTests(TestCase):
         self.assertEqual(result.description, 'simple result')
         self.assertEqual(result.path, 'app/models.py')
         self.assertEqual(result.line, 2)
-        self.assertIsInstance(result.source, Code)
-        self.assertIsInstance(result.solution, Code)
+        self.assertIsInstance(result.source, CodeSnippet)
+        self.assertIsInstance(result.solution, CodeSnippet)
