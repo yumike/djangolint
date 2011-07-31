@@ -276,8 +276,8 @@ class DeprecatedCodeVisitor(ModuleVisitor):
         if visitor.is_usable:
             name = visitor.get_name()
             if name in self.names:
-                self.add_found(name, node)
+                self.add_found(self.names[name], node)
 
     def visit_Name(self, node):
         if node.id in self.names:
-            self.add_found(node.id, node)
+            self.add_found(self.names[node.id], node)
