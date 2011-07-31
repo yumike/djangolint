@@ -165,9 +165,28 @@ class ModuleVisitor(ast.NodeVisitor):
     def __init__(self):
         self.names = Context()
         self.lineno = []
+        self.found = {}
+
+    def add_found(self, name, node):
+        lineno_level = self.get_lineno_level()
+        if lineno_level not in self.found:
+            self.found[lineno_level] = []
+        self.found[lineno_level].append([name, node, self.get_lineno(), None])
+
+    def get_found(self):
+        for level in self.found.values():
+            for found in level:
+                yield found
 
     def push_lineno(self, lineno):
         self.lineno.append(lineno)
+        lineno_level = self.get_lineno_level()
+        for level in self.found.keys():
+            if level < lineno_level:
+                return
+            for found in self.found[level]:
+                if found[-1] is None:
+                    found[-1] = max(lineno - 1, found[-2])
 
     def pop_lineno(self):
         return self.lineno.pop()
