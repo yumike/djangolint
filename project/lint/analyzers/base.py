@@ -157,15 +157,19 @@ class ModuleVisitor(ast.NodeVisitor):
         self.names.pop()
 
     def visit_Assign(self, node):
-        # Some assings attach interesting imports to new names.
+        # Some assingments attach interesting imports to new names.
         # Trying to parse it.
         visitor = AttributeVisitor()
         visitor.visit(node.value)
         if not visitor.is_usable:
             return
+
         name = visitor.get_name()
+        # skipping assignment if value is not interesting
         if name not in self.names:
             return
+
+        # trying to parse the left-side attribute name
         for target in node.targets:
             visitor = AttributeVisitor()
             visitor.visit(target)
