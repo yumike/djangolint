@@ -12,9 +12,9 @@
 {% endif %}
 
 {% if solution_result %}
-<div class="fix-bg">
+<div class="fix-bg yes">
 {% for line in solution_result %}
-  {% if forloop.first %}<ol class="fix yes" start="{{ line.number }}">{% endif %}
+  {% if forloop.first %}<ol class="fix" start="{{ line.number }}">{% endif %}
   <li{% if line.is_significant %} class="significant"{% endif %}><pre><code>{{ line.text|slice:":85"|default:"&nbsp;" }}{% if line.text|length > 85 %}<span class="clip">...</span>{% endif %}</code></pre></li>
   {% if froloop.last %}</ol>{% endif %}
 {% endfor %}
