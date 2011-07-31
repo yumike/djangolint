@@ -4,19 +4,19 @@ import os
 
 class Parser(object):
 
-    def __init__(self, source):
-        if not os.path.isabs(source):
-            raise ValueError('Source path is not absolute: %s' % source)
-        self.source = source
+    def __init__(self, repo_path):
+        if not os.path.isabs(repo_path):
+            raise ValueError('Repository path is not absolute: %s' % repo_path)
+        self.repo_path = repo_path
 
     def walk(self):
-        for root, dirnames, filenames in os.walk(self.source):
+        for root, dirnames, filenames in os.walk(self.repo_path):
             for filename in filenames:
                 if filename.endswith('.py'):
                     yield os.path.join(root, filename)
 
     def relpath(self, path):
-        return os.path.relpath(path, self.source)
+        return os.path.relpath(path, self.repo_path)
 
     def parse_file(self, path):
         relpath = self.relpath(path)
@@ -28,4 +28,4 @@ class Parser(object):
             return (relpath, e)
 
     def parse(self):
-        return dict(self.parse_file(path) for path in self.walk())
+        return dict(self.parse_file(filepath) for filepath in self.walk())
