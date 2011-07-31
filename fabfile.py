@@ -19,7 +19,7 @@ def bootstrap():
         run('apt-get -q -y update')
         run('apt-get -q -y upgrade')
         run('apt-get -q -y install wget ssl-cert ruby ruby-dev '
-            'libopenssl-ruby rdoc ri irb')
+            'libopenssl-ruby rdoc ri irb build-essential')
         with cd('/tmp'):
             run('wget -q http://production.cf.rubygems.org/rubygems/rubygems-1.7.2.tgz')
             run('tar xf rubygems-1.7.2.tgz')
