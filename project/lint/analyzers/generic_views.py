@@ -52,13 +52,13 @@ class GenericViewsVisitor(ModuleVisitor):
 
 class GenericViewsAnalyzer(BaseAnalyzer):
 
-    def analyze_file(self, path, code):
+    def analyze_file(self, filepath, code):
         if not isinstance(code, ast.AST):
             return
         visitor = GenericViewsVisitor()
         visitor.visit(code)
         for name, node in visitor.found:
-            result = Result('%r is deprecated' % name, path, node.lineno)
-            for i, line in self.get_file_lines(path, node.lineno):
-                result.source.add_line(i, line, i == node.lineno)
+            result = Result('%r is deprecated' % name, filepath, node.lineno)
+            for lineno, text in self.get_file_lines(filepath, node.lineno):
+                result.source.add_line(lineno, text, lineno == node.lineno)
             yield result
