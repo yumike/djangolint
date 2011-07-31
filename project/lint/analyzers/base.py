@@ -51,8 +51,8 @@ class BaseAnalyzer(object):
 
 class CodeSnippet(list):
 
-    def add_line(self, line, text, important=True):
-        self.append((line, important, text))
+    def add_line(self, lineno, text, important=True):
+        self.append((lineno, important, text))
 
 
 class Result(object):
