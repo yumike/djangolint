@@ -4,6 +4,7 @@ import os
 from datetime import datetime
 
 from fabric.api import *
+from fabric.contrib.files import append, exists
 
 
 @task
@@ -35,14 +36,23 @@ def provision():
     chef_root = os.path.join(project_root, 'chef')
     chef_name = 'chef-{0}'.format(datetime.utcnow().strftime('%Y-%m-%d-%H-%M-%S'))
     chef_archive = '{0}.tar.gz'.format(chef_name)
+
     local('cp -r {0} /tmp/{1}'.format(chef_root, chef_name))
-    create_node_json('/tmp/{0}/node.json'.format(chef_name))
+
+    with open('node.json') as f:
+        data = json.load(f)
+    project = data.setdefault('project', {})
+    project['environment'] = env.project_env
+    with open('/tmp/{0}/node.json'.format(chef_name), 'w') as f:
+        json.dump(data, f)
+
     solo_rb = ('file_cache_path "/tmp/chef-solo"',
                'cookbook_path "/tmp/{0}/cookbooks"'.format(chef_name))
     with lcd('/tmp'):
         for line in solo_rb:
             local("echo '{0}' >> {1}/solo.rb".format(line, chef_name))
         local('tar czf {0} {1}'.format(chef_archive, chef_name))
+
     with settings(user='root'):
         put('/tmp/{0}'.format(chef_archive), '/tmp/{0}'.format(chef_archive))
         local('rm -rf /tmp/{0}*'.format(chef_name))
@@ -52,12 +62,64 @@ def provision():
             with settings(warn_only=True):
                 run('chef-solo -c solo.rb -j node.json')
         run('rm -rf /tmp/{0}*'.format(chef_name))
+    upload_public_key('project', 'root')
+    prepare_env()
 
 
-def create_node_json(target):
-    with open('node.json') as f:
-        data = json.load(f)
-    project = data.setdefault('project', {})
-    project['environment'] = env.project_env
-    with open(target, 'w') as f:
-        json.dump(data, f)
+@task
+def prepare_env():
+    if not exists('.env'):
+        run('wget https://raw.github.com/pypa/virtualenv/develop/virtualenv.py')
+        run('python virtualenv.py --distribute --no-site-packages ~/.env')
+        run("echo 'source ~/.env/bin/activate' >> .profile")
+    if not exists('.git'):
+        run('git init .git --bare')
+        run('git clone .git project')
+    deploy()
+    with open('etc/supervisord.conf') as f:
+        supervisor_config = f.read().format(**{'project_env': env.project_env})
+        run('mkdir -p ~/etc/ && rm -f ~/etc/supervisord.conf')
+        append('~/etc/supervisord.conf', supervisor_config)
+    with settings(user='root', warn_only=True):
+        with lcd('etc'):
+            put('supervisor_upstart.conf', '/etc/init/supervisor.conf')
+            run('stop supervisor')
+            run('start supervisor')
+
+
+@task
+def deploy(update_all='yes'):
+    local('git push ssh://{user}@{host}:{port}/~/.git master'.format(**env))
+    with cd('project'):
+        run('git pull ~/.git master')
+        if update_all == 'yes':
+            install_requirements()
+            manage('syncdb --migrate --noinput')
+            manage('collectstatic --noinput')
+    run('supervisorctl restart gunicorn')
+    run('supervisorctl restart celery')
+
+
+@task
+def install_requirements():
+    run('pip install -r requirements/{0}.txt'.format(env.project_env))
+
+
+@task
+def manage(command):
+    run('python project/manage.py {0}'.format(command))
+
+
+@task
+def upload_public_key(to=None, user=None):
+    with settings(user=user or env.user):
+        to = to or env.user
+        path = os.path.expanduser('~/.ssh/id_rsa.pub')
+        if to and os.path.exists(path):
+            key = ' '.join(open(path).read().strip().split(' ')[:2])
+            run('mkdir -p /home/{0}/.ssh'.format(to))
+            append('/home/{0}/.ssh/authorized_keys'.format(to), key, partial=True)
+            run('chown {0}:{0} /home/{0}/.ssh/authorized_keys'.format(to))
+            run('chmod 600 /home/{0}/.ssh/authorized_keys'.format(to))
+            run('chown {0}:{0} /home/{0}/.ssh'.format(to))
+            run('chmod 700 /home/{0}/.ssh'.format(to))
