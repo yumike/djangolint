@@ -162,3 +162,5 @@ COMPRESS_CSS_FILTERS = (
 
 import djcelery
 djcelery.setup_loader()
+
+CELERY_IGNORE_RESULT = True
