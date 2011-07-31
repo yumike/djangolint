@@ -162,14 +162,16 @@ strong {
 /* line 85, ../../sass/partials/_base.sass */
 code {
   font-family: Menlo, Monaco, monospace;
+  width: 600px;
 }
 
-/* line 88, ../../sass/partials/_base.sass */
+/* line 89, ../../sass/partials/_base.sass */
 pre {
   display: inline;
+  width: 600px;
 }
 
-/* line 91, ../../sass/partials/_base.sass */
+/* line 93, ../../sass/partials/_base.sass */
 .subtitle {
   color: #62676a;
   font-size: 0.8em;
@@ -178,21 +180,21 @@ pre {
   line-height: 1.1em;
 }
 
-/* line 98, ../../sass/partials/_base.sass */
+/* line 100, ../../sass/partials/_base.sass */
 .content-bg {
   padding: 50px 0 60px;
 }
-/* line 101, ../../sass/partials/_base.sass */
+/* line 103, ../../sass/partials/_base.sass */
 .content-bg .content {
-  width: 755px;
+  width: 805px;
   margin: 0 auto;
 }
-/* line 105, ../../sass/partials/_base.sass */
+/* line 107, ../../sass/partials/_base.sass */
 .content-bg .content .title {
   font-size: 1.5em;
   text-align: center;
 }
-/* line 109, ../../sass/partials/_base.sass */
+/* line 111, ../../sass/partials/_base.sass */
 .content-bg .content .title h1 {
   margin-bottom: 0.3em;
   margin-top: 0;
@@ -363,6 +365,11 @@ pre {
   margin-top: 0;
 }
 
+/* line 61, ../../sass/partials/_results.sass */
+.clip {
+  color: black;
+}
+
 /* line 14, ../../sass/partials/_footer.sass */
 .footer-bg {
   width: 100%;
@@ -401,7 +408,7 @@ pre {
 /* line 23, ../../sass/partials/_header.sass */
 .header-bg .header {
   display: block;
-  width: 700px;
+  width: 750px;
   height: 67px;
   margin: 0 auto;
   padding-left: 55px;
