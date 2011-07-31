@@ -15,7 +15,7 @@ class ParserTests(TestCase):
 
     def test_init_with_absolute_path(self):
         parser = Parser(self.example_project)
-        self.assertEqual(parser.source, self.example_project)
+        self.assertEqual(parser.repo_path, self.example_project)
 
     def test_init_with_relative_path(self):
         with self.assertRaises(ValueError):

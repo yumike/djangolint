@@ -8,17 +8,21 @@ class BaseAnalyzer(object):
     surround_by = 2
 
     def __init__(self, code, source):
+        self._file_lines = None
         self.code = code
         self.source = source
 
     def get_file_lines(self, path, lineno):
-        if not hasattr(self, '_file_lines'):
+        if self._file_lines is None:
             with open(os.path.join(self.source, path)) as f:
                 self._file_lines = f.readlines()
         start = max(0, lineno - self.surround_by - 1)
         stop = lineno + self.surround_by
         for i, line in enumerate(self._file_lines[start:stop], start=start):
             yield (i + 1, line.rstrip())
+
+    def clear_file_lines_cache(self):
+        self._file_lines = None
 
     def analyze_file(self, path, code):
         raise NotImplementedError
@@ -27,6 +31,7 @@ class BaseAnalyzer(object):
         for path, code in self.code.items():
             for result in self.analyze_file(path, code):
                 yield result
+            self.clear_file_lines_cache()
 
 
 class Code(list):
