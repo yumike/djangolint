@@ -381,7 +381,7 @@ pre {
   background-image: url('/static/images/bg-top.png?1311987982');
   background-repeat: repeat-x;
   background-position: 5px 0;
-  background-color: #23272a;
+  background-color: rgba(35, 39, 42, 0.2);
 }
 /* line 23, ../../sass/partials/_header.sass */
 .header-bg .header {
@@ -404,6 +404,7 @@ pre {
 }
 /* line 41, ../../sass/partials/_header.sass */
 .header-bg .header p {
-  color: #7b8184;
+  color: #bbbbbb;
   font-size: 0.8em;
+  text-shadow: black 0 1px 0;
 }

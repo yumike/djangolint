@@ -5,7 +5,7 @@ $dark-color: #23272A
 $light-color: #FFFFFF
 $ref-color: #BD2500
 
-$default-text-shadow-color: #414141
+$default-text-shadow-color: #000
 $default-text-shadow-h-offset: 0
 $default-text-shadow-v-offset: 1px
 $default-text-shadow-blur: 0
@@ -18,7 +18,7 @@ $default-text-shadow-blur: 0
     image: image-url("bg-top.png")
     repeat: repeat-x
     position: 5px 0
-    color: $dark-color
+    color: rgba($dark-color, 0.2)
   
   .header
     display: block
@@ -39,5 +39,6 @@ $default-text-shadow-blur: 0
       font-weight: normal
   
     p
-      color: $color
+      color: #BBB
       font-size: 0.8em
+      +text-shadow
