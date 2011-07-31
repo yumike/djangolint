@@ -1,0 +1,1 @@
+default[:project][:environment] = "production"
