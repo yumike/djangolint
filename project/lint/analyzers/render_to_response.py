@@ -46,7 +46,7 @@ class RenderToResponseVisitor(ModuleVisitor):
 
         # ... and also if it is actually `render_to_response` call.
         if self.names[name] != 'django.shortcuts.render_to_response':
-            pass
+            return
 
         # Check if it contains `RequestContext`. If so, add to `found`.
         visitor = CallVisitor()

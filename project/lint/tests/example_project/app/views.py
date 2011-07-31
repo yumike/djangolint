@@ -52,3 +52,7 @@ def get_form_with_security_hash(request):
     form = MessageForm()
     hash = security_hash(request, form)
     return render_to_response('messages/form.html', {'form': form, 'hash': hash})
+
+
+def request_context(request):
+    request_context = RequestContext(request)

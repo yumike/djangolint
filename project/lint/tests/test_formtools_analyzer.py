@@ -22,4 +22,5 @@ class FormToolsAnalyzerTests(TestCase):
             (52, False, '    form = MessageForm()'),
             (53, True,  '    hash = security_hash(request, form)'),
             (54, False, '    return render_to_response(\'messages/form.html\', {\'form\': form, \'hash\': hash})'),
+            (55, False, ''),
         ])
