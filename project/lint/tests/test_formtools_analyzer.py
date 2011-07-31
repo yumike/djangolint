@@ -18,9 +18,9 @@ class FormToolsAnalyzerTests(TestCase):
         results = list(self.analyzer.analyze())
         self.assertEqual(len(results), 1)
         self.assertItemsEqual(results[0].source, [
-            (51, False, '    from django.contrib.formtools.utils import security_hash'),
-            (52, False, '    form = MessageForm()'),
-            (53, True,  '    hash = security_hash(request, form)'),
-            (54, False, '    return render_to_response(\'messages/form.html\', {\'form\': form, \'hash\': hash})'),
-            (55, False, ''),
+            (58, False, '    from django.contrib.formtools.utils import security_hash'),
+            (59, False, '    form = MessageForm()'),
+            (60, True,  '    hash = security_hash(request, form)'),
+            (61, False, '    return render_to_response(\'messages/form.html\', {\'form\': form, \'hash\': hash})'),
+            (62, False, ''),
         ])

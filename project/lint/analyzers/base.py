@@ -185,7 +185,7 @@ class ModuleVisitor(ast.NodeVisitor):
             if level < lineno_level:
                 return
             for found in self.found[level]:
-                if found[-1] is None:
+                if found[-1] is None and lineno >= found[-2]:
                     found[-1] = max(lineno - 1, found[-2])
 
     def pop_lineno(self):

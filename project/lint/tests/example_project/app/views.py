@@ -42,6 +42,13 @@ def random_message(request):
                               context_instance=RequestContext(request))
 
 
+@decorator('something')
+def another_random_message(request):
+    message = Message.objects.order_by('?')[0]
+    return render_to_response('messages/random.html', {'message': message},
+                              context_instance=RequestContext(request))
+
+
 def random_message_without_request_context(request):
     message = Message.objects.order_by('?')[0]
     return render_to_response('messages/random.html', {'message': message})
