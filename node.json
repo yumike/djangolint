@@ -1,4 +1,7 @@
 {
   "run_list": [ "ssh", "apt", "packages", "curl", "git", "nginx", "python",
-                "postgresql::server", "redis::server", "project" ]
+                "postgresql::server", "redis::server", "project" ],
+  "packages": {
+    "default": []
+  }
 }
