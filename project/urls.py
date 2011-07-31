@@ -1,10 +1,8 @@
 from django.conf.urls.defaults import patterns, include, url
-from django.views.generic import TemplateView
 
 
 urlpatterns = patterns('',
-    url(r'^$', 
-        TemplateView.as_view(template_name='lint/form.html'),
+    url(r'^$', 'lint.views.index',
         name='lint_create'),
     url(r'^create$', 'lint.views.create',
         name='lint_report_create'),
