@@ -159,6 +159,13 @@ COMPRESS_CSS_FILTERS = (
     'compressor.filters.cssmin.CSSMinFilter',
 )
 
+LINT_ANALYZERS = (
+    'lint.analyzers.formtools.FormToolsAnalyzer',
+    'lint.analyzers.generic_views.GenericViewsAnalyzer',
+    'lint.analyzers.render_to_response.RenderToResponseAnalyzer',
+    'lint.analyzers.syntax_error.SyntaxErrorAnalyzer',
+)
+
 
 import djcelery
 djcelery.setup_loader()
