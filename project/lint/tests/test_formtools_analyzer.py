@@ -1,7 +1,7 @@
 import os
 from django.test import TestCase
 
-from ..analyzers import FormToolsAnalyzer
+from ..analyzers.formtools import FormToolsAnalyzer
 from ..parsers import Parser
 
 from .base import TESTS_ROOT

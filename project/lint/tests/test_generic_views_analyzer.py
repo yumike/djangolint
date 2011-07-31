@@ -1,7 +1,7 @@
 import os
 from django.test import TestCase
 
-from ..analyzers import GenericViewsAnalyzer
+from ..analyzers.generic_views import GenericViewsAnalyzer
 from ..parsers import Parser
 
 from .base import TESTS_ROOT

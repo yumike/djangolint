@@ -6,7 +6,7 @@ from celery.task import task
 from django.conf import settings
 from django.utils import simplejson as json
 
-from .analyzers import registry
+from .analyzers.loader import get_analyzers
 from .models import Fix
 from .parsers import Parser
 
@@ -28,7 +28,7 @@ def parse(path):
 
 def analyze(code, path):
     results = [] 
-    for analyzer in registry:
+    for analyzer in get_analyzers():
         results.extend(analyzer(code, path).analyze())
     return results
 
