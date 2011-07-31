@@ -18,7 +18,7 @@ def create(request):
         report = None
 
     if not (report is None or report.stage == 'done' or report.error):
-        data = {'status': 'error', 'error': 'You are already in queue'}
+        data = {'status': 'error', 'error': 'You are already in the queue'}
     elif form.is_valid():
         report = form.save()
         request.session['report_pk'] = report.pk
