@@ -65,6 +65,9 @@ class CodeSnippet(list):
 
 
 class Result(object):
+    """
+    Represents the result of code analysis.
+    """
 
     def __init__(self, description, path, line):
         self.description = description
