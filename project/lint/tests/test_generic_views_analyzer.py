@@ -21,8 +21,10 @@ class GenericViewsAnalyzerTests(TestCase):
             (7,  False, ''),
             (8,  False, 'def index(request):'),
             (9,  True,  '    return django.views.generic.simple.direct_to_template('),
-            (10, False, '        request,'),
-            (11, False, "        template_name='messages/index.html')"),
+            (10, True,  '        request,'),
+            (11, True,  "        template_name='messages/index.html')"),
+            (12, False, ''),
+            (13, False, ''),
         ])
         self.assertItemsEqual(results[1].source, [
             (14, False, 'def redirect(request):'),

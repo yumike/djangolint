@@ -11,6 +11,7 @@ class SyntaxErrorAnalyzer(BaseAnalyzer):
         if not isinstance(code, SyntaxError):
             return
         result = Result(description=code.msg, path=path, line=code.lineno)
-        for i, line in self.get_file_lines(path, code.lineno):
-            result.source.add_line(i, line, i == code.lineno)
+        lines = self.get_file_lines(path, code.lineno, code.lineno)
+        for i, important, line in lines:
+            result.source.add_line(i, line, important)
         yield result

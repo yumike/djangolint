@@ -35,7 +35,13 @@ class RenderToResponseVisitor(ModuleVisitor):
         ModuleVisitor.__init__(self)
         self.found = []
 
+    def update_lineno(self, lineno):
+        ModuleVisitor.update_lineno(self, lineno)
+        if self.in_block and self.found and not self.found[-1][-1]:
+            self.found[-1][-1] = self.lineno - 1
+
     def visit_Call(self, node):
+        self.update_lineno(node.lineno)
         # Check if calling attribute is usable...
         visitor = AttributeVisitor()
         visitor.visit(node.func)
@@ -58,7 +64,7 @@ class RenderToResponseVisitor(ModuleVisitor):
             if subname not in self.names:
                 continue
             if self.names[subname] == 'django.template.RequestContext':
-                self.found.append((name, node))
+                self.found.append([name, node, self.lineno, None])
 
 
 class RenderToResponseAnalyzer(BaseAnalyzer):
@@ -68,13 +74,14 @@ class RenderToResponseAnalyzer(BaseAnalyzer):
             return
         visitor = RenderToResponseVisitor()
         visitor.visit(code)
-        for name, node in visitor.found:
+        for name, node, start, stop in visitor.found:
             result = Result(
                 description = (
                     "this %r usage case can be replaced with 'render' "
                     "function from 'django.shortcuts' package." % name),
                 path = filepath,
-                line = node.lineno)
-            for lineno, text in self.get_file_lines(filepath, node.lineno):
-                result.source.add_line(lineno, text, lineno == node.lineno)
+                line = start)
+            lines = self.get_file_lines(filepath, start, stop)
+            for lineno, important, text in lines:
+                result.source.add_line(lineno, text, important)
             yield result

@@ -19,19 +19,47 @@ class BaseAnalyzer(object):
         self.code_dict = code_dict
         self.repo_path = repo_path
 
-    def get_file_lines(self, filepath, lineno):
+    def get_file_lines(self, filepath, start, stop):
         """
         Yield code snippet from file `filepath` for line number `lineno`
-        as tuples `(<line number>, <text>)` extending it by `surround_by`
-        lines up and down if possible.
+        as tuples `(<line number>, <importance>, <text>)` extending it by
+        `surround_by` lines up and down if possible.
+
+        If important part has blank lines at the bottom they will be removed.
         """
+
         if self._file_lines is None:
             with open(os.path.join(self.repo_path, filepath)) as f:
                 self._file_lines = f.readlines()
-        start = max(0, lineno - self.surround_by - 1)
-        stop = lineno + self.surround_by
-        for i, line in enumerate(self._file_lines[start:stop], start=start):
-            yield (i + 1, line.rstrip())
+
+        if stop is None:
+            lines = self._file_lines[start - 1:]
+        else:
+            lines = self._file_lines[start - 1:stop]
+        for i, line in enumerate(lines):
+            lines[i] = [start + i, True, line.rstrip()]
+        while lines and self.is_empty_line(lines[-1][-1]):
+            lines.pop()
+
+        if not lines:
+            return []
+
+        stop = lines[0][0]
+        start = max(1, stop - self.surround_by)
+        prefix_lines = []
+        for i, line in enumerate(self._file_lines[start - 1:stop - 1], start=start):
+            prefix_lines.append([i, False, line.rstrip()])
+
+        start = lines[-1][0] + 1
+        stop = start + self.surround_by
+        suffix_lines = []
+        for i, line in enumerate(self._file_lines[start - 1:stop - 1], start=start):
+            suffix_lines.append([i, False, line.rstrip()])
+
+        return prefix_lines + lines + suffix_lines
+
+    def is_empty_line(self, line):
+        return not line.split('#')[0].strip()
 
     def clear_file_lines_cache(self):
         self._file_lines = None
@@ -126,6 +154,12 @@ class ModuleVisitor(ast.NodeVisitor):
 
     def __init__(self):
         self.names = Context()
+        self.in_block = True
+        self.lineno = None
+
+    def update_lineno(self, lineno):
+        if self.in_block:
+            self.lineno = lineno
 
     def update_names(self, aliases, get_path):
         """
@@ -145,18 +179,22 @@ class ModuleVisitor(ast.NodeVisitor):
                 self.names[name] = path
 
     def visit_Import(self, node):
+        self.update_lineno(node.lineno)
         self.update_names(node.names, lambda x: x)
 
     def visit_ImportFrom(self, node):
+        self.update_lineno(node.lineno)
         self.update_names(node.names, lambda x: '.'.join((node.module, x)))
 
     def visit_FunctionDef(self, node):
+        self.update_lineno(node.lineno)
         # Create new scope in `names` context if we are coming to function body
         self.names.push()
         self.generic_visit(node)
         self.names.pop()
 
     def visit_Assign(self, node):
+        self.update_lineno(node.lineno)
         # Some assingments attach interesting imports to new names.
         # Trying to parse it.
         visitor = AttributeVisitor()
@@ -177,3 +215,9 @@ class ModuleVisitor(ast.NodeVisitor):
                 continue
             target = visitor.get_name()
             self.names[target] = self.names[name]
+
+    def visit_Call(self, node):
+        self.update_lineno(node.lineno)
+        self.in_block = False
+        self.generic_visit(node)
+        self.in_block = True
