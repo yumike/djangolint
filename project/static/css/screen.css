@@ -76,7 +76,7 @@ html, body, .container {
 body {
   font-family: Verdana, Arial, sans-serif;
   font-size: 18px;
-  background-image: url('/static/images/bg.png?1311988153');
+  background-image: url('/static/images/bg.jpg?1312133426');
   background-repeat: repeat;
   background-position: 0% 0%;
   background-color: white;
@@ -217,6 +217,17 @@ hr {
   font-size: 70px;
   font-weight: bold;
   text-shadow: #414141 0 1px 0;
+}
+
+/* line 129, ../../sass/partials/_base.sass */
+.not-found {
+  text-align: center;
+  font-size: 1.3em;
+}
+/* line 133, ../../sass/partials/_base.sass */
+.not-found p {
+  margin-top: 1em;
+  font-family: "Francois One", sans-serif;
 }
 
 /* line 11, ../../sass/partials/_form.sass */

@@ -22,7 +22,10 @@ class FormToolsAnalyzer(BaseAnalyzer):
         visitor.visit(code)
         for name, node, start, stop in visitor.get_found():
             result = Result(
-                description = '%r function is deprecated' % name,
+                description = (
+                    "%r function is deprecated, use "
+                    "'django.contrib.formtools.utils.form_hmac() instead'" % name
+                ),
                 path = filepath,
                 line = start)
             lines = self.get_file_lines(filepath, start, stop)
