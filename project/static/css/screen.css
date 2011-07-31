@@ -219,6 +219,17 @@ hr {
   text-shadow: #414141 0 1px 0;
 }
 
+/* line 129, ../../sass/partials/_base.sass */
+.not-found {
+  text-align: center;
+  font-size: 1.3em;
+}
+/* line 133, ../../sass/partials/_base.sass */
+.not-found p {
+  margin-top: 1em;
+  font-family: "Francois One", sans-serif;
+}
+
 /* line 11, ../../sass/partials/_form.sass */
 .start-info {
   margin-top: 1em;
