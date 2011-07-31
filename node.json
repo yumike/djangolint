@@ -1,5 +1,5 @@
 {
-  "run_list": [ "ssh", "apt", "packages", "curl", "git", "nginx" ],
+  "run_list": [ "ssh", "apt", "packages", "curl", "git", "nginx", "postgresql::server" ],
   "packages": {
     "default": [ "libjpeg8-dev", "zlib1g-dev", "libfreetype6-dev", "liblcms1-dev" ]
   }
