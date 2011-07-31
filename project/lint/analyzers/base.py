@@ -49,7 +49,7 @@ class BaseAnalyzer(object):
             self.clear_file_lines_cache()
 
 
-class Code(list):
+class CodeSnippet(list):
 
     def add_line(self, line, text, important=True):
         self.append((line, important, text))
@@ -61,8 +61,8 @@ class Result(object):
         self.description = description
         self.path = path
         self.line = line
-        self.source = Code()
-        self.solution = Code()
+        self.source = CodeSnippet()
+        self.solution = CodeSnippet()
 
 
 class AttributeVisitor(ast.NodeVisitor):
