@@ -5,6 +5,9 @@ from .context import Context
 
 
 class CallVisitor(ast.NodeVisitor):
+    """
+    Collects all usable attributes and names inside function call.
+    """
 
     def __init__(self):
         self.names = set()
@@ -33,15 +36,22 @@ class RenderToResponseVisitor(ModuleVisitor):
         self.found = []
 
     def visit_Call(self, node):
+        # Check if calling attribute is usable...
         visitor = AttributeVisitor()
         visitor.visit(node.func)
         if not visitor.is_usable:
             return
+
+        # ...and if interesting
         name = visitor.get_name()
         if name not in self.names:
             return
+
+        # ... and also if it is actually `render_to_response` call.
         if self.names[name] != 'django.shortcuts.render_to_response':
             pass
+
+        # Check if it contains `RequestContext`. If so, add to `found`.
         visitor = CallVisitor()
         visitor.visit(node)
         for subname in visitor.names:
