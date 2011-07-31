@@ -45,3 +45,10 @@ def random_message(request):
 def random_message_without_request_context(request):
     message = Message.objects.order_by('?')[0]
     return render_to_response('messages/random.html', {'message': message})
+
+
+def get_form_with_security_hash(request):
+    from django.contrib.formtools.utils import security_hash
+    form = MessageForm()
+    hash = security_hash(request, form)
+    return render_to_response('messages/form.html', {'form': form, 'hash': hash})
