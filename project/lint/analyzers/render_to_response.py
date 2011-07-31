@@ -63,7 +63,7 @@ class RenderToResponseVisitor(ModuleVisitor):
 
 class RenderToResponseAnalyzer(BaseAnalyzer):
 
-    def analyze_file(self, path, code):
+    def analyze_file(self, filepath, code):
         if not isinstance(code, ast.AST):
             return
         visitor = RenderToResponseVisitor()
@@ -73,8 +73,8 @@ class RenderToResponseAnalyzer(BaseAnalyzer):
                 description = (
                     "this %r usage case can be replaced with 'render' "
                     "function from 'django.shortcuts' package." % name),
-                path = path,
+                path = filepath,
                 line = node.lineno)
-            for i, line in self.get_file_lines(path, node.lineno):
-                result.source.add_line(i, line, i == node.lineno)
+            for lineno, text in self.get_file_lines(filepath, node.lineno):
+                result.source.add_line(lineno, text, lineno == node.lineno)
             yield result
