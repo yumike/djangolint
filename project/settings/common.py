@@ -164,3 +164,5 @@ import djcelery
 djcelery.setup_loader()
 
 CELERY_IGNORE_RESULT = True
+CELERYD_MAX_TASKS_PER_CHILD = 1
+CELERYD_CONCURRENCY = 2
