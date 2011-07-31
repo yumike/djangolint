@@ -14,12 +14,28 @@ class FormToolsVisitor(ModuleVisitor):
 
     def __init__(self):
         ModuleVisitor.__init__(self)
-        self.found = []
+        self.found = {}
 
-    def update_lineno(self, lineno):
-        ModuleVisitor.update_lineno(self, lineno)
-        if self.in_block and self.found and not self.found[-1][-1]:
-            self.found[-1][-1] = self.lineno - 1
+    def add_found(self, name, node):
+        lineno_level = self.get_lineno_level()
+        if lineno_level not in self.found:
+            self.found[lineno_level] = []
+        self.found[lineno_level].append([name, node, self.get_lineno(), None])
+
+    def get_found(self):
+        for level in self.found.values():
+            for found in level:
+                yield found
+
+    def push_lineno(self, lineno):
+        ModuleVisitor.push_lineno(self, lineno)
+        lineno_level = self.get_lineno_level()
+        for level in self.found.keys():
+            if level < lineno_level:
+                return
+            for found in self.found[level]:
+                if found[-1] is None:
+                    found[-1] = max(lineno - 1, found[-2])
 
     def visit_Attribute(self, node):
         visitor = AttributeVisitor()
@@ -27,11 +43,11 @@ class FormToolsVisitor(ModuleVisitor):
         if visitor.is_usable:
             name = visitor.get_name()
             if name in self.names:
-                self.found.append([name, node, self.lineno, None])
+                self.add_found(name, node)
 
     def visit_Name(self, node):
         if node.id in self.names:
-            self.found.append([node.id, node, self.lineno, None])
+            self.add_found(node.id, node)
 
 
 class FormToolsAnalyzer(BaseAnalyzer):
@@ -41,7 +57,7 @@ class FormToolsAnalyzer(BaseAnalyzer):
             return
         visitor = FormToolsVisitor()
         visitor.visit(code)
-        for name, node, start, stop in visitor.found:
+        for name, node, start, stop in visitor.get_found():
             result = Result(
                 description = '%r function is deprecated' % name,
                 path = filepath,

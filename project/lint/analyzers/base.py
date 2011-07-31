@@ -145,6 +145,16 @@ class AttributeVisitor(ast.NodeVisitor):
         ast.NodeVisitor.generic_visit(self, node)
 
 
+def set_lineno(meth):
+    def decorator(self, node):
+        self.push_lineno(node.lineno)
+        result = meth(self, node)
+        self.pop_lineno()
+        return result
+    decorator.__name__ = meth.__name__
+    return decorator
+
+
 class ModuleVisitor(ast.NodeVisitor):
     """
     Collect interesting imported names during module nodes visiting.
@@ -154,12 +164,19 @@ class ModuleVisitor(ast.NodeVisitor):
 
     def __init__(self):
         self.names = Context()
-        self.in_block = True
-        self.lineno = None
+        self.lineno = []
 
-    def update_lineno(self, lineno):
-        if self.in_block:
-            self.lineno = lineno
+    def push_lineno(self, lineno):
+        self.lineno.append(lineno)
+
+    def pop_lineno(self):
+        return self.lineno.pop()
+
+    def get_lineno(self):
+        return self.lineno[-1]
+
+    def get_lineno_level(self):
+        return len(self.lineno)
 
     def update_names(self, aliases, get_path):
         """
@@ -178,23 +195,23 @@ class ModuleVisitor(ast.NodeVisitor):
                 name = alias.asname or alias.name
                 self.names[name] = path
 
+    @set_lineno
     def visit_Import(self, node):
-        self.update_lineno(node.lineno)
         self.update_names(node.names, lambda x: x)
 
+    @set_lineno
     def visit_ImportFrom(self, node):
-        self.update_lineno(node.lineno)
         self.update_names(node.names, lambda x: '.'.join((node.module, x)))
 
+    @set_lineno
     def visit_FunctionDef(self, node):
-        self.update_lineno(node.lineno)
         # Create new scope in `names` context if we are coming to function body
         self.names.push()
         self.generic_visit(node)
         self.names.pop()
 
+    @set_lineno
     def visit_Assign(self, node):
-        self.update_lineno(node.lineno)
         # Some assingments attach interesting imports to new names.
         # Trying to parse it.
         visitor = AttributeVisitor()
@@ -219,8 +236,6 @@ class ModuleVisitor(ast.NodeVisitor):
             target = visitor.get_name()
             self.names[target] = self.names[name]
 
+    @set_lineno
     def visit_Call(self, node):
-        self.update_lineno(node.lineno)
-        self.in_block = False
         self.generic_visit(node)
-        self.in_block = True

@@ -1,6 +1,7 @@
 import ast
 
-from .base import BaseAnalyzer, Result, AttributeVisitor, ModuleVisitor
+from .base import (
+    BaseAnalyzer, Result, AttributeVisitor, ModuleVisitor, set_lineno)
 from .context import Context
 
 
@@ -33,15 +34,31 @@ class RenderToResponseVisitor(ModuleVisitor):
 
     def __init__(self):
         ModuleVisitor.__init__(self)
-        self.found = []
+        self.found = {}
 
-    def update_lineno(self, lineno):
-        ModuleVisitor.update_lineno(self, lineno)
-        if self.in_block and self.found and not self.found[-1][-1]:
-            self.found[-1][-1] = self.lineno - 1
+    def add_found(self, name, node):
+        lineno_level = self.get_lineno_level()
+        if lineno_level not in self.found:
+            self.found[lineno_level] = []
+        self.found[lineno_level].append([name, node, self.get_lineno(), None])
 
+    def get_found(self):
+        for level in self.found.values():
+            for found in level:
+                yield found
+
+    def push_lineno(self, lineno):
+        ModuleVisitor.push_lineno(self, lineno)
+        lineno_level = self.get_lineno_level()
+        for level in self.found.keys():
+            if level < lineno_level:
+                return
+            for found in self.found[level]:
+                if found[-1] is None:
+                    found[-1] = max(lineno - 1, found[-2])
+
+    @set_lineno
     def visit_Call(self, node):
-        self.update_lineno(node.lineno)
         # Check if calling attribute is usable...
         visitor = AttributeVisitor()
         visitor.visit(node.func)
@@ -64,7 +81,7 @@ class RenderToResponseVisitor(ModuleVisitor):
             if subname not in self.names:
                 continue
             if self.names[subname] == 'django.template.RequestContext':
-                self.found.append([name, node, self.lineno, None])
+                self.add_found(name, node)
 
 
 class RenderToResponseAnalyzer(BaseAnalyzer):
@@ -74,7 +91,7 @@ class RenderToResponseAnalyzer(BaseAnalyzer):
             return
         visitor = RenderToResponseVisitor()
         visitor.visit(code)
-        for name, node, start, stop in visitor.found:
+        for name, node, start, stop in visitor.get_found():
             result = Result(
                 description = (
                     "this %r usage case can be replaced with 'render' "
