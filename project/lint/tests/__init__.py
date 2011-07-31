@@ -7,11 +7,10 @@ from .test_attribute_visitor import AttributeVisitorTests
 from .test_code_snippet import CodeSnippetTests
 
 from .test_base_analyzer import BaseAnalyzerTests
+from .test_context_processors_analyzer import ContextProcessorsAnalyzerTests
+from .test_db_backends_analyzer import DB_BackendsAnalyzerTests
+from .test_formtools_analyzer import FormToolsAnalyzerTests
 from .test_generic_views_analyzer import GenericViewsAnalyzerTests
 from .test_render_to_response_analyzer import RenderToResponseAnalyzerTests
 from .test_syntax_error_analyzer import SyntaxErrorAnalyzerTests
-
-from .test_formtools_analyzer import FormToolsAnalyzerTests
-
-from .test_context_processors_analyzer import ContextProcessorsAnalyzerTests
-from .test_db_backends_analyzer import DB_BackendsAnalyzerTests
+from .test_template_loaders_analyzer import TemplateLoadersAnalyzerTests

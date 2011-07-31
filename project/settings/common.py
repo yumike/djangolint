@@ -166,6 +166,7 @@ LINT_ANALYZERS = (
     'lint.analyzers.generic_views.GenericViewsAnalyzer',
     'lint.analyzers.render_to_response.RenderToResponseAnalyzer',
     'lint.analyzers.syntax_error.SyntaxErrorAnalyzer',
+    'lint.analyzers.template_loaders.TemplateLoadersAnalyzer',
 )
 
 

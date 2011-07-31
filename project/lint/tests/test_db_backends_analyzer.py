@@ -19,16 +19,16 @@ class DB_BackendsAnalyzerTests(TestCase):
         results = list(self.analyzer.analyze())
         self.assertEqual(len(results), 1)
         self.assertItemsEqual(results[0].source, [
-            (30, False, "DATABASES = {"),
-            (31, False, "    'default': {"),
-            (32, True,  "        'ENGINE': 'django.db.backends.postgresql',"),
-            (33, False, "        'NAME': 'project',"),
-            (34, False, "    }"),
+            (35, False, "DATABASES = {"),
+            (36, False, "    'default': {"),
+            (37, True,  "        'ENGINE': 'django.db.backends.postgresql',"),
+            (38, False, "        'NAME': 'project',"),
+            (39, False, "    }"),
         ])
         self.assertItemsEqual(results[0].solution, [
-            (30, False, "DATABASES = {"),
-            (31, False, "    'default': {"),
-            (32, True,  "        'ENGINE': 'django.db.backends.postgresql_psycopg2',"),
-            (33, False, "        'NAME': 'project',"),
-            (34, False, "    }"),
+            (35, False, "DATABASES = {"),
+            (36, False, "    'default': {"),
+            (37, True,  "        'ENGINE': 'django.db.backends.postgresql_psycopg2',"),
+            (38, False, "        'NAME': 'project',"),
+            (39, False, "    }"),
         ])
