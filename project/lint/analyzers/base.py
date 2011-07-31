@@ -50,12 +50,24 @@ class BaseAnalyzer(object):
 
 
 class CodeSnippet(list):
+    """
+    Represents code snippet as list of tuples `(<line number>, <importance>,
+    <text>)`.
+
+    Use `add_line` method to add new lines to the snippet.
+    """
 
     def add_line(self, lineno, text, important=True):
+        """
+        Add new line to the end of snippet.
+        """
         self.append((lineno, important, text))
 
 
 class Result(object):
+    """
+    Represents the result of code analysis.
+    """
 
     def __init__(self, description, path, line):
         self.description = description
