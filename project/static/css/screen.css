@@ -172,6 +172,21 @@ pre {
 }
 
 /* line 93, ../../sass/partials/_base.sass */
+ol {
+  list-style-type: decimal;
+  line-height: 1.6em;
+}
+/* line 97, ../../sass/partials/_base.sass */
+ol li {
+  list-style-position: inside;
+}
+
+/* line 100, ../../sass/partials/_base.sass */
+hr {
+  margin-bottom: 3em;
+}
+
+/* line 103, ../../sass/partials/_base.sass */
 .subtitle {
   color: #62676a;
   font-size: 0.8em;
@@ -180,21 +195,21 @@ pre {
   line-height: 1.1em;
 }
 
-/* line 100, ../../sass/partials/_base.sass */
+/* line 110, ../../sass/partials/_base.sass */
 .content-bg {
-  padding: 50px 0 60px;
+  padding: 10px 0 60px;
 }
-/* line 103, ../../sass/partials/_base.sass */
+/* line 113, ../../sass/partials/_base.sass */
 .content-bg .content {
   width: 805px;
   margin: 0 auto;
 }
-/* line 107, ../../sass/partials/_base.sass */
+/* line 117, ../../sass/partials/_base.sass */
 .content-bg .content .title {
   font-size: 1.5em;
   text-align: center;
 }
-/* line 111, ../../sass/partials/_base.sass */
+/* line 121, ../../sass/partials/_base.sass */
 .content-bg .content .title h1 {
   margin-bottom: 0.3em;
   margin-top: 0;
@@ -205,20 +220,72 @@ pre {
 }
 
 /* line 11, ../../sass/partials/_form.sass */
+.start-info {
+  margin-top: 1em;
+  font-family: "Francois One", sans-serif;
+  font-size: 1em;
+  display: block;
+}
+/* line 17, ../../sass/partials/_form.sass */
+.start-info li {
+  float: left;
+  margin-left: 4em;
+  margin-bottom: 1em;
+  color: #bd2500;
+  list-style-type: none;
+}
+/* line 24, ../../sass/partials/_form.sass */
+.start-info li .step {
+  color: #23272a;
+  display: block;
+  margin-left: 7px;
+  float: left;
+  width: 90%;
+}
+/* line 31, ../../sass/partials/_form.sass */
+.start-info li .num {
+  display: block;
+  float: left;
+}
+/* line 35, ../../sass/partials/_form.sass */
+.start-info .first {
+  margin-left: 1.5em;
+  width: 216px;
+}
+/* line 39, ../../sass/partials/_form.sass */
+.start-info .second {
+  width: 228px;
+}
+/* line 42, ../../sass/partials/_form.sass */
+.start-info .third {
+  width: 180px;
+}
+/* line 45, ../../sass/partials/_form.sass */
+.start-info .third .step {
+  width: 80%;
+}
+
+/* line 48, ../../sass/partials/_form.sass */
+.dialogue {
+  border-top: 1px dashed #bbbbbb;
+  padding: 2em 0 0 35px;
+}
+
+/* line 52, ../../sass/partials/_form.sass */
 .dialogue .url-container * {
   font-size: 20px;
 }
 
-/* line 14, ../../sass/partials/_form.sass */
+/* line 55, ../../sass/partials/_form.sass */
 .dialogue .url-field {
   padding: 5px 3px;
-  width: 580px;
+  width: 670px;
   border: 1px solid #d9d9d9;
   border-top-color: silver;
   color: #23272a;
 }
 
-/* line 21, ../../sass/partials/_form.sass */
+/* line 62, ../../sass/partials/_form.sass */
 .dialogue .button {
   padding: 5px 10px;
   background-color: #666666;
@@ -240,17 +307,17 @@ pre {
   text-decoration: none;
 }
 
-/* line 31, ../../sass/partials/_form.sass */
+/* line 72, ../../sass/partials/_form.sass */
 .dialogue .lock-botton {
   color: #888888;
 }
 
-/* line 34, ../../sass/partials/_form.sass */
+/* line 75, ../../sass/partials/_form.sass */
 .dialogue .report {
   margin: 1em 0 0 0;
   font-size: 1.4em;
 }
-/* line 38, ../../sass/partials/_form.sass */
+/* line 79, ../../sass/partials/_form.sass */
 .dialogue .report p {
   background-image: url('/static/images/action-waiting.png?1312010126');
   background-repeat: no-repeat;
@@ -258,33 +325,33 @@ pre {
   padding: 10px 0 0 22px;
   color: #bbbbbb;
 }
-/* line 46, ../../sass/partials/_form.sass */
+/* line 87, ../../sass/partials/_form.sass */
 .dialogue .report .done {
   background-image: url('/static/images/action-done.png?1312004913');
   color: #23272a;
 }
-/* line 51, ../../sass/partials/_form.sass */
+/* line 92, ../../sass/partials/_form.sass */
 .dialogue .report .working {
   background-image: url('/static/images/ajax-loader.gif?1312096230');
   color: #23272a;
 }
-/* line 56, ../../sass/partials/_form.sass */
+/* line 97, ../../sass/partials/_form.sass */
 .dialogue .report .error {
   background-image: url('/static/images/action-error.png?1312013270');
   color: #23272a;
 }
 
-/* line 61, ../../sass/partials/_form.sass */
+/* line 102, ../../sass/partials/_form.sass */
 .not-valid #id_url {
   border-color: #bd2500;
 }
 
-/* line 64, ../../sass/partials/_form.sass */
+/* line 105, ../../sass/partials/_form.sass */
 .not-valid #info {
   color: #bd2500;
 }
 
-/* line 67, ../../sass/partials/_form.sass */
+/* line 108, ../../sass/partials/_form.sass */
 .result {
   margin: 2.5em 0 0 0;
   display: none;
@@ -292,7 +359,7 @@ pre {
   text-align: center;
 }
 
-/* line 73, ../../sass/partials/_form.sass */
+/* line 114, ../../sass/partials/_form.sass */
 .view {
   display: block;
 }
@@ -315,8 +382,6 @@ pre {
 /* line 25, ../../sass/partials/_results.sass */
 .description .fix {
   font-size: 0.7em;
-  line-height: 1.6em;
-  list-style-type: decimal;
   color: #aaaaaa;
   padding: 10px;
   margin: 10px 0;
@@ -328,44 +393,43 @@ pre {
   -khtml-border-radius: 3px;
   border-radius: 3px;
 }
-/* line 35, ../../sass/partials/_results.sass */
+/* line 33, ../../sass/partials/_results.sass */
 .description .fix li {
-  list-style-position: inside;
   overflow: hidden;
   text-overflow: clip;
 }
-/* line 40, ../../sass/partials/_results.sass */
+/* line 37, ../../sass/partials/_results.sass */
 .description .fix li code {
   color: #aaaaaa;
 }
-/* line 43, ../../sass/partials/_results.sass */
+/* line 40, ../../sass/partials/_results.sass */
 .description .fix .significant {
   color: #bd2500;
 }
-/* line 46, ../../sass/partials/_results.sass */
+/* line 43, ../../sass/partials/_results.sass */
 .description .fix .significant code {
   color: #bd2500;
 }
-/* line 49, ../../sass/partials/_results.sass */
+/* line 46, ../../sass/partials/_results.sass */
 .description .yes {
   background: rgba(102, 152, 80, 0.1);
   border-color: #476a39;
 }
-/* line 53, ../../sass/partials/_results.sass */
+/* line 50, ../../sass/partials/_results.sass */
 .description .yes .significant {
   color: #476a39;
 }
-/* line 56, ../../sass/partials/_results.sass */
+/* line 53, ../../sass/partials/_results.sass */
 .description .yes .significant code {
   color: #476a39;
 }
 
-/* line 58, ../../sass/partials/_results.sass */
+/* line 55, ../../sass/partials/_results.sass */
 .first h3 {
   margin-top: 0;
 }
 
-/* line 61, ../../sass/partials/_results.sass */
+/* line 58, ../../sass/partials/_results.sass */
 .clip {
   color: black;
 }
