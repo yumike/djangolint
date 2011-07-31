@@ -4,6 +4,13 @@ from .context import Context
 
 
 class BaseAnalyzer(object):
+    """
+    Base code analyzer class. Takes dict `file path => ast node` as first
+    param and path to repository as second.
+
+    Subclass this class and implement `analyze_file` method if you want to
+    create new code analyzer.
+    """
 
     surround_by = 2
 
@@ -13,6 +20,11 @@ class BaseAnalyzer(object):
         self.repo_path = repo_path
 
     def get_file_lines(self, filepath, lineno):
+        """
+        Yield code snippet from file `filepath` for line number `lineno`
+        as tuples `(<line number>, <text>)` extending it by `surround_by`
+        lines up and down if possible.
+        """
         if self._file_lines is None:
             with open(os.path.join(self.repo_path, filepath)) as f:
                 self._file_lines = f.readlines()
@@ -28,16 +40,19 @@ class BaseAnalyzer(object):
         raise NotImplementedError
 
     def analyze(self):
+        """
+        Iterate over `code_dict` and yield all results from every file.
+        """
         for filepath, code in self.code_dict.items():
             for result in self.analyze_file(filepath, code):
                 yield result
             self.clear_file_lines_cache()
 
 
-class Code(list):
+class CodeSnippet(list):
 
-    def add_line(self, line, text, important=True):
-        self.append((line, important, text))
+    def add_line(self, lineno, text, important=True):
+        self.append((lineno, important, text))
 
 
 class Result(object):
@@ -46,8 +61,8 @@ class Result(object):
         self.description = description
         self.path = path
         self.line = line
-        self.source = Code()
-        self.solution = Code()
+        self.source = CodeSnippet()
+        self.solution = CodeSnippet()
 
 
 class AttributeVisitor(ast.NodeVisitor):

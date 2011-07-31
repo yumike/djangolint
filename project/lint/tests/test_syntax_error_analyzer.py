@@ -2,7 +2,6 @@ import os
 from django.test import TestCase
 from .base import TESTS_ROOT
 
-from ..analyzers.base import Code, Result
 from ..analyzers.syntax_error import SyntaxErrorAnalyzer
 from ..parsers import Parser
 
@@ -27,4 +26,4 @@ class SyntaxErrorAnalyzerTests(TestCase):
             (3, False, ''),
             (4, False, ''),
         ])
-        self.assertEqual(result.solution, Code({}))
+        self.assertItemsEqual(result.solution, [])
