@@ -67,13 +67,40 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   display: block;
 }
 
-/* line 13, ../../sass/partials/_base.sass */
-body {
-  font-family: Verdana, Arial, sans-serif;
-  font-size: 18px;
+/* line 14, ../../sass/partials/_base.sass */
+html, body, .container {
+  height: 100%;
 }
 
 /* line 17, ../../sass/partials/_base.sass */
+body {
+  font-family: Verdana, Arial, sans-serif;
+  font-size: 18px;
+  background-image: url('/static/images/bg.png?1311988153');
+  background-repeat: repeat;
+  background-position: 0% 0%;
+  background-color: white;
+}
+/* line 26, ../../sass/partials/_base.sass */
+body .container {
+  height: auto;
+  min-height: 100%;
+}
+
+/* line 30, ../../sass/partials/_base.sass */
+.footer-bg {
+  clear: both;
+  position: relative;
+  z-index: 10;
+  margin-top: -68px;
+}
+
+/* line 36, ../../sass/partials/_base.sass */
+.help-container {
+  padding-bottom: 68px;
+}
+
+/* line 39, ../../sass/partials/_base.sass */
 h1 {
   margin-top: 3em;
   margin-bottom: 0.2em;
@@ -86,7 +113,7 @@ h1 {
   text-shadow: #414141 0 1px 0;
 }
 
-/* line 28, ../../sass/partials/_base.sass */
+/* line 50, ../../sass/partials/_base.sass */
 h2 {
   margin-bottom: 0.3em;
   margin-top: 2em;
@@ -98,7 +125,7 @@ h2 {
   text-shadow: #414141 0 1px 0;
 }
 
-/* line 38, ../../sass/partials/_base.sass */
+/* line 60, ../../sass/partials/_base.sass */
 h3 {
   color: #23272a;
   padding: 7px 0;
@@ -107,19 +134,19 @@ h3 {
   border-bottom: 1px dashed #7b8184;
 }
 
-/* line 45, ../../sass/partials/_base.sass */
+/* line 67, ../../sass/partials/_base.sass */
 a {
   color: #bd2500;
   text-decoration: none;
   border-bottom: 1px dashed #bd2500;
 }
-/* line 50, ../../sass/partials/_base.sass */
+/* line 72, ../../sass/partials/_base.sass */
 a:hover {
   color: #23272a;
   border-color: #23272a;
 }
 
-/* line 54, ../../sass/partials/_base.sass */
+/* line 76, ../../sass/partials/_base.sass */
 p {
   color: #7b8184;
   line-height: 1.4em;
@@ -127,22 +154,22 @@ p {
   font-size: 0.7em;
 }
 
-/* line 60, ../../sass/partials/_base.sass */
+/* line 82, ../../sass/partials/_base.sass */
 strong {
   font-weight: bold;
 }
 
-/* line 63, ../../sass/partials/_base.sass */
+/* line 85, ../../sass/partials/_base.sass */
 code {
   font-family: Menlo, Monaco, monospace;
 }
 
-/* line 66, ../../sass/partials/_base.sass */
+/* line 88, ../../sass/partials/_base.sass */
 .first {
   margin-top: 0;
 }
 
-/* line 69, ../../sass/partials/_base.sass */
+/* line 91, ../../sass/partials/_base.sass */
 .subtitle {
   color: #62676a;
   font-size: 0.8em;
@@ -151,25 +178,21 @@ code {
   line-height: 1.1em;
 }
 
-/* line 76, ../../sass/partials/_base.sass */
+/* line 98, ../../sass/partials/_base.sass */
 .content-bg {
   padding: 50px 0 60px;
-  background-image: url('/static/images/bg.png?1311988153');
-  background-repeat: repeat;
-  background-position: 0% 0%;
-  background-color: white;
 }
-/* line 84, ../../sass/partials/_base.sass */
+/* line 101, ../../sass/partials/_base.sass */
 .content-bg .content {
   width: 755px;
   margin: 0 auto;
 }
-/* line 88, ../../sass/partials/_base.sass */
+/* line 105, ../../sass/partials/_base.sass */
 .content-bg .content .title {
   font-size: 1.5em;
   text-align: center;
 }
-/* line 92, ../../sass/partials/_base.sass */
+/* line 109, ../../sass/partials/_base.sass */
 .content-bg .content .title h1 {
   margin-bottom: 0.3em;
   margin-top: 0;
@@ -320,11 +343,10 @@ code {
   color: #476a39;
 }
 
-/* line 11, ../../sass/partials/_footer.sass */
+/* line 14, ../../sass/partials/_footer.sass */
 .footer-bg {
   width: 100%;
-  height: 44px;
-  padding-top: 24px;
+  height: 68px;
   background-image: url('/static/images/bg-bottom.png?1311987942');
   background-repeat: repeat-x;
   background-position: 0% 0%;
@@ -334,12 +356,13 @@ code {
   -o-box-shadow: 0px -4px 0px 0px rgba(35, 39, 42, 0.2);
   box-shadow: 0px -4px 0px 0px rgba(35, 39, 42, 0.2);
 }
-/* line 22, ../../sass/partials/_footer.sass */
+/* line 24, ../../sass/partials/_footer.sass */
 .footer-bg .footer {
   width: 600px;
   margin: 0 auto;
+  padding-top: 24px;
 }
-/* line 26, ../../sass/partials/_footer.sass */
+/* line 29, ../../sass/partials/_footer.sass */
 .footer-bg .footer a:hover {
   color: white;
   border-color: white;

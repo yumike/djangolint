@@ -8,25 +8,27 @@
   <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Francois+One">
   {% block js %}{% endblock %}
 </head>
-<body class="container">
-  <div class="header-bg">
-  <a href="/" class="header">
-    <h1>Djangolint</h1>
-    <p>Web analysis tool for Django projects and applications</p>
-  </a>
-  </div>
+<body>
+  <div class="container">
+    <div class="help-container">
+      <div class="header-bg">
+      <a href="/" class="header">
+        <h1>Djangolint</h1>
+        <p>Web analysis tool for Django projects and applications</p>
+      </a>
+      </div>
 
-  <div style="clear: both"></div>
+      <div style="clear: both"></div>
   
-  <div class="content-bg">
-  <div class="content">
-    {% block content %}
-    {% endblock %}
-  </div>
+      <div class="content-bg">
+      <div class="content">
+        {% block content %}
+        {% endblock %}
+      </div>
+      </div>
+    </div>
   </div>
   
-  <div style="clear: both"></div>
-
   <div class="footer-bg">
   <div class="footer">
     <p>This site powered by <a href="https://www.djangoproject.com/">Django</a>,
@@ -35,6 +37,7 @@
       as part of <a href="http://djangodash.com/archive/2011/">Django Dash 2011</a></p>
   </div>
   </div>
+
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script> 
   <script>!window.jQuery && document.write(unescape('%3Cscript src="{{ STATIC_URL }}js/jquery-1.6.2.min.js"%3E%3C/script%3E'))</script>
   <script src="{{ STATIC_URL }}js/form.js"></script>

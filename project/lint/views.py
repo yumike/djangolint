@@ -11,13 +11,21 @@ from .tasks import process_report
 @require_POST
 def create(request):
     form = ReportForm(data=request.POST)
-    if form.is_valid():
+    report_pk = request.session.get('report_pk')
+    try:
+        report = Report.objects.get(pk=report_pk)
+    except Report.DoesNotExist:
+        report = None
+
+    if not (report is None or report.stage == 'done' or report.error):
+        data = {'status': 'error', 'error': 'You are already in the queue'}
+    elif form.is_valid():
         report = form.save()
         request.session['report_pk'] = report.pk
         process_report.delay(report)
         data = {'status': 'ok', 'url': report.get_absolute_url()}
     else:
-        data = {'status': 'error'}
+        data = {'status': 'error', 'error': 'Invalid URL'}
     return HttpResponse(json.dumps(data), mimetype='application/json')
 
 
