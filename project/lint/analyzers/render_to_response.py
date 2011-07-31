@@ -2,7 +2,6 @@ import ast
 
 from .base import (
     BaseAnalyzer, Result, AttributeVisitor, ModuleVisitor, set_lineno)
-from .context import Context
 
 
 class CallVisitor(ast.NodeVisitor):

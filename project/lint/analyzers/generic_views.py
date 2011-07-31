@@ -1,7 +1,6 @@
 import ast
 
 from .base import BaseAnalyzer, Result, DeprecatedCodeVisitor
-from .context import Context
 
 
 class GenericViewsVisitor(DeprecatedCodeVisitor):

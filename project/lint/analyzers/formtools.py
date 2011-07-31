@@ -1,8 +1,6 @@
 import ast
-import re
 
 from .base import BaseAnalyzer, Result, DeprecatedCodeVisitor
-from .context import Context
 
 
 class FormToolsVisitor(DeprecatedCodeVisitor):
