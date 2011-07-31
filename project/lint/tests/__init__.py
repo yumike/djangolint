@@ -12,3 +12,5 @@ from .test_render_to_response_analyzer import RenderToResponseAnalyzerTests
 from .test_syntax_error_analyzer import SyntaxErrorAnalyzerTests
 
 from .test_formtools_analyzer import FormToolsAnalyzerTests
+
+from .test_context_processors_analyzer import ContextProcessorsAnalyzerTests

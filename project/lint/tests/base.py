@@ -14,5 +14,6 @@ EXAMPLE_PROJECT_FILES = [
     'app/views.py',
     'bad_code.py',
     'good_code.py',
+    'settings.py',
     'syntax_error.py',
 ]

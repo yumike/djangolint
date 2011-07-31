@@ -160,6 +160,7 @@ COMPRESS_CSS_FILTERS = (
 )
 
 LINT_ANALYZERS = (
+    'lint.analyzers.context_processors.ContextProcessorsAnalyzer',
     'lint.analyzers.formtools.FormToolsAnalyzer',
     'lint.analyzers.generic_views.GenericViewsAnalyzer',
     'lint.analyzers.render_to_response.RenderToResponseAnalyzer',
