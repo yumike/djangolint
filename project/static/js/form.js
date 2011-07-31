@@ -96,7 +96,7 @@ $(function(){
           }
           else {
             $('#id_url').css('border-color', '#BD2500');
-            $('#info').text("URL error").css('color', '#BD2500');
+            $('#info').text(data.error).css('color', '#BD2500');
           }
         }
     });
