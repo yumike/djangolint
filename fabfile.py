@@ -82,7 +82,12 @@ def prepare_env():
     if not exists('.git'):
         run('git init .git --bare')
         run('git clone .git project')
-    deploy()
+    local('git push ssh://{user}@{host}:{port}/~/.git master'.format(**env))
+    with cd('project'):
+        run('git pull ~/.git master')
+        install_requirements()
+        manage('syncdb --migrate --noinput')
+        manage('collectstatic --noinput')
     with open('etc/supervisord.conf') as f:
         supervisor_config = f.read().format(**{'project_env': env.project_env})
         run('mkdir -p ~/etc/ && rm -f ~/etc/supervisord.conf')

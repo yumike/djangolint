@@ -1,7 +1,4 @@
 {
   "run_list": [ "ssh", "apt", "packages", "curl", "git", "nginx", "python",
-                "postgresql::server", "redis::server", "project" ],
-  "packages": {
-    "default": [ "libjpeg8-dev", "zlib1g-dev", "libfreetype6-dev", "liblcms1-dev" ]
-  }
+                "postgresql::server", "redis::server", "project" ]
 }
