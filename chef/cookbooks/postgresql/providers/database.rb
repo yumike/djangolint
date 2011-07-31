@@ -13,7 +13,6 @@ end
 def options
   options = "--owner #{new_resource.owner}"
   options += " --encoding=#{new_resource.encoding}"
-  options += " --locale=#{new_resource.locale}"
 end
 
 def exists?
