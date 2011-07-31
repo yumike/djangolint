@@ -8,6 +8,17 @@ from .models import Report, STAGES
 from .tasks import process_report
 
 
+def index(request):
+    report = None
+    report_pk = request.session.get('report_pk')
+    if report_pk is not None:
+        try:
+            report = Report.objects.get(pk=report_pk)
+        except Report.DoesNotExist:
+            pass
+    return render(request, 'lint/form.html', {'report': report})
+
+
 @require_POST
 def create(request):
     form = ReportForm(data=request.POST)
