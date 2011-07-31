@@ -16,7 +16,8 @@ class CloningError(Exception):
 
 
 def clone(url, clone_path):
-    error = Popen(['git', 'clone', url, clone_path], stdout=PIPE, stderr=PIPE).wait()
+    error = Popen(['git', 'clone', '--depth=1', url, clone_path],
+                  stdout=PIPE, stderr=PIPE).wait()
     if error:
         raise CloningError('Cloning %s repository failed' % url) 
 
