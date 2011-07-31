@@ -42,7 +42,19 @@ def save_results(report, results):
         )
 
 
+def exception_handle(func):
+    def decorator(report):
+        try:
+            func(report)
+        except Exception, e:
+            report.error = '%s: %s' % (e.__class__.__name__, unicode(e))
+            report.save()
+    decorator.__name__ = func.__name__
+    return decorator
+
+
 @task()
+@exception_handle
 def process_report(report):
     report.stage = 'cloning'
     report.save()

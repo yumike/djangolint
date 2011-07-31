@@ -10,3 +10,5 @@ from .test_base_analyzer import BaseAnalyzerTests
 from .test_generic_views_analyzer import GenericViewsAnalyzerTests
 from .test_render_to_response_analyzer import RenderToResponseAnalyzerTests
 from .test_syntax_error_analyzer import SyntaxErrorAnalyzerTests
+
+from .test_formtools_analyzer import FormToolsAnalyzerTests
