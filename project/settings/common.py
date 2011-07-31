@@ -138,7 +138,6 @@ INSTALLED_APPS = (
     'lint',
     'south',
     'djcelery',
-    'djkombu',
 )
 
 # A sample logging configuration. The only tangible logging
