@@ -259,6 +259,14 @@ class ModuleVisitor(ast.NodeVisitor):
     def visit_Call(self, node):
         self.generic_visit(node)
 
+    @set_lineno
+    def visit_List(self, node):
+        self.generic_visit(node)
+
+    @set_lineno
+    def visit_Tuple(self, node):
+        self.generic_visit(node)
+
 
 class DeprecatedCodeVisitor(ModuleVisitor):
 
