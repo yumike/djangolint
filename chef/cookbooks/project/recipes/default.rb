@@ -24,7 +24,7 @@ execute "echo 'export PROJECT_ENV=#{node[:project][:environment]}' >> /home/proj
   not_if "cat /home/project/.profile | grep 'export PROJECT_ENV=#{node[:project][:environment]}'"
 end
 
-directory "/var/www/project" do
+directory "/usr/share/nginx/www/project" do
   owner "project"
   group "project"
   mode 0755

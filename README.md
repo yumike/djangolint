@@ -15,7 +15,7 @@ django projects and apps.
 
 ### Deployment
 
-1. Setup your server settings in fabfile (Ubuntu 10.10 only tested)
+1. Setup your server settings in fabfile (Ubuntu 11.04 only tested)
 2. Run `fab bootstrap provision deploy`
 
 ### Todo

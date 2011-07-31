@@ -25,7 +25,9 @@ BROKER_HOST = 'localhost'
 BROKER_PORT = 6379
 BROKER_VHOST = '0'
 
-PUBLIC_ROOT = os.path.join(os.sep, 'var', 'www', 'project', 'public')
+PUBLIC_ROOT = os.path.join(
+    os.sep, 'usr', 'share', 'nginx', 'www', 'project', 'public'
+)
 STATIC_ROOT = os.path.join(PUBLIC_ROOT, 'static')
 MEDIA_ROOT = os.path.join(PUBLIC_ROOT, 'media')
 
