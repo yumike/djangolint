@@ -239,11 +239,16 @@ pre {
 }
 
 /* line 31, ../../sass/partials/_form.sass */
+.dialogue .lock-botton {
+  color: #888888;
+}
+
+/* line 34, ../../sass/partials/_form.sass */
 .dialogue .report {
   margin: 1em 0 0 0;
   font-size: 1.4em;
 }
-/* line 35, ../../sass/partials/_form.sass */
+/* line 38, ../../sass/partials/_form.sass */
 .dialogue .report p {
   background-image: url('/static/images/action-waiting.png?1312010126');
   background-repeat: no-repeat;
@@ -251,23 +256,33 @@ pre {
   padding: 10px 0 0 22px;
   color: #bbbbbb;
 }
-/* line 43, ../../sass/partials/_form.sass */
+/* line 46, ../../sass/partials/_form.sass */
 .dialogue .report .done {
   background-image: url('/static/images/action-done.png?1312004913');
   color: #23272a;
 }
-/* line 48, ../../sass/partials/_form.sass */
+/* line 51, ../../sass/partials/_form.sass */
 .dialogue .report .working {
   background-image: url('/static/images/ajax-loader.gif?1312096230');
   color: #23272a;
 }
-/* line 53, ../../sass/partials/_form.sass */
+/* line 56, ../../sass/partials/_form.sass */
 .dialogue .report .error {
   background-image: url('/static/images/action-error.png?1312013270');
   color: #23272a;
 }
 
-/* line 58, ../../sass/partials/_form.sass */
+/* line 61, ../../sass/partials/_form.sass */
+.not-valid #id_url {
+  border-color: #bd2500;
+}
+
+/* line 64, ../../sass/partials/_form.sass */
+.not-valid #info {
+  color: #bd2500;
+}
+
+/* line 67, ../../sass/partials/_form.sass */
 .result {
   margin: 2.5em 0 0 0;
   display: none;
@@ -275,7 +290,7 @@ pre {
   text-align: center;
 }
 
-/* line 64, ../../sass/partials/_form.sass */
+/* line 73, ../../sass/partials/_form.sass */
 .view {
   display: block;
 }
