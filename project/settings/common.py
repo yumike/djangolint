@@ -138,7 +138,6 @@ INSTALLED_APPS = (
     'lint',
     'south',
     'djcelery',
-    'djkombu',
     'compressor',
 )
 
