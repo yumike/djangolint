@@ -1,10 +1,10 @@
 import ast
 
-from .base import BaseAnalyzer, Result, AttributeVisitor, ModuleVisitor
+from .base import BaseAnalyzer, Result, DeprecatedCodeVisitor
 from .context import Context
 
 
-class GenericViewsVisitor(ModuleVisitor):
+class GenericViewsVisitor(DeprecatedCodeVisitor):
 
     interesting = {
         'django.views.generic.simple': ['direct_to_template', 'redirect_to'],
@@ -32,18 +32,6 @@ class GenericViewsVisitor(ModuleVisitor):
         'django.views.generic.create_update.update_object': None,
         'django.views.generic.create_update.delete_object': None,
     }
-
-    def visit_Attribute(self, node):
-        visitor = AttributeVisitor()
-        visitor.visit(node)
-        if visitor.is_usable:
-            name = visitor.get_name()
-            if name in self.names:
-                self.add_found(name, node)
-
-    def visit_Name(self, node):
-        if node.id in self.names:
-            self.add_found(node.id, node)
 
 
 class GenericViewsAnalyzer(BaseAnalyzer):

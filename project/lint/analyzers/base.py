@@ -258,3 +258,18 @@ class ModuleVisitor(ast.NodeVisitor):
     @set_lineno
     def visit_Call(self, node):
         self.generic_visit(node)
+
+
+class DeprecatedCodeVisitor(ModuleVisitor):
+
+    def visit_Attribute(self, node):
+        visitor = AttributeVisitor()
+        visitor.visit(node)
+        if visitor.is_usable:
+            name = visitor.get_name()
+            if name in self.names:
+                self.add_found(name, node)
+
+    def visit_Name(self, node):
+        if node.id in self.names:
+            self.add_found(node.id, node)
