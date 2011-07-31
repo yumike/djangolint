@@ -94,6 +94,9 @@ class AttributeVisitor(ast.NodeVisitor):
         self.name = []
 
     def get_name(self):
+        """
+        Get the name of the visited attribute.
+        """
         return '.'.join(self.name)
 
     def visit_Attribute(self, node):
@@ -107,10 +110,8 @@ class AttributeVisitor(ast.NodeVisitor):
         pass
 
     def generic_visit(self, node):
-        """
-        If attribute node consists not only from nodes of types `Attribute`
-        and `Name` mark it as unusable.
-        """
+        # If attribute node consists not only from nodes of types `Attribute`
+        # and `Name` mark it as unusable.
         if not isinstance(node, ast.Attribute):
             self.is_usable = False
         ast.NodeVisitor.generic_visit(self, node)
@@ -127,6 +128,10 @@ class ModuleVisitor(ast.NodeVisitor):
         self.names = Context()
 
     def update_names(self, aliases, get_path):
+        """
+        Update `names` context with interesting imported `aliases` using
+        `get_path` function to get full path to the object by object name.
+        """
         for alias in aliases:
             path = get_path(alias.name)
             if path not in self.interesting:
@@ -146,18 +151,25 @@ class ModuleVisitor(ast.NodeVisitor):
         self.update_names(node.names, lambda x: '.'.join((node.module, x)))
 
     def visit_FunctionDef(self, node):
+        # Create new scope in `names` context if we are coming to function body
         self.names.push()
         self.generic_visit(node)
         self.names.pop()
 
     def visit_Assign(self, node):
+        # Some assingments attach interesting imports to new names.
+        # Trying to parse it.
         visitor = AttributeVisitor()
         visitor.visit(node.value)
         if not visitor.is_usable:
             return
+
         name = visitor.get_name()
+        # skipping assignment if value is not interesting
         if name not in self.names:
             return
+
+        # trying to parse the left-side attribute name
         for target in node.targets:
             visitor = AttributeVisitor()
             visitor.visit(target)
