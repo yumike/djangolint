@@ -22,17 +22,23 @@ $default-text-shadow-blur: 0
     line-height: 1.5em
     color: $dark-color
 
-  .fix
+  .fix-bg
     font-size: 0.7em
     color: $code-color
     padding: 10px
+    padding-left: 5em
     margin: 10px 0
     background: rgba(204, 71, 71, 0.1)
     +border-radius(3px)
+    overflow: hidden
+    text-overflow: clip
 
+  .fix
+    border-left: 1px solid #FFF
+    padding-left: 5px
+    
     li
-      overflow: hidden
-      text-overflow: clip
+      list-style-position: outside
 
       code
         color: $code-color
