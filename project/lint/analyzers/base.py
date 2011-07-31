@@ -7,14 +7,14 @@ class BaseAnalyzer(object):
 
     surround_by = 2
 
-    def __init__(self, code, source):
+    def __init__(self, code_dict, repo_path):
         self._file_lines = None
-        self.code = code
-        self.source = source
+        self.code_dict = code_dict
+        self.repo_path = repo_path
 
-    def get_file_lines(self, path, lineno):
+    def get_file_lines(self, filepath, lineno):
         if self._file_lines is None:
-            with open(os.path.join(self.source, path)) as f:
+            with open(os.path.join(self.repo_path, filepath)) as f:
                 self._file_lines = f.readlines()
         start = max(0, lineno - self.surround_by - 1)
         stop = lineno + self.surround_by
@@ -24,12 +24,12 @@ class BaseAnalyzer(object):
     def clear_file_lines_cache(self):
         self._file_lines = None
 
-    def analyze_file(self, path, code):
+    def analyze_file(self, filepath, code):
         raise NotImplementedError
 
     def analyze(self):
-        for path, code in self.code.items():
-            for result in self.analyze_file(path, code):
+        for filepath, code in self.code_dict.items():
+            for result in self.analyze_file(filepath, code):
                 yield result
             self.clear_file_lines_cache()
 
