@@ -22,6 +22,7 @@ class RenderToResponseAnalyzerTests(TestCase):
             (39, False, 'def random_message(request):'),
             (40, False, "    message = Message.objects.order_by('?')[0]"),
             (41, True,  "    return render_to_response('messages/random.html', {'message': message},"),
-            (42, False, '                              context_instance=RequestContext(request))'),
+            (42, True, '                              context_instance=RequestContext(request))'),
             (43, False, ''),
+            (44, False, ''),
         ])

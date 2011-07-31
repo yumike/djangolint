@@ -25,27 +25,22 @@ class BaseAnalyzerTests(TestCase):
         self.assertEqual(self.analyzer.repo_path, self.example_project)
 
     def test_file_lines(self):
-        lines = list(self.analyzer.get_file_lines('syntax_error.py', 1))
+        lines = list(self.analyzer.get_file_lines('syntax_error.py', 1, 2))
         self.assertEqual(lines, [
-            (1, 'def main():'),
-            (2, '    syntax error'),
-            (3, ''),
+            [1, True,  'def main():'],
+            [2, True,  '    syntax error'],
+            [3, False, ''],
+            [4, False, ''],
         ])
 
-        lines = list(self.analyzer.get_file_lines('syntax_error.py', 3))
-        self.assertEqual(lines, [
-            (1, 'def main():'),
-            (2, '    syntax error'),
-            (3, ''),
-            (4, ''),
-            (5, "if __name__ == '__main__':"),
-        ])
+        lines = list(self.analyzer.get_file_lines('syntax_error.py', 3, 3))
+        self.assertEqual(lines, [])
 
-        lines = list(self.analyzer.get_file_lines('syntax_error.py', 6))
+        lines = list(self.analyzer.get_file_lines('syntax_error.py', 6, 6))
         self.assertEqual(lines, [
-            (4, ''),
-            (5, "if __name__ == '__main__':"),
-            (6, '    main()'),
+            [4, False, ''],
+            [5, False, "if __name__ == '__main__':"],
+            [6, True,  '    main()'],
         ])
 
     def test_analyze_file(self):
