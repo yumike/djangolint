@@ -263,7 +263,7 @@ pre {
 }
 /* line 48, ../../sass/partials/_form.sass */
 .dialogue .report .working {
-  background-image: url('/static/images/action-working.png?1312009784');
+  background-image: url('/static/images/ajax-loader.gif?1312095832');
   color: #23272a;
 }
 /* line 53, ../../sass/partials/_form.sass */
