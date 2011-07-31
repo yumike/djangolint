@@ -128,6 +128,10 @@ class ModuleVisitor(ast.NodeVisitor):
         self.names = Context()
 
     def update_names(self, aliases, get_path):
+        """
+        Update `names` context with interesting imported `aliases` using
+        `get_path` function to get full path to the object by object name.
+        """
         for alias in aliases:
             path = get_path(alias.name)
             if path not in self.interesting:
@@ -147,11 +151,14 @@ class ModuleVisitor(ast.NodeVisitor):
         self.update_names(node.names, lambda x: '.'.join((node.module, x)))
 
     def visit_FunctionDef(self, node):
+        # Create new scope in `names` context if we are coming to function body
         self.names.push()
         self.generic_visit(node)
         self.names.pop()
 
     def visit_Assign(self, node):
+        # Some assings attach interesting imports to new names.
+        # Trying to parse it.
         visitor = AttributeVisitor()
         visitor.visit(node.value)
         if not visitor.is_usable:
