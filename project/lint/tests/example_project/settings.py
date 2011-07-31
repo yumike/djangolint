@@ -26,3 +26,10 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.core.context_processors.PermLookupDict',
     'django.contrib.messages.context_processors.messages',
 )
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'project',
+    }
+}

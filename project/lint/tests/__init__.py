@@ -14,3 +14,4 @@ from .test_syntax_error_analyzer import SyntaxErrorAnalyzerTests
 from .test_formtools_analyzer import FormToolsAnalyzerTests
 
 from .test_context_processors_analyzer import ContextProcessorsAnalyzerTests
+from .test_db_backends_analyzer import DB_BackendsAnalyzerTests
