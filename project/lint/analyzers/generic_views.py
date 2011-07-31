@@ -60,7 +60,7 @@ class GenericViewsAnalyzer(BaseAnalyzer):
         for name, node in visitor.found:
             result = Result(
                 description = '%r function is deprecated' % name,
-                file = filepath,
+                path = filepath,
                 line = node.lineno)
             for lineno, text in self.get_file_lines(filepath, node.lineno):
                 result.source.add_line(lineno, text, lineno == node.lineno)
