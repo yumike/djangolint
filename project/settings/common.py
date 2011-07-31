@@ -83,7 +83,7 @@ STATICFILES_DIRS = (
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-#    'django.contrib.staticfiles.finders.DefaultStorageFinder',
+    'compressor.finders.CompressorFinder',
 )
 
 SECRET_KEY_FILE = os.path.join(PROJECT_ROOT, 'secret.txt')
@@ -139,6 +139,7 @@ INSTALLED_APPS = (
     'south',
     'djcelery',
     'djkombu',
+    'compressor',
 )
 
 # A sample logging configuration. The only tangible logging
@@ -163,6 +164,11 @@ LOGGING = {
         },
     }
 }
+
+COMPRESS_CSS_FILTERS = (
+    'compressor.filters.css_default.CssAbsoluteFilter',
+    'compressor.filters.cssmin.CSSMinFilter',
+)
 
 
 import djcelery

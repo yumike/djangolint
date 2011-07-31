@@ -22,3 +22,5 @@ INSTALLED_APPS +=(
 
 BROKER_BACKEND = "djkombu.transport.DatabaseTransport"
 CELERY_RESULTS_BACKEND = "djkombu.transport.DatabaseTransport"
+
+COMPRESS = True
