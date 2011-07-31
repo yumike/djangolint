@@ -165,11 +165,16 @@ code {
 }
 
 /* line 88, ../../sass/partials/_base.sass */
+pre {
+  display: inline;
+}
+
+/* line 91, ../../sass/partials/_base.sass */
 .first {
   margin-top: 0;
 }
 
-/* line 91, ../../sass/partials/_base.sass */
+/* line 94, ../../sass/partials/_base.sass */
 .subtitle {
   color: #62676a;
   font-size: 0.8em;
@@ -178,21 +183,21 @@ code {
   line-height: 1.1em;
 }
 
-/* line 98, ../../sass/partials/_base.sass */
+/* line 101, ../../sass/partials/_base.sass */
 .content-bg {
   padding: 50px 0 60px;
 }
-/* line 101, ../../sass/partials/_base.sass */
+/* line 104, ../../sass/partials/_base.sass */
 .content-bg .content {
   width: 755px;
   margin: 0 auto;
 }
-/* line 105, ../../sass/partials/_base.sass */
+/* line 108, ../../sass/partials/_base.sass */
 .content-bg .content .title {
   font-size: 1.5em;
   text-align: center;
 }
-/* line 109, ../../sass/partials/_base.sass */
+/* line 112, ../../sass/partials/_base.sass */
 .content-bg .content .title h1 {
   margin-bottom: 0.3em;
   margin-top: 0;
