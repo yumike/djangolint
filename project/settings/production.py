@@ -10,6 +10,15 @@ DATABASES = {
     }
 }
 
+CACHES = {
+    'default': {
+        'BACKEND': 'redis_cache.RedisCache',
+        'LOCATION': '127.0.0.1:6379',
+        'OPTIONS': {
+            'DB': 1,
+        },
+    },
+}
 
 BROKER_BACKEND = 'redis'
 BROKER_HOST = 'localhost'
