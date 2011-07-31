@@ -94,6 +94,9 @@ class AttributeVisitor(ast.NodeVisitor):
         self.name = []
 
     def get_name(self):
+        """
+        Get the name of the visited attribute.
+        """
         return '.'.join(self.name)
 
     def visit_Attribute(self, node):
@@ -107,10 +110,8 @@ class AttributeVisitor(ast.NodeVisitor):
         pass
 
     def generic_visit(self, node):
-        """
-        If attribute node consists not only from nodes of types `Attribute`
-        and `Name` mark it as unusable.
-        """
+        # If attribute node consists not only from nodes of types `Attribute`
+        # and `Name` mark it as unusable.
         if not isinstance(node, ast.Attribute):
             self.is_usable = False
         ast.NodeVisitor.generic_visit(self, node)
