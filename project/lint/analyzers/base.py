@@ -200,6 +200,9 @@ class ModuleVisitor(ast.NodeVisitor):
         visitor = AttributeVisitor()
         visitor.visit(node.value)
         if not visitor.is_usable:
+            # Seems on the right side is not an attribute. Let's visit
+            # assignment as it also can contain interesting code.
+            self.generic_visit(node)
             return
 
         name = visitor.get_name()
