@@ -3,6 +3,12 @@ import os
 
 
 class Parser(object):
+    """
+    Find all *.py files inside `repo_path` and parse its into ast nodes.
+
+    If file has syntax errors SyntaxError object will be returned except
+    ast node.
+    """
 
     def __init__(self, repo_path):
         if not os.path.isabs(repo_path):
@@ -10,6 +16,9 @@ class Parser(object):
         self.repo_path = repo_path
 
     def walk(self):
+        """
+        Yield absolute paths to all *.py files inside `repo_path` directory.
+        """
         for root, dirnames, filenames in os.walk(self.repo_path):
             for filename in filenames:
                 if filename.endswith('.py'):
