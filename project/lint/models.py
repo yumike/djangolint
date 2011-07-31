@@ -67,7 +67,7 @@ class Fix(models.Model):
     solution = models.TextField()
 
     class Meta:
-        ordering = ['path']
+        ordering = ['path', 'line']
 
 
 @receiver(models.signals.post_save, sender=Report)
