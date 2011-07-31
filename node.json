@@ -1,5 +1,5 @@
 {
-  "run_list": [ "packages" ],
+  "run_list": [ "packages", "curl" ],
   "packages": {
     "default": [ "libjpeg8-dev", "zlib1g-dev", "libfreetype6-dev", "liblcms1-dev" ]
   }
