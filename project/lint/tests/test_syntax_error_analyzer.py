@@ -2,7 +2,7 @@ import os
 from django.test import TestCase
 from .base import TESTS_ROOT
 
-from ..analyzers.base import Code, Result
+from ..analyzers.base import Code
 from ..analyzers.syntax_error import SyntaxErrorAnalyzer
 from ..parsers import Parser
 
