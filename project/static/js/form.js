@@ -1,3 +1,7 @@
+var timeout = 1000,
+    intervalID = false;
+
+
 $(document).ajaxSend(function(event, xhr, settings) {
     function getCookie(name) {
         var cookieValue = null;
@@ -34,6 +38,62 @@ $(document).ajaxSend(function(event, xhr, settings) {
     }
 });
 
+function updateStatus(data) {
+  var msg = $('#adding').text();
+  if (data.queue == 'waiting') {
+    msg = 'Add the project to the task queue';}
+  else if (data.queue == 'working') {
+    msg = 'Adding the project to the task queue...';
+    lockForm();}
+  else if (data.queue == 'done') {
+    msg = 'Adding the project to the task queue completed successfully';}
+  else if (data.queue == 'error') {
+    msg = 'Got an error when adding the project to the task queue';
+    stopUpdateData(data);}
+  $('#adding').removeClass('working done error').addClass(data.queue).text(msg);
+
+  msg = $('#cloning').text();
+  if (data.cloning == 'waiting') {
+    msg = 'Clone the project';}
+  else if (data.cloning == 'working') {
+    msg = 'Cloning the project...';
+    lockForm();}
+  else if (data.cloning == 'done') {
+    msg = 'Cloning the project completed successfully';}
+  else if (data.cloning == 'error') {
+    msg = 'Got an error when cloning the project';
+    stopUpdateData(data);}
+  $('#cloning').removeClass('working done error').addClass(data.cloning).text(msg);
+
+  msg = $('#parsing').text();
+  if (data.parsing == 'waiting') {
+    msg = 'Parse the source code';}
+  else if (data.parsing == 'working') {
+    msg = 'Parsing the source code...';
+    lockForm();}
+  else if (data.parsing == 'done') {
+    msg = 'Parsing the source code completed successfully';}
+  else if (data.parsing == 'error') {
+    msg = 'Got an error when parsing the source code';
+    stopUpdateData(data);}
+  $('#parsing').removeClass('working done error').addClass(data.parsing).text(msg);
+
+  msg = $('#analyzing').text();
+  if (data.analyzing == 'waiting') {
+    msg = 'Analyze the source code';}
+  else if (data.analyzing == 'working') {
+    msg = 'Analyzing the source code...';
+    lockForm();}
+  else if (data.analyzing == 'done') {
+    msg = 'Analyzing the source code completed successfully';
+    $('#result').addClass('view');
+    stopUpdateData(data);}
+  else if (data.analyzing == 'error') {
+    msg = 'Got an error when analyzing the source code';
+    stopUpdateData(data);}
+  $('#analyzing').removeClass('working done error').addClass(data.analyzing).text(msg); 
+}
+
 function lockForm() {
   $('#id_url').attr('disabled','disabled');
   $('.button').attr('disabled','disabled').addClass('lock-botton');
@@ -44,59 +104,25 @@ function unlockForm() {
   $('.button').removeAttr('disabled').removeClass('lock-botton');
 }
 
-function updateDatta() {
-  $.ajax({
-    url: __get_status_url__,
-    type: 'GET',
-    context: this,
-    success: function (data) {
-      var msg = $('#adding').text();
-      if (data.queue == 'working') {
-        lockForm();
-        msg = 'Adding the project to the task queue...';}
-      else if (data.queue == 'done') {
-        msg = 'Adding the project to the task queue completed successfully';}
-      else if (data.queue == 'error') {
-        msg = 'Got an error when adding the project to the task queue';
-        unlockForm();}
-      $('#adding').removeClass('working done error').addClass(data.queue).text(msg);
+function startUpdateData(data) {
+  lockForm();
+  intervalID = setInterval(function () {
+    $.ajax({
+      url: __get_status_url__,
+      type: 'GET',
+      context: this,
+      success: function (data) {
+        updateStatus(data);
+      }
+    });
+  }, timeout);
+}
 
-      msg = $('#cloning').text();
-      if (data.cloning == 'working') {
-        lockForm();
-        msg = 'Cloning the project...';}
-      else if (data.cloning == 'done') {
-        msg = 'Cloning the project completed successfully';}
-      else if (data.cloning == 'error') {
-        msg = 'Got an error when cloning the project';
-        unlockForm();}
-      $('#cloning').removeClass('working done error').addClass(data.cloning).text(msg);
-
-      msg = $('#parsing').text();
-      if (data.parsing == 'working') {
-        lockForm();
-        msg = 'Parsing the source code...';}
-      else if (data.parsing == 'done') {
-        msg = 'Parsing the source code completed successfully';}
-      else if (data.parsing == 'error') {
-        msg = 'Got an error when parsing the source code';
-        unlockForm();}
-      $('#parsing').removeClass('working done error').addClass(data.parsing).text(msg);
-
-      msg = $('#analyzing').text();
-      if (data.analyzing == 'working') {
-        lockForm();
-        msg = 'Analyzing the source code...';}
-      else if (data.analyzing == 'done') {
-        msg = 'Analyzing the source code completed successfully';
-        $('#result').addClass('view');
-        unlockForm();}
-      else if (data.analyzing == 'error') {
-        msg = 'Got an error when analyzing the source code';
-        unlockForm();}
-      $('#analyzing').removeClass('working done error').addClass(data.analyzing).text(msg); 
-    }
-  });
+function stopUpdateData(data) {
+  if (intervalID) {
+    clearInterval(intervalID);
+  }
+  unlockForm();
 }
 
 $(function(){
@@ -108,8 +134,8 @@ $(function(){
         context: this,
         success: function (data) {
           if (data.status == 'ok') {
+            startUpdateData(data);
             $(this).parent().removeClass('not-valid');
-            lockForm();
             $('#info').text("You'll have access to the results within 30 days");
             $('#result').removeClass('view');
             $('#result a').attr('href', data.url);
@@ -128,8 +154,16 @@ $(function(){
     $('.dialogue').removeClass('not-valid');
     $('#info').text("You'll have access to the results within 30 days");
   });
-  
-  var timeout = 1000;
-  updateDatta();
-  setInterval(updateDatta, timeout);
+
+  $.ajax({
+    url: __get_status_url__,
+    type: 'GET',
+    context: this,
+    success: function (data) {
+      updateStatus(data);
+      if (data.queue == 'working' || data.cloning == 'working' || data.parsing == 'working' || data.analyzing == 'working') {
+        startUpdateData(data);
+      }
+    }
+  });
 });

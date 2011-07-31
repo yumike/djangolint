@@ -16,10 +16,3 @@
     <strong>Done!</strong> You can see the results <a href="{{ report.get_absolute_url }}">here</a>.
   </div>
 {% endblock %}
-
-{% block js %}
-  <script>
-    var __get_status_url__ = "{% url lint_report_get_status %}",
-        __get_create_url__ = "{% url lint_report_create %}";
-  </script>
-{% endblock %}

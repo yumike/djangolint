@@ -7,7 +7,6 @@
   <link rel="shortcut icon" href="{{ STATIC_URL }}images/favicon.ico">
   {% compress css %}<link rel="stylesheet" href="{{ STATIC_URL }}css/screen.css" media="screen">{% endcompress %}
   <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Francois+One">
-  {% block js %}{% endblock %}
 </head>
 <body>
   <div class="container">
@@ -36,6 +35,10 @@
   </div>
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script> 
   <script>!window.jQuery && document.write(unescape('%3Cscript src="{{ STATIC_URL }}js/jquery-1.6.2.min.js"%3E%3C/script%3E'))</script>
+  <script>
+    var __get_status_url__ = "{% url lint_report_get_status %}",
+        __get_create_url__ = "{% url lint_report_create %}";
+  </script>
   {% compress js %}<script src="{{ STATIC_URL }}js/form.js"></script>{% endcompress %}
 </body>
 </html>
