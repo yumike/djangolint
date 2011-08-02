@@ -1,5 +1,6 @@
 import os
 import time
+import requests
 from subprocess import Popen, PIPE
 
 from celery.task import task
@@ -9,17 +10,44 @@ from django.utils import simplejson as json
 from .analyzers.loader import get_analyzers
 from .models import Fix
 from .parsers import Parser
+from .settings import CONFIG
 
 
-class CloningError(Exception):
+class DownloadError(Exception):
     pass
 
 
-def clone(url, clone_path):
-    error = Popen(['git', 'clone', '--depth=1', url, clone_path],
-                  stdout=PIPE, stderr=PIPE).wait()
-    if error:
-        raise CloningError('Cloning %s repository failed' % url) 
+def download(url, repo_path):
+    user, repo = url.split('/')
+    """ Get info about repo, we need python containing repos only"""
+    r = requests.get('https://api.github.com/repos/%s/languages' % url)
+    if r.status_code != 200:
+        raise DownloadError('Not found')
+    data = json.loads(r.content)
+    if not 'Python' in data.keys():
+        raise DownloadError("Repo language hasn't Python code")
+
+    """ Get branch to download """
+    r = requests.get('https://api.github.com/repos/%s' % url)
+    data = json.loads(r.content)
+    branch = data['master_branch'] or 'master'
+    tarball = 'https://github.com/%s/tarball/%s' % (url, branch)
+
+    """ Check size of branch """
+    r = requests.head(tarball)
+    if r.status_code != 200:
+        raise DownloadError("Can't get information about tarball")
+    size = r.headers['content-length']
+    if int(size) > CONFIG['MAX_TARBALL_SIZE']:
+        raise DownloadError("Tarball is too large: %s bytes" % size)
+
+    """ Download and extract tarball """
+    os.makedirs(repo_path)
+    filepath = os.path.join(repo_path, 'archive.tar.gz')
+    with open(filepath, 'wb') as f:
+        f.write(requests.get(tarball).content)
+    Popen(['tar', 'xf', filepath, '-C', repo_path]).wait()
+    os.unlink(filepath)
 
 
 def parse(path):
@@ -37,9 +65,10 @@ def save_results(report, results):
     for result in results:
         source = json.dumps(result.source)
         solution = json.dumps(result.solution)
+        path = '/'.join(result.path.split('/')[1:]) # Remove archive dir name from result path
         Fix.objects.create(
             report=report, line=result.line, description=result.description,
-            path=result.path, source=source, solution=solution
+            path=path, source=source, solution=solution
         )
 
 
@@ -60,12 +89,7 @@ def process_report(report):
     report.stage = 'cloning'
     report.save()
     path = report.get_repo_path()
-    try:
-        clone(report.url, path)
-    except CloningError, e:
-        report.error = e.message
-        report.save()
-        return
+    download(report.github_url, path)
 
     report.stage = 'parsing'
     report.save()

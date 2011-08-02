@@ -3,12 +3,12 @@
 {% block content %}
   <h2 class="first">Your project:</h2>
   <div class="description">
-    {{ report.url|urlize }}
+    <a href="https://github.com/{{ report.github_url }}">https://github.com/{{ report.github_url }}"</a>
   </div>
 
   <h2>Results url:</h2>
   <div class="description">
-    <a href="{{ report.get_absolute_url }}">http://djangolint.trilandev.com{{ report.get_absolute_url }}</a>
+    <a href="{{ report.get_absolute_url }}">http://djangolint.com{{ report.get_absolute_url }}</a>
   </div>
 
   <h2>Fixes:</h2>

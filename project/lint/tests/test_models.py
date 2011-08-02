@@ -10,12 +10,11 @@ class ReportTestCase(TestCase):
 
     def setUp(self):
         expiration_days = CONFIG['REPORT_EXPIRATION_DAYS']
-        self.report1 = Report.objects.create(url='http://google.com/')
+        self.report1 = Report.objects.create(url='https://github.com/django/django')
         expired_datetime = datetime.now() - timedelta(days=expiration_days+1)
-        self.report2 = Report.objects.create(url='http://yandex.ru/', created_on=expired_datetime)
-
-    def tearDown(self):
-        Report.objects.all().delete()
+        self.report2 = Report.objects.create(
+            url='https://github.com/yumike/djangolint', created_on=expired_datetime
+        )
 
     def test_expired(self):
         self.assertFalse(self.report1.expired())
