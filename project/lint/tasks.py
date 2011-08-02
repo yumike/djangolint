@@ -19,7 +19,7 @@ class DownloadError(Exception):
 
 def download(url, repo_path):
     user, repo = url.split('/')
-    """ Get info about repo, we need python containing repos only"""
+    # Get info about repo, we need python containing repos only
     r = requests.get('https://api.github.com/repos/%s/languages' % url)
     if r.status_code != 200:
         raise DownloadError('Not found')
@@ -27,13 +27,13 @@ def download(url, repo_path):
     if not 'Python' in data.keys():
         raise DownloadError("Repo language hasn't Python code")
 
-    """ Get branch to download """
+    # Get branch to download
     r = requests.get('https://api.github.com/repos/%s' % url)
     data = json.loads(r.content)
     branch = data['master_branch'] or 'master'
     tarball = 'https://github.com/%s/tarball/%s' % (url, branch)
 
-    """ Check size of branch """
+    # Check tarball size
     r = requests.head(tarball)
     if r.status_code != 200:
         raise DownloadError("Can't get information about tarball")
@@ -41,7 +41,7 @@ def download(url, repo_path):
     if int(size) > CONFIG['MAX_TARBALL_SIZE']:
         raise DownloadError("Tarball is too large: %s bytes" % size)
 
-    """ Download and extract tarball """
+    # Download and extract tarball
     os.makedirs(repo_path)
     filepath = os.path.join(repo_path, 'archive.tar.gz')
     with open(filepath, 'wb') as f:
