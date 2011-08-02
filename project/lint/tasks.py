@@ -20,22 +20,26 @@ class DownloadError(Exception):
 def download(url, repo_path):
     user, repo = url.split('/')
     # Get info about repo, we need python containing repos only
-    r = requests.get('https://api.github.com/repos/%s/languages' % url)
-    if r.status_code != 200:
+    r = requests.get('https://api.github.com/repos/%s/languages' % url,
+                     timeout=CONFIG['GITHUB_TIMEOUT'])
+    if not r.ok or r.status_code != 200:
         raise DownloadError('Not found')
     data = json.loads(r.content)
     if not 'Python' in data.keys():
         raise DownloadError("Repo language hasn't Python code")
 
     # Get branch to download
-    r = requests.get('https://api.github.com/repos/%s' % url)
+    r = requests.get('https://api.github.com/repos/%s' % url,
+                     timeout=CONFIG['GITHUB_TIMEOUT'])
+    if not r.ok or r.status_code != 200:
+        raise DownloadError('Cannot fetch information about repo')
     data = json.loads(r.content)
     branch = data['master_branch'] or 'master'
     tarball = 'https://github.com/%s/tarball/%s' % (url, branch)
 
     # Check tarball size
-    r = requests.head(tarball)
-    if r.status_code != 200:
+    r = requests.get(tarball, timeout=CONFIG['GITHUB_TIMEOUT'])
+    if not r.ok or r.status_code != 200:
         raise DownloadError("Can't get information about tarball")
     size = r.headers['content-length']
     if int(size) > CONFIG['MAX_TARBALL_SIZE']:
@@ -44,8 +48,9 @@ def download(url, repo_path):
     # Download and extract tarball
     os.makedirs(repo_path)
     filepath = os.path.join(repo_path, 'archive.tar.gz')
+    tarball = r.content
     with open(filepath, 'wb') as f:
-        f.write(requests.get(tarball).content)
+        f.write(tarball)
     Popen(['tar', 'xf', filepath, '-C', repo_path]).wait()
     os.unlink(filepath)
 
