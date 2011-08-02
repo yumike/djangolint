@@ -239,55 +239,49 @@ hr {
 }
 /* line 17, ../../sass/partials/_form.sass */
 .start-info li {
+  display: block;
   float: left;
-  margin-left: 4em;
   margin-bottom: 1em;
-  color: #bd2500;
   list-style-type: none;
+  line-height: 1.6em;
 }
 /* line 24, ../../sass/partials/_form.sass */
-.start-info li .step {
-  color: #23272a;
-  display: block;
-  margin-left: 7px;
-  float: left;
-  width: 90%;
+.start-info .step {
+  width: 230px;
 }
-/* line 31, ../../sass/partials/_form.sass */
-.start-info li .num {
-  display: block;
-  float: left;
-}
-/* line 35, ../../sass/partials/_form.sass */
+/* line 27, ../../sass/partials/_form.sass */
 .start-info .first {
-  margin-left: 1.5em;
-  width: 216px;
+  width: 220px;
 }
-/* line 39, ../../sass/partials/_form.sass */
+/* line 30, ../../sass/partials/_form.sass */
 .start-info .second {
-  width: 228px;
+  width: 230px;
 }
-/* line 42, ../../sass/partials/_form.sass */
+/* line 33, ../../sass/partials/_form.sass */
 .start-info .third {
-  width: 180px;
+  width: 150px;
 }
-/* line 45, ../../sass/partials/_form.sass */
-.start-info .third .step {
-  width: 80%;
+/* line 36, ../../sass/partials/_form.sass */
+.start-info .num {
+  font-size: 1.3em;
+  margin-top: -3px;
+  margin-left: 35px;
+  width: 27px;
+  color: #bd2500;
 }
 
-/* line 48, ../../sass/partials/_form.sass */
+/* line 43, ../../sass/partials/_form.sass */
 .dialogue {
   border-top: 1px dashed #bbbbbb;
   padding: 2em 0 0 35px;
 }
 
-/* line 52, ../../sass/partials/_form.sass */
+/* line 47, ../../sass/partials/_form.sass */
 .dialogue .url-container * {
   font-size: 20px;
 }
 
-/* line 55, ../../sass/partials/_form.sass */
+/* line 50, ../../sass/partials/_form.sass */
 .dialogue .url-field {
   padding: 5px 3px;
   width: 670px;
@@ -296,7 +290,7 @@ hr {
   color: #23272a;
 }
 
-/* line 62, ../../sass/partials/_form.sass */
+/* line 57, ../../sass/partials/_form.sass */
 .dialogue .button {
   padding: 5px 10px;
   background-color: #666666;
@@ -318,17 +312,17 @@ hr {
   text-decoration: none;
 }
 
-/* line 72, ../../sass/partials/_form.sass */
+/* line 67, ../../sass/partials/_form.sass */
 .dialogue .lock-botton {
   color: #888888;
 }
 
-/* line 75, ../../sass/partials/_form.sass */
+/* line 70, ../../sass/partials/_form.sass */
 .dialogue .report {
   margin: 1em 0 0 0;
   font-size: 1.4em;
 }
-/* line 79, ../../sass/partials/_form.sass */
+/* line 74, ../../sass/partials/_form.sass */
 .dialogue .report p {
   background-image: url('/static/images/action-waiting.png?1312010126');
   background-repeat: no-repeat;
@@ -336,33 +330,33 @@ hr {
   padding: 10px 0 0 22px;
   color: #bbbbbb;
 }
-/* line 87, ../../sass/partials/_form.sass */
+/* line 82, ../../sass/partials/_form.sass */
 .dialogue .report .done {
   background-image: url('/static/images/action-done.png?1312004913');
   color: #23272a;
 }
-/* line 92, ../../sass/partials/_form.sass */
+/* line 87, ../../sass/partials/_form.sass */
 .dialogue .report .working {
   background-image: url('/static/images/ajax-loader.gif?1312096230');
   color: #23272a;
 }
-/* line 97, ../../sass/partials/_form.sass */
+/* line 92, ../../sass/partials/_form.sass */
 .dialogue .report .error {
   background-image: url('/static/images/action-error.png?1312013270');
   color: #23272a;
 }
 
-/* line 102, ../../sass/partials/_form.sass */
+/* line 97, ../../sass/partials/_form.sass */
 .not-valid #id_url {
   border-color: #bd2500;
 }
 
-/* line 105, ../../sass/partials/_form.sass */
+/* line 100, ../../sass/partials/_form.sass */
 .not-valid #info {
   color: #bd2500;
 }
 
-/* line 108, ../../sass/partials/_form.sass */
+/* line 103, ../../sass/partials/_form.sass */
 .result {
   margin: 2.5em 0 0 0;
   display: none;
@@ -371,7 +365,7 @@ hr {
   font-family: "Francois One", sans-serif;
 }
 
-/* line 115, ../../sass/partials/_form.sass */
+/* line 110, ../../sass/partials/_form.sass */
 .view {
   display: block;
 }
