@@ -17,7 +17,7 @@ def vagrant():
 @task
 def linode():
     env.user = 'project'
-    env.hosts = ['178.79.172.9']
+    env.hosts = ['djangolint.com']
     env.project_env = 'production'
 
 
