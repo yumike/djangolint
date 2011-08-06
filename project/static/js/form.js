@@ -39,59 +39,40 @@ $(document).ajaxSend(function(event, xhr, settings) {
 });
 
 function updateStatus(data) {
-  var msg = $('#adding').text();
-  if (data.queue == 'waiting') {
-    msg = 'Add the project to the task queue';}
-  else if (data.queue == 'working') {
-    msg = 'Adding the project to the task queue...';
+  $('#adding-msg').text('');
+  if (data.queue == 'working') {
     lockForm();}
-  else if (data.queue == 'done') {
-    msg = 'Adding the project to the task queue completed successfully';}
   else if (data.queue == 'error') {
-    msg = 'Got an error when adding the project to the task queue';
+    $('#adding-msg').text('An error occurred.');
     stopUpdateData(data);}
-  $('#adding').removeClass('working done error').addClass(data.queue).text(msg);
+  $('#adding').removeClass('working done error').addClass(data.queue);
 
-  msg = $('#cloning').text();
-  if (data.cloning == 'waiting') {
-    msg = 'Clone the project';}
-  else if (data.cloning == 'working') {
-    msg = 'Cloning the project...';
+  $('#cloning-msg').text('');
+  if (data.cloning == 'working') {
     lockForm();}
-  else if (data.cloning == 'done') {
-    msg = 'Cloning the project completed successfully';}
   else if (data.cloning == 'error') {
-    msg = 'Got an error when cloning the project';
+    $('#cloning-msg').text('An error occurred.');
     stopUpdateData(data);}
-  $('#cloning').removeClass('working done error').addClass(data.cloning).text(msg);
+  $('#cloning').removeClass('working done error').addClass(data.cloning);
 
-  msg = $('#parsing').text();
-  if (data.parsing == 'waiting') {
-    msg = 'Parse the source code';}
-  else if (data.parsing == 'working') {
-    msg = 'Parsing the source code...';
+  $('#parsing-msg').text('');
+  if (data.parsing == 'working') {
     lockForm();}
-  else if (data.parsing == 'done') {
-    msg = 'Parsing the source code completed successfully';}
   else if (data.parsing == 'error') {
-    msg = 'Got an error when parsing the source code';
+    $('#parsing-msg').text('An error occurred.');
     stopUpdateData(data);}
-  $('#parsing').removeClass('working done error').addClass(data.parsing).text(msg);
+  $('#parsing').removeClass('working done error').addClass(data.parsing);
 
-  msg = $('#analyzing').text();
-  if (data.analyzing == 'waiting') {
-    msg = 'Analyze the source code';}
-  else if (data.analyzing == 'working') {
-    msg = 'Analyzing the source code...';
+  $('#analyzing-msg').text('');
+  if (data.analyzing == 'working') {
     lockForm();}
   else if (data.analyzing == 'done') {
-    msg = 'Analyzing the source code completed successfully';
     $('#result').addClass('view');
     stopUpdateData(data);}
   else if (data.analyzing == 'error') {
-    msg = 'Got an error when analyzing the source code';
+    $('#analyzing-msg').text('An error occurred.');
     stopUpdateData(data);}
-  $('#analyzing').removeClass('working done error').addClass(data.analyzing).text(msg); 
+  $('#analyzing').removeClass('working done error').addClass(data.analyzing); 
 }
 
 function lockForm() {
@@ -135,14 +116,14 @@ $(function(){
         success: function (data) {
           if (data.status == 'ok') {
             startUpdateData(data);
-            $(this).parent().removeClass('not-valid');
-            $('#info').text("You'll have access to the results within 30 days");
+            $('#dialogue').removeClass('not-valid');
+            $('#error').text(' ');
             $('#result').removeClass('view');
             $('#result a').attr('href', data.url);
           }
           else {
             $(this).parent().addClass('not-valid');
-            $('#info').text(data.error);
+            $('#error').text(data.error);
             unlockForm();
           }
         }
@@ -151,8 +132,15 @@ $(function(){
   });
   
   $('#id_url').focus(function() {
-    $('.dialogue').removeClass('not-valid');
-    $('#info').text("You'll have access to the results within 30 days");
+    $('#dialogue').removeClass('not-valid');
+    $('#error').text(' ');
+  });
+
+  $('#example-url').click(function() {
+    $('#id_url').val($(this).text());
+    $('#dialogue').removeClass('not-valid');
+    $('#error').text(' ');
+    return false;
   });
 
   $.ajax({

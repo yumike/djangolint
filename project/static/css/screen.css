@@ -273,7 +273,7 @@ hr {
 /* line 43, ../../sass/partials/_form.sass */
 .dialogue {
   border-top: 1px dashed #bbbbbb;
-  padding: 2em 0 0 35px;
+  padding: 1.5em 0 0 35px;
 }
 
 /* line 47, ../../sass/partials/_form.sass */
@@ -318,11 +318,29 @@ hr {
 }
 
 /* line 70, ../../sass/partials/_form.sass */
+.dialogue #error {
+  margin-bottom: 0.5em;
+  height: 1em;
+}
+
+/* line 74, ../../sass/partials/_form.sass */
+.dialogue .example {
+  margin-top: 3px;
+  color: #999999;
+}
+
+/* line 78, ../../sass/partials/_form.sass */
+.dialogue .example a {
+  color: #666666;
+  border-color: #888888;
+}
+
+/* line 82, ../../sass/partials/_form.sass */
 .dialogue .report {
   margin: 1em 0 0 0;
   font-size: 1.4em;
 }
-/* line 74, ../../sass/partials/_form.sass */
+/* line 86, ../../sass/partials/_form.sass */
 .dialogue .report p {
   background-image: url('/static/images/action-waiting.png?1312010126');
   background-repeat: no-repeat;
@@ -330,42 +348,48 @@ hr {
   padding: 10px 0 0 22px;
   color: #bbbbbb;
 }
-/* line 82, ../../sass/partials/_form.sass */
+/* line 94, ../../sass/partials/_form.sass */
 .dialogue .report .done {
   background-image: url('/static/images/action-done.png?1312004913');
   color: #23272a;
 }
-/* line 87, ../../sass/partials/_form.sass */
+/* line 99, ../../sass/partials/_form.sass */
 .dialogue .report .working {
   background-image: url('/static/images/ajax-loader.gif?1312096230');
   color: #23272a;
 }
-/* line 92, ../../sass/partials/_form.sass */
+/* line 104, ../../sass/partials/_form.sass */
 .dialogue .report .error {
   background-image: url('/static/images/action-error.png?1312013270');
   color: #23272a;
 }
+/* line 109, ../../sass/partials/_form.sass */
+.dialogue .report .msg {
+  font-weight: bold;
+  font-size: 0.9em;
+}
 
-/* line 97, ../../sass/partials/_form.sass */
+/* line 113, ../../sass/partials/_form.sass */
 .not-valid #id_url {
   border-color: #bd2500;
 }
 
-/* line 100, ../../sass/partials/_form.sass */
-.not-valid #info {
+/* line 116, ../../sass/partials/_form.sass */
+.not-valid #error {
   color: #bd2500;
 }
 
-/* line 103, ../../sass/partials/_form.sass */
+/* line 119, ../../sass/partials/_form.sass */
 .result {
   margin: 2.5em 0 0 0;
   display: none;
   font-size: 1.2em;
-  text-align: center;
   font-family: "Francois One", sans-serif;
+  text-align: center;
+  line-height: 1.6em;
 }
 
-/* line 110, ../../sass/partials/_form.sass */
+/* line 127, ../../sass/partials/_form.sass */
 .view {
   display: block;
 }

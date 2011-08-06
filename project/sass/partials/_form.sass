@@ -42,7 +42,7 @@ $default-text-shadow-blur: 0
 
 .dialogue
   border-top: 1px dashed #BBB
-  padding: 2em 0 0 35px
+  padding: 1.5em 0 0 35px
 
 .dialogue .url-container *
   font-size: 20px
@@ -66,6 +66,18 @@ $default-text-shadow-blur: 0
 
 .dialogue .lock-botton
   color: #888
+
+.dialogue #error
+  margin-bottom: 0.5em
+  height: 1em
+
+.dialogue .example
+  margin-top: 3px
+  color: #999
+
+.dialogue .example a
+  color: #666
+  border-color: #888
 
 .dialogue .report
   margin: 1em 0 0 0
@@ -94,18 +106,23 @@ $default-text-shadow-blur: 0
       image: image-url("action-error.png")
     color: $dark-color
 
+  .msg
+    font-weight: bold
+    font-size: 0.9em
+
 .not-valid #id_url
   border-color: $ref-color
 
-.not-valid #info
+.not-valid #error
   color: $ref-color
 
 .result
   margin: 2.5em 0 0 0
   display: none
   font-size: 1.2em
-  text-align: center
   font-family: 'Francois One', sans-serif
+  text-align: center
+  line-height: 1.6em
 
 .view
   display: block
