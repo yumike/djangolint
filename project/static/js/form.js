@@ -39,11 +39,13 @@ $(document).ajaxSend(function(event, xhr, settings) {
 });
 
 function updateStatus(data) {
+  var errorMsg = 'An error occurred.'
+  
   $('#adding-msg').text('');
   if (data.queue == 'working') {
     lockForm();}
   else if (data.queue == 'error') {
-    $('#adding-msg').text('An error occurred.');
+    $('#adding-msg').text(errorMsg);
     stopUpdateData(data);}
   $('#adding').removeClass('working done error').addClass(data.queue);
 
@@ -51,7 +53,7 @@ function updateStatus(data) {
   if (data.cloning == 'working') {
     lockForm();}
   else if (data.cloning == 'error') {
-    $('#cloning-msg').text('An error occurred.');
+    $('#cloning-msg').text(errorMsg);
     stopUpdateData(data);}
   $('#cloning').removeClass('working done error').addClass(data.cloning);
 
@@ -59,7 +61,7 @@ function updateStatus(data) {
   if (data.parsing == 'working') {
     lockForm();}
   else if (data.parsing == 'error') {
-    $('#parsing-msg').text('An error occurred.');
+    $('#parsing-msg').text(errorMsg);
     stopUpdateData(data);}
   $('#parsing').removeClass('working done error').addClass(data.parsing);
 
@@ -70,7 +72,7 @@ function updateStatus(data) {
     $('#result').addClass('view');
     stopUpdateData(data);}
   else if (data.analyzing == 'error') {
-    $('#analyzing-msg').text('An error occurred.');
+    $('#analyzing-msg').text(errorMsg);
     stopUpdateData(data);}
   $('#analyzing').removeClass('working done error').addClass(data.analyzing); 
 }
@@ -106,6 +108,16 @@ function stopUpdateData(data) {
   unlockForm();
 }
 
+function registerError(msg) {
+  $('#dialogue').addClass('not-valid');
+  $('#error').text(msg);
+}
+
+function cancelError() {
+  $('#dialogue').removeClass('not-valid');
+  $('#error').text('');
+}
+
 $(function(){
   $('#dialogue form').submit(function() {
     $.ajax({
@@ -116,14 +128,12 @@ $(function(){
         success: function (data) {
           if (data.status == 'ok') {
             startUpdateData(data);
-            $('#dialogue').removeClass('not-valid');
-            $('#error').text(' ');
+            cancelError();
             $('#result').removeClass('view');
             $('#result a').attr('href', data.url);
           }
           else {
-            $(this).parent().addClass('not-valid');
-            $('#error').text(data.error);
+            registerError(data.error);
             unlockForm();
           }
         }
@@ -131,15 +141,11 @@ $(function(){
     return false;
   });
   
-  $('#id_url').focus(function() {
-    $('#dialogue').removeClass('not-valid');
-    $('#error').text(' ');
-  });
+  $('#id_url').focus(cancelError);
 
   $('#example-url').click(function() {
     $('#id_url').val($(this).text());
-    $('#dialogue').removeClass('not-valid');
-    $('#error').text(' ');
+    cancelError();
     return false;
   });
 
