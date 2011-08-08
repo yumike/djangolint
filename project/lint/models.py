@@ -64,7 +64,7 @@ class Report(models.Model):
 
     def get_repo_path(self):
         if self.hash:
-            return os.path.join(CONFIG['CLONES_ROOT'], self.hash)
+            return os.path.normpath(os.path.join(CONFIG['CLONES_ROOT'], self.hash))
         return None
 
     @models.permalink
