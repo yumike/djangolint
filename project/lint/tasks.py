@@ -1,7 +1,6 @@
 import os
-import time
 import requests
-from subprocess import Popen, PIPE
+from subprocess import Popen
 
 from celery.task import task
 from django.conf import settings
@@ -37,21 +36,17 @@ def download(url, repo_path):
     branch = data['master_branch'] or 'master'
     tarball = 'https://github.com/%s/tarball/%s' % (url, branch)
 
-    # Check tarball size
-    r = requests.get(tarball, timeout=CONFIG['GITHUB_TIMEOUT'])
-    if not r.ok or r.status_code != 200:
-        raise DownloadError("Can't get information about tarball")
-    size = r.headers['content-length']
-    if int(size) > CONFIG['MAX_TARBALL_SIZE']:
-        raise DownloadError("Tarball is too large: %s bytes" % size)
-
-    # Download and extract tarball
-    os.makedirs(repo_path)
+    # Donwload tarball with curl
+    if not os.path.exists(repo_path):
+        os.makedirs(repo_path)
     filepath = os.path.join(repo_path, 'archive.tar.gz')
-    tarball = r.content
-    with open(filepath, 'wb') as f:
-        f.write(tarball)
-    Popen(['tar', 'xf', filepath, '-C', repo_path]).wait()
+    curl_string = 'curl %s --connect-timeout %d --max-filesize %d -L -s -o %s' % (
+        tarball, CONFIG['GITHUB_TIMEOUT'], CONFIG['MAX_TARBALL_SIZE'], filepath
+    )
+    if Popen(curl_string.split()).wait():
+        raise DownloadError("Can't download tarball")
+    if Popen(['tar', 'xf', filepath, '-C', repo_path]).wait():
+        raise DownloadError("Can't extract tarball")
     os.unlink(filepath)
 
 
