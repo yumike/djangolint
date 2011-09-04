@@ -6,7 +6,7 @@ django projects and apps.
 ### Installation
 
 1. Clone repo
-2. Run `pip install -r requirements/developments.txt` in your virtualenv
+2. Run `pip install -r requirements/development.txt` in your virtualenv
 3. Run `python project/manage.py syncdb --migrate`
 4. Run `python project/manage.py runserver`
 5. Run in another tab `python project/manage.py celeryd`
