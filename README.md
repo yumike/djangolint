@@ -1,6 +1,6 @@
 ### Introduction
 
-Djangolint is the tool to detect django deprecetad and non-optimal code in
+Djangolint is the tool to detect django deprecated and non-optimal code in
 django projects and apps.
 
 ### Installation
