@@ -488,12 +488,16 @@ hr {
 .footer-bg .footer {
   width: 600px;
   margin: 0 auto;
-  padding-top: 24px;
+  padding-top: 18px;
 }
 /* line 29, ../../sass/partials/_footer.sass */
 .footer-bg .footer a:hover {
   color: white;
   border-color: white;
+}
+/* line 33, ../../sass/partials/_footer.sass */
+.footer-bg .footer p {
+  margin-bottom: 0.2em;
 }
 
 /* line 13, ../../sass/partials/_header.sass */
