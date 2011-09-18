@@ -55,21 +55,19 @@ def parse(path):
 
 
 def analyze(code, path):
-    results = [] 
     for analyzer in get_analyzers():
-        results.extend(analyzer(code, path).analyze())
-    return results
+        for result in analyzer(code, path).analyze():
+            yield result
 
 
-def save_results(report, results):
-    for result in results:
-        source = json.dumps(result.source)
-        solution = json.dumps(result.solution)
-        path = '/'.join(result.path.split('/')[1:]) # Remove archive dir name from result path
-        Fix.objects.create(
-            report=report, line=result.line, description=result.description,
-            path=path, source=source, solution=solution
-        )
+def save_result(report, result):
+    source = json.dumps(result.source)
+    solution = json.dumps(result.solution)
+    path = '/'.join(result.path.split('/')[1:]) # Remove archive dir name from result path
+    Fix.objects.create(
+        report=report, line=result.line, description=result.description,
+        path=path, source=source, solution=solution
+    )
 
 
 def exception_handle(func):
@@ -97,6 +95,7 @@ def process_report(report):
 
     report.stage = 'analyzing'
     report.save()
-    save_results(report, analyze(parsed_code, path))
+    for result in analyze(parsed_code, path):
+        save_result(report, result)
     report.stage = 'done'
     report.save()
