@@ -8,7 +8,7 @@ class ContextProcessorsVisitor(ast.NodeVisitor):
     def __init__(self):
         self.found = []
 
-    removed_items = {
+    deprecated_items = {
         'django.core.context_processors.auth':
             'django.contrib.auth.context_processors.auth',
         'django.core.context_processors.PermWrapper':
@@ -18,7 +18,7 @@ class ContextProcessorsVisitor(ast.NodeVisitor):
     }
 
     def visit_Str(self, node):
-        if node.s in self.removed_items.keys():
+        if node.s in self.deprecated_items.keys():
             self.found.append((node.s, node))
 
 
@@ -30,10 +30,11 @@ class ContextProcessorsAnalyzer(BaseAnalyzer):
         visitor = ContextProcessorsVisitor()
         visitor.visit(code)
         for name, node in visitor.found:
-            propose = visitor.removed_items[name]
+            propose = visitor.deprecated_items[name]
             result = Result(
                 description = (
-                    '%r function is removed in Django >=1.4, use %r instead'
+                    'As of Django 1.4, %r function has beed deprecated and '
+                    'will be removed in Django 1.5. Use %r instead.'
                     % (name, propose)
                 ),
                 path = filepath,
