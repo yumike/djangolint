@@ -8,7 +8,7 @@ class TemplateLoadersVisitor(ast.NodeVisitor):
     def __init__(self):
         self.found = []
 
-    deprecated_items = {
+    removed_items = {
         'django.template.loaders.app_directories.load_template_source':
             'django.template.loaders.app_directories.Loader',
         'django.template.loaders.eggs.load_template_source':
@@ -18,7 +18,7 @@ class TemplateLoadersVisitor(ast.NodeVisitor):
     }
 
     def visit_Str(self, node):
-        if node.s in self.deprecated_items.keys():
+        if node.s in self.removed_items.keys():
             self.found.append((node.s, node))
 
 
@@ -30,10 +30,11 @@ class TemplateLoadersAnalyzer(BaseAnalyzer):
         visitor = TemplateLoadersVisitor()
         visitor.visit(code)
         for name, node in visitor.found:
-            propose = visitor.deprecated_items[name]
+            propose = visitor.removed_items[name]
             result = Result(
                 description = (
-                    '%r function is deprecated, use %r class instead' % (name, propose)
+                    '%r function has been deprecated in Django 1.2 and '
+                    'removed in 1.4. Use %r class instead.' % (name, propose)
                 ),
                 path = filepath,
                 line = node.lineno)
