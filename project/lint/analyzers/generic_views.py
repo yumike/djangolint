@@ -42,7 +42,10 @@ class GenericViewsAnalyzer(BaseAnalyzer):
         visitor.visit(code)
         for name, node, start, stop in visitor.get_found():
             result = Result(
-                description = '%r function is deprecated' % name,
+                description = (
+                    '%r function has been deprecated in Django 1.3 and will '
+                    'be removed in 1.5.' % name
+                ),
                 path = filepath,
                 line = start)
             lines = self.get_file_lines(filepath, start, stop)
