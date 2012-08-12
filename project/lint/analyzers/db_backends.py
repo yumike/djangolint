@@ -30,7 +30,7 @@ class DB_BackendsAnalyzer(BaseAnalyzer):
             propose = visitor.removed_items[name]
             result = Result(
                 description = (
-                    '%r database backend has beed deprecated in Django 1.3 '
+                    '%r database backend has beed deprecated in Django 1.2 '
                     'and removed in 1.4. Use %r instead.' % (name, propose)
                 ),
                 path = filepath,
