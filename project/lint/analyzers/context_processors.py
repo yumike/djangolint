@@ -33,7 +33,9 @@ class ContextProcessorsAnalyzer(BaseAnalyzer):
             propose = visitor.deprecated_items[name]
             result = Result(
                 description = (
-                    '%r function is deprecated, use %r instead' % (name, propose)
+                    'As of Django 1.4, %r function has beed deprecated and '
+                    'will be removed in Django 1.5. Use %r instead.'
+                    % (name, propose)
                 ),
                 path = filepath,
                 line = node.lineno)
