@@ -1,7 +1,7 @@
 from django.conf import settings
 from django.core.management.base import BaseCommand
 
-from ...models import Report
+from lint.models import Report
 
 
 class Command(BaseCommand):
