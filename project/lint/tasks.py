@@ -54,12 +54,6 @@ def parse(path):
     return Parser(path).parse()
 
 
-def analyze(code, path):
-    for analyzer in get_analyzers():
-        for result in analyzer(code, path).analyze():
-            yield result
-
-
 def save_result(report, result):
     source = json.dumps(result.source)
     solution = json.dumps(result.solution)
@@ -95,7 +89,8 @@ def process_report(report):
 
     report.stage = 'analyzing'
     report.save()
-    for result in analyze(parsed_code, path):
-        save_result(report, result)
+    for analyzer in get_analyzers():
+        for result in analyzer(parsed_code, path).analyze():
+            save_result(report, result)
     report.stage = 'done'
     report.save()
