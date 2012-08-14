@@ -4,7 +4,7 @@ import os
 from datetime import datetime
 
 from fabric.api import *
-from fabric.contrib.files import append, exists
+from fabric.contrib.files import append, exists, upload_template
 
 
 @task
@@ -108,6 +108,7 @@ def deploy(update_all='yes'):
             install_requirements()
             manage('syncdb --migrate --noinput')
             manage('collectstatic --noinput')
+            upload_crontab()
     run('supervisorctl restart gunicorn')
     run('supervisorctl restart celery')
 
@@ -135,3 +136,18 @@ def upload_public_key(to=None, user=None):
             run('chmod 600 /home/{0}/.ssh/authorized_keys'.format(to))
             run('chown {0}:{0} /home/{0}/.ssh'.format(to))
             run('chmod 700 /home/{0}/.ssh'.format(to))
+
+
+@task
+def upload_crontab():
+    project_root = os.path.dirname(env.real_fabfile)
+    crontab_path = os.path.join('etc', 'crontab')
+    if not os.path.exists(crontab_path):
+        return
+    upload_template(
+        filename=crontab_path,
+        destination='crontab.tmp',
+        context={'environment': env.project_env},
+    )
+    run('crontab < crontab.tmp')
+    #run('rm crontab.tmp')
