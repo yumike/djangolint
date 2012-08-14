@@ -1,0 +1,2 @@
+* 1 * * 7 PROJECT_ENV=%(environment)s ~/.env/bin/python ~/project/project/manage.py cleanup > /dev/null
+* 1 * * 7 PROJECT_ENV=%(environment)s ~/.env/bin/python ~/project/project/manage.py delete_expired_reports > /dev/null
