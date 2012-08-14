@@ -1,6 +1,7 @@
 -r base.txt
 
 django-kombu==0.9.2
-Fabric==1.2.0
-pycrypto==2.3
+Fabric==1.4.3
+pycrypto==2.6
+ssh==1.7.14
 paramiko==1.7.7.1
