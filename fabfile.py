@@ -150,4 +150,4 @@ def upload_crontab():
         context={'environment': env.project_env},
     )
     run('crontab < crontab.tmp')
-    #run('rm crontab.tmp')
+    run('rm crontab.tmp')
