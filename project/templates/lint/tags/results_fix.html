@@ -1,5 +1,7 @@
+{% load markup %}
+
 <h3>{{ fix.path }}</h3>
-<p>{{ fix.description }}</p>
+{{ fix.description|restructuredtext }}
 
 {% if source_result %}
 <div class="fix-bg">
