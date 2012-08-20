@@ -13,6 +13,7 @@ class Migration(SchemaMigration):
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ('identificator', self.gf('django.db.models.fields.CharField')(unique=True, max_length=255)),
             ('username', self.gf('django.db.models.fields.CharField')(max_length=255)),
+            ('full_name', self.gf('django.db.models.fields.CharField')(max_length=255)),
             ('email', self.gf('django.db.models.fields.EmailField')(max_length=255)),
             ('access_token', self.gf('django.db.models.fields.CharField')(max_length=255)),
         ))
@@ -30,6 +31,7 @@ class Migration(SchemaMigration):
             'Meta': {'object_name': 'User'},
             'access_token': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
             'email': ('django.db.models.fields.EmailField', [], {'max_length': '255'}),
+            'full_name': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'identificator': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '255'}),
             'username': ('django.db.models.fields.CharField', [], {'max_length': '255'})
