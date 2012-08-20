@@ -5,17 +5,14 @@ from south.db import db
 from south.v2 import DataMigration
 
 from django.db import models
+from ..utils import rst2html
 
 
 class Migration(DataMigration):
 
     def forwards(self, orm):
-        from django.utils.encoding import smart_str, force_unicode
-        from docutils.core import publish_parts
-
         for fix in orm.Fix.objects.all():
-            parts = publish_parts(source=smart_str(fix.description), writer_name='html4css1')
-            fix.description_html = force_unicode(parts['fragment'])
+            fix.description_html = rst2html(fix.description)
             fix.save()
 
     def backwards(self, orm):
