@@ -2,8 +2,6 @@ from django.conf import settings
 from requests_oauth2 import OAuth2
 
 
-
-
 def get_oauth_handler():
     GITHUB = settings.GITHUB
     return OAuth2(
