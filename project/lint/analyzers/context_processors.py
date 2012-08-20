@@ -3,6 +3,12 @@ import ast
 from .base import BaseAnalyzer, ModuleVisitor, Result
 
 
+DESCRIPTION = """
+As of Django 1.4, ``{name}`` function has been deprecated and will be removed
+in Django 1.5. Use ``{propose}`` instead.
+"""
+
+
 class ContextProcessorsVisitor(ast.NodeVisitor):
 
     def __init__(self):
@@ -32,11 +38,7 @@ class ContextProcessorsAnalyzer(BaseAnalyzer):
         for name, node in visitor.found:
             propose = visitor.deprecated_items[name]
             result = Result(
-                description = (
-                    'As of Django 1.4, %r function has beed deprecated and '
-                    'will be removed in Django 1.5. Use %r instead.'
-                    % (name, propose)
-                ),
+                description = DESCRIPTION.format(name=name, propose=propose),
                 path = filepath,
                 line = node.lineno)
             lines = self.get_file_lines(filepath, node.lineno, node.lineno)

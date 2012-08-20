@@ -3,6 +3,12 @@ import ast
 from .base import BaseAnalyzer, Result
 
 
+DESCRIPTION = """
+``{name}`` database backend has been deprecated in Django 1.2 and removed in 1.4.
+Use ``{propose}`` instead.
+"""
+
+
 class DB_BackendsVisitor(ast.NodeVisitor):
 
     def __init__(self):
@@ -29,10 +35,7 @@ class DB_BackendsAnalyzer(BaseAnalyzer):
         for name, node in visitor.found:
             propose = visitor.removed_items[name]
             result = Result(
-                description = (
-                    '%r database backend has beed deprecated in Django 1.2 '
-                    'and removed in 1.4. Use %r instead.' % (name, propose)
-                ),
+                description = DESCRIPTION.format(name=name, propose=propose),
                 path = filepath,
                 line = node.lineno)
             lines = self.get_file_lines(filepath, node.lineno, node.lineno)

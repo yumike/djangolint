@@ -3,6 +3,12 @@ import ast
 from .base import BaseAnalyzer, Result
 
 
+DESCRIPTION = """
+``{name}`` function has been deprecated in Django 1.2 and removed in 1.4. Use
+``{propose}`` class instead.
+"""
+
+
 class TemplateLoadersVisitor(ast.NodeVisitor):
 
     def __init__(self):
@@ -32,10 +38,7 @@ class TemplateLoadersAnalyzer(BaseAnalyzer):
         for name, node in visitor.found:
             propose = visitor.removed_items[name]
             result = Result(
-                description = (
-                    '%r function has been deprecated in Django 1.2 and '
-                    'removed in 1.4. Use %r class instead.' % (name, propose)
-                ),
+                description = DESCRIPTION.format(name=name, propose=propose),
                 path = filepath,
                 line = node.lineno)
             lines = self.get_file_lines(filepath, node.lineno, node.lineno)

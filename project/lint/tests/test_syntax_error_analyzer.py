@@ -17,7 +17,7 @@ class SyntaxErrorAnalyzerTests(TestCase):
         results = list(analyzer.analyze())
         self.assertEqual(len(results), 1)
         result = results[0]
-        self.assertEqual(result.description, 'invalid syntax')
+        self.assertEqual(result.description, 'Syntax error: invalid syntax.')
         self.assertEqual(result.path, 'syntax_error.py')
         self.assertEqual(result.line, 2)
         self.assertItemsEqual(result.source, [
