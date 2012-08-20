@@ -113,6 +113,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.core.context_processors.media',
     'django.core.context_processors.static',
     'lint.context_processors.report_pk',
+    'oauth.context_processors.user',
 )
 
 
