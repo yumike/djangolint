@@ -14,6 +14,7 @@ from django.utils.hashcompat import sha_constructor
 
 from .managers import ReportManager
 from .settings import CONFIG
+from .utils import rst2html
 
 
 STAGES = ('queue', 'cloning', 'parsing', 'analyzing', 'done')
