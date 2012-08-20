@@ -2,8 +2,14 @@ from datetime import datetime, timedelta
 
 from django.test import TestCase
 
-from ..models import Report
+from ..models import Report, Fix
 from ..settings import CONFIG
+
+
+def create_fix(**kwargs):
+    kwargs['line'] = 0
+    kwargs['report'] = Report.objects.create(url='https://github.com/django/django')
+    return Fix.objects.create(**kwargs)
 
 
 class ReportTestCase(TestCase):
@@ -26,3 +32,17 @@ class ReportTestCase(TestCase):
 
         self.assertEqual(qs.count(), 1)
         self.assertEqual(qs[0].pk, 1)
+
+
+class FixTestCase(TestCase):
+
+    def setUp(self):
+        self.fix = create_fix(description='Fix description.')
+
+    def test_caches_description_html(self):
+        self.assertEqual(self.fix.description_html, '<p>Fix description.</p>\n')
+
+    def test_updates_description_html(self):
+        self.fix.description = 'Updated fix description.'
+        self.fix.save()
+        self.assertEqual(self.fix.description_html, '<p>Updated fix description.</p>\n')
