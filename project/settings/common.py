@@ -125,6 +125,7 @@ TEMPLATE_DIRS = (
 INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.staticfiles',
+    'auth',
     'lint',
     'south',
     'djcelery',
