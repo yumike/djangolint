@@ -182,4 +182,7 @@ GITHUB = {
     'CLIENT_ID': os.environ.get('GITHUB_ID'),
     'CLIENT_SECRET': os.environ.get('GITHUB_SECRET'),
     'AUTH_URL': 'https://github.com/login/',
+    'SCOPES': 'repo',
+    'AUTHORIZE_URL': 'oauth/authorize',
+    'TOKEN_URL': 'oauth/access_token'
 }
