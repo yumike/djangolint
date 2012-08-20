@@ -76,6 +76,7 @@ class Fix(models.Model):
 
     report = models.ForeignKey(Report, related_name='fixes')
     description = models.TextField()
+    description_html = models.TextField()
     path = models.CharField(max_length=255)
     line = models.PositiveIntegerField()
     source = models.TextField()
@@ -83,6 +84,10 @@ class Fix(models.Model):
 
     class Meta:
         ordering = ['path', 'line']
+
+    def save(self, *args, **kwargs):
+        self.description_html = rst2html(self.description)
+        super(Fix, self).save(*args, **kwargs)
 
 
 @receiver(models.signals.post_save, sender=Report)
