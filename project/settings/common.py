@@ -176,3 +176,8 @@ djcelery.setup_loader()
 CELERY_IGNORE_RESULT = True
 CELERYD_MAX_TASKS_PER_CHILD = 1
 CELERYD_CONCURRENCY = 2
+
+GITHUB = {
+    'CLIENT_ID': os.environ.get('GITHUB_ID'),
+    'CLIENT_SECRET': os.environ.get('GITHUB_SECRET'),
+}
