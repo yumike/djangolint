@@ -17,3 +17,9 @@ def callback(request):
     user = get_user(access_token)
     request.session['user_id'] = user.pk
     return redirect('lint_create')
+
+
+def logout(request):
+    if 'user_id' in request.session:
+        del request.session['user_id']
+    return redirect('lint_create')
