@@ -181,4 +181,5 @@ CELERYD_CONCURRENCY = 2
 GITHUB = {
     'CLIENT_ID': os.environ.get('GITHUB_ID'),
     'CLIENT_SECRET': os.environ.get('GITHUB_SECRET'),
+    'AUTH_URL': 'https://github.com/login/',
 }
