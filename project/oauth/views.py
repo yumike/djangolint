@@ -10,7 +10,6 @@ def callback(request):
     if not code:
         raise Http404
     response = oauth2_handler.get_token(code)
-    print response
     if not response or not response.get('access_token'):
         #  TODO: Show message to user, that something went wrong?
         return redirect('lint_create')
