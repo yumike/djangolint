@@ -1,4 +1,5 @@
 from django.db import models
+from github import Github
 
 
 class User(models.Model):
@@ -11,3 +12,6 @@ class User(models.Model):
 
     def __unicode__(self):
         return self.username
+
+    def github(self):
+        return Github(self.access_token)
