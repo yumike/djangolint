@@ -10,8 +10,14 @@ class CloneError(Exception):
 
 
 def clone(url, repo_path):
-    user, repo = url.split('/')
-    # Get info about repo, we need python containing repos only
+    _check_language(url)
+    tarball_url = _get_tarball_url(url)
+    tarball_path = _download_tarball(tarball_url, repo_path)
+    _extract_tarball(tarball_path, repo_path)
+    _remove_tarball(tarball_path)
+
+
+def _check_language(url):
     r = requests.get('https://api.github.com/repos/%s/languages' % url,
                      timeout=CONFIG['GITHUB_TIMEOUT'])
     if not r.ok or r.status_code != 200:
@@ -20,24 +26,33 @@ def clone(url, repo_path):
     if not 'Python' in data.keys():
         raise CloneError("Repo language hasn't Python code")
 
-    # Get branch to download
+
+def _get_tarball_url(url):
     r = requests.get('https://api.github.com/repos/%s' % url,
                      timeout=CONFIG['GITHUB_TIMEOUT'])
     if not r.ok or r.status_code != 200:
         raise CloneError('Cannot fetch information about repo')
     data = json.loads(r.content)
     branch = data['master_branch'] or 'master'
-    tarball = 'https://github.com/%s/tarball/%s' % (url, branch)
+    return 'https://github.com/%s/tarball/%s' % (url, branch)
 
-    # Donwload tarball with curl
+
+def _download_tarball(tarball_url, repo_path):
     if not os.path.exists(repo_path):
         os.makedirs(repo_path)
-    filepath = os.path.join(repo_path, 'archive.tar.gz')
+    tarball_path = os.path.join(repo_path, 'archive.tar.gz')
     curl_string = 'curl %s --connect-timeout %d --max-filesize %d -L -s -o %s' % (
-        tarball, CONFIG['GITHUB_TIMEOUT'], CONFIG['MAX_TARBALL_SIZE'], filepath
+        tarball_url, CONFIG['GITHUB_TIMEOUT'], CONFIG['MAX_TARBALL_SIZE'], tarball_path
     )
     if Popen(curl_string.split()).wait():
         raise CloneError("Can't download tarball")
-    if Popen(['tar', 'xf', filepath, '-C', repo_path]).wait():
+    return tarball_path
+
+
+def _extract_tarball(tarball_path, repo_path):
+    if Popen(['tar', 'xf', tarball_path, '-C', repo_path]).wait():
         raise CloneError("Can't extract tarball")
-    os.unlink(filepath)
+
+
+def _remove_tarball(tarball_path):
+    os.unlink(tarball_path)
