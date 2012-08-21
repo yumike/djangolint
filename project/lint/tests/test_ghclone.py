@@ -5,12 +5,12 @@ import shutil
 
 from django.test import TestCase
 
+from ..ghclone import CloneError, clone
 from ..models import Report
 from ..settings import CONFIG
-from ..tasks import CloneError, clone
 
 
-class TasksTests(TestCase):
+class CloneTests(TestCase):
 
     def setUp(self):
         self.report1 = Report.objects.create(url='https://github.com/yumike/djangolint')

@@ -1,6 +1,6 @@
+from .test_ghclone import CloneTests
 from .test_models import ReportTestCase, FixTestCase
 from .test_parsers import ParserTests
-from .test_tasks import TasksTests
 from .test_utils import RST2HTMLTests
 
 from .test_analyzers_result import ResultTests
