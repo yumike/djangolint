@@ -7,7 +7,7 @@ from django.test import TestCase
 
 from ..models import Report
 from ..settings import CONFIG
-from ..tasks import DownloadError, download
+from ..tasks import CloneError, clone
 
 
 class TasksTests(TestCase):
@@ -31,25 +31,25 @@ class TasksTests(TestCase):
         except OSError:
             pass
 
-    def test_download(self):
+    def test_clone(self):
         path1 = self.report1.get_repo_path()
-        download(self.report1.github_url, path1)
+        clone(self.report1.github_url, path1)
         self.assertTrue(os.path.exists(path1))
-        with self.assertRaises(DownloadError):
-            download(self.report2.github_url, self.report2.get_repo_path())
-        with self.assertRaises(DownloadError):
-            download(self.report3.github_url, self.report3.get_repo_path())
+        with self.assertRaises(CloneError):
+            clone(self.report2.github_url, self.report2.get_repo_path())
+        with self.assertRaises(CloneError):
+            clone(self.report3.github_url, self.report3.get_repo_path())
 
 
     def test_files_delete(self):
         path1 = self.report1.get_repo_path()
-        download(self.report1.github_url, path1)
+        clone(self.report1.github_url, path1)
         self.report1.stage = 'done'
         self.report1.save()
         self.assertFalse(os.path.exists(path1))
         self.report1.stage = 'whait'
         self.report1.save()
-        download(self.report1.github_url, path1)
+        clone(self.report1.github_url, path1)
         self.report1.error = 'error'
         self.report1.save()
         self.assertFalse(os.path.exists(path1))

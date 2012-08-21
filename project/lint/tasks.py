@@ -12,26 +12,26 @@ from .parsers import Parser
 from .settings import CONFIG
 
 
-class DownloadError(Exception):
+class CloneError(Exception):
     pass
 
 
-def download(url, repo_path):
+def clone(url, repo_path):
     user, repo = url.split('/')
     # Get info about repo, we need python containing repos only
     r = requests.get('https://api.github.com/repos/%s/languages' % url,
                      timeout=CONFIG['GITHUB_TIMEOUT'])
     if not r.ok or r.status_code != 200:
-        raise DownloadError('Not found')
+        raise CloneError('Not found')
     data = json.loads(r.content)
     if not 'Python' in data.keys():
-        raise DownloadError("Repo language hasn't Python code")
+        raise CloneError("Repo language hasn't Python code")
 
     # Get branch to download
     r = requests.get('https://api.github.com/repos/%s' % url,
                      timeout=CONFIG['GITHUB_TIMEOUT'])
     if not r.ok or r.status_code != 200:
-        raise DownloadError('Cannot fetch information about repo')
+        raise CloneError('Cannot fetch information about repo')
     data = json.loads(r.content)
     branch = data['master_branch'] or 'master'
     tarball = 'https://github.com/%s/tarball/%s' % (url, branch)
@@ -44,9 +44,9 @@ def download(url, repo_path):
         tarball, CONFIG['GITHUB_TIMEOUT'], CONFIG['MAX_TARBALL_SIZE'], filepath
     )
     if Popen(curl_string.split()).wait():
-        raise DownloadError("Can't download tarball")
+        raise CloneError("Can't download tarball")
     if Popen(['tar', 'xf', filepath, '-C', repo_path]).wait():
-        raise DownloadError("Can't extract tarball")
+        raise CloneError("Can't extract tarball")
     os.unlink(filepath)
 
 
@@ -81,7 +81,7 @@ def process_report(report):
     report.stage = 'cloning'
     report.save()
     path = report.get_repo_path()
-    download(report.github_url, path)
+    clone(report.github_url, path)
 
     report.stage = 'parsing'
     report.save()
