@@ -1,3 +1,6 @@
+import hashlib
+import urllib
+
 from django.conf import settings
 from github import Github
 from requests_oauth2 import OAuth2
@@ -31,3 +34,10 @@ def get_user(access_token):
         user.access_token = access_token
         user.save()
     return user
+
+
+def get_gravatar_url(email, size, default='identicon'):
+    gravatar_url = 'http://www.gravatar.com/avatar/'
+    hash = hashlib.md5(email.lower()).hexdigest()
+    params = urllib.urlencode({'s': str(size), 'd': default})
+    return gravatar_url + hash + '?' + params
