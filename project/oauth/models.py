@@ -11,7 +11,7 @@ class User(models.Model):
     access_token = models.CharField(max_length=255)
 
     def __unicode__(self):
-        return self.username
+        return self.full_name or self.username
 
     @property
     def github(self):
