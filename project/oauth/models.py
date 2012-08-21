@@ -13,5 +13,6 @@ class User(models.Model):
     def __unicode__(self):
         return self.username
 
+    @property
     def github(self):
         return Github(self.access_token)
