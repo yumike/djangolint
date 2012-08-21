@@ -21,10 +21,13 @@ def get_user(access_token):
             'username': github_user.login,
             'full_name': github_user.name,
             'email': github_user.email,
+            'access_token': access_token,
         }
     )
     if not created:
         #  Catch situation when user has changed his login
         user.username = github_user.login
+        #  Or access token has been changed.
+        user.access_token = access_token
         user.save()
     return user
