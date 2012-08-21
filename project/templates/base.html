@@ -17,7 +17,7 @@
           <p>Upgrade your Django project</p>
         </a>
         <div class="user-info">
-          {% if user %}
+          {% if user.is_authenticated %}
             {% include 'oauth/includes/user.html' %}
           {% else %}
             <a href="{% github_auth_url %}" class="auth">Login with GitHub</a>

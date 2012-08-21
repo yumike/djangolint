@@ -16,3 +16,9 @@ class User(models.Model):
     @property
     def github(self):
         return Github(self.access_token)
+
+    def is_anonymous(self):
+        return False
+
+    def is_authenticated(self):
+        return True
