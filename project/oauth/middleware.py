@@ -3,15 +3,6 @@ from django.utils.functional import SimpleLazyObject
 from .models import User
 
 
-class AnonymousUser(object):
-
-    def is_authenticated(self):
-        return False
-
-    def is_anonymous(self):
-        return True
-
-
 class UserMiddleware(object):
 
     def process_request(self, request):

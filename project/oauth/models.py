@@ -2,6 +2,15 @@ from django.db import models
 from github import Github
 
 
+class AnonymousUser(object):
+
+    def is_authenticated(self):
+        return False
+
+    def is_anonymous(self):
+        return True
+
+
 class User(models.Model):
 
     identificator = models.CharField(max_length=255, unique=True)
