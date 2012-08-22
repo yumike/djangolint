@@ -1,5 +1,4 @@
 from django.utils.functional import SimpleLazyObject
-
 from .models import User
 
 
