@@ -4,7 +4,7 @@ from .models import User, AnonymousUser
 
 def get_user(request):
     user_id = request.session.get('user_id')
-    if not user_id:
+    if user_id is None:
         return AnonymousUser()
     try:
         return User.objects.get(pk=user_id)
