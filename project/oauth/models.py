@@ -13,18 +13,18 @@ class AnonymousUser(object):
 
 class User(models.Model):
 
-    identificator = models.CharField(max_length=255, unique=True)
+    github_id = models.IntegerField(unique=True)
+    github_access_token = models.CharField(max_length=255)
     username = models.CharField(max_length=255)
     full_name = models.CharField(max_length=255)
     email = models.EmailField(max_length=255)
-    access_token = models.CharField(max_length=255)
 
     def __unicode__(self):
         return self.full_name or self.username
 
     @property
     def github(self):
-        return Github(self.access_token)
+        return Github(self.github_access_token)
 
     def is_anonymous(self):
         return False
