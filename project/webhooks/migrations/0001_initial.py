@@ -18,7 +18,6 @@ class Migration(SchemaMigration):
             ('compare_url', self.gf('django.db.models.fields.URLField')(max_length=255)),
             ('committer_name', self.gf('django.db.models.fields.CharField')(max_length=255)),
             ('committer_email', self.gf('django.db.models.fields.EmailField')(max_length=255)),
-            ('timestamp', self.gf('django.db.models.fields.DateTimeField')()),
             ('message', self.gf('django.db.models.fields.TextField')()),
             ('created_on', self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, blank=True)),
         ))
@@ -49,8 +48,7 @@ class Migration(SchemaMigration):
             'message': ('django.db.models.fields.TextField', [], {}),
             'ref': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
             'repo_name': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
-            'repo_user': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
-            'timestamp': ('django.db.models.fields.DateTimeField', [], {})
+            'repo_user': ('django.db.models.fields.CharField', [], {'max_length': '255'})
         }
     }
 

@@ -12,7 +12,6 @@ class Commit(models.Model):
     compare_url = models.URLField(max_length=255)
     committer_name = models.CharField(max_length=255)
     committer_email = models.EmailField(max_length=255)
-    timestamp = models.DateTimeField()
     message = models.TextField()
 
     created_on = models.DateTimeField(auto_now_add=True)
