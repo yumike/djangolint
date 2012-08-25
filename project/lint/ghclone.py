@@ -13,9 +13,7 @@ class CloneError(Exception):
 
 @contextmanager
 def clone(url, repo_path):
-    _check_language(url)
-    tarball_url = _get_tarball_url(url)
-    tarball_path = _download_tarball(tarball_url, repo_path)
+    tarball_path = _download_tarball(url, repo_path)
     _extract_tarball(tarball_path, repo_path)
     _remove_tarball(tarball_path)
     yield repo_path
@@ -42,7 +40,9 @@ def _get_tarball_url(url):
     return 'https://github.com/%s/tarball/%s' % (url, branch)
 
 
-def _download_tarball(tarball_url, repo_path):
+def _download_tarball(url, repo_path):
+    _check_language(url)
+    tarball_url = _get_tarball_url(url)
     if not os.path.exists(repo_path):
         os.makedirs(repo_path)
     tarball_path = os.path.join(repo_path, 'archive.tar.gz')
