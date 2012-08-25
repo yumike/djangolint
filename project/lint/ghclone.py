@@ -34,8 +34,7 @@ def tempdir(root=None):
 @contextmanager
 def clone(url):
     with tempdir(root=CONFIG['CLONES_ROOT']) as path:
-        repo_owner, repo_name = url.split('/')
-        tarball_path = _download_tarball(repo_owner, repo_name, path)
+        tarball_path = _download_tarball(url, path)
         repo_path = _extract_tarball(tarball_path)
         yield repo_path
 
@@ -52,7 +51,8 @@ def _get_tarball_url(repo):
     )
 
 
-def _download_tarball(repo_owner, repo_name, path):
+def _download_tarball(url, path):
+    repo_owner, repo_name = url.split('/')
     try:
         repo = github.get_user(repo_owner).get_repo(repo_name)
     except GithubException:
