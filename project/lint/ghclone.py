@@ -12,12 +12,12 @@ class CloneError(Exception):
 
 
 @contextmanager
-def clone(url, repo_path):
-    tarball_path = _download_tarball(url, repo_path)
-    _extract_tarball(tarball_path, repo_path)
+def clone(url, path):
+    tarball_path = _download_tarball(url, path)
+    repo_path = _extract_tarball(tarball_path)
     _remove_tarball(tarball_path)
     yield repo_path
-    _remove_clone(repo_path)
+    _remove_clone(path)
 
 
 def _check_language(url):
@@ -54,9 +54,11 @@ def _download_tarball(url, repo_path):
     return tarball_path
 
 
-def _extract_tarball(tarball_path, repo_path):
+def _extract_tarball(tarball_path):
+    repo_path = os.path.join(os.path.dirname(tarball_path))
     if Popen(['tar', 'xf', tarball_path, '-C', repo_path]).wait():
         raise CloneError("Can't extract tarball")
+    return repo_path
 
 
 def _remove_tarball(tarball_path):
