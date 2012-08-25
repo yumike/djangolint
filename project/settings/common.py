@@ -106,6 +106,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
+    'oauth.middleware.UserMiddleware',
 )
 
 
@@ -113,6 +114,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.core.context_processors.media',
     'django.core.context_processors.static',
     'lint.context_processors.report_pk',
+    'oauth.context_processors.user',
 )
 
 
@@ -125,6 +127,7 @@ TEMPLATE_DIRS = (
 INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.staticfiles',
+    'oauth',
     'lint',
     'south',
     'djcelery',
@@ -176,3 +179,12 @@ djcelery.setup_loader()
 CELERY_IGNORE_RESULT = True
 CELERYD_MAX_TASKS_PER_CHILD = 1
 CELERYD_CONCURRENCY = 2
+
+GITHUB = {
+    'CLIENT_ID': os.environ.get('GITHUB_ID'),
+    'CLIENT_SECRET': os.environ.get('GITHUB_SECRET'),
+    'AUTH_URL': 'https://github.com/login/',
+    'SCOPES': 'public_repo',
+    'AUTHORIZE_URL': 'oauth/authorize',
+    'TOKEN_URL': 'oauth/access_token'
+}
