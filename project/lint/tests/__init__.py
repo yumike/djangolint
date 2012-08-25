@@ -1,4 +1,4 @@
-from .test_ghclone import CloneTests
+from .test_ghclone import TempDirTests, CloneTests
 from .test_models import ReportTestCase, FixTestCase
 from .test_parsers import ParserTests
 from .test_utils import RST2HTMLTests
