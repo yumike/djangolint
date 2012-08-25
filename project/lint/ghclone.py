@@ -55,7 +55,8 @@ def _download_tarball(url, repo_path):
 
 
 def _extract_tarball(tarball_path):
-    repo_path = os.path.join(os.path.dirname(tarball_path))
+    repo_path = os.path.join(os.path.dirname(tarball_path), 'repo')
+    os.makedirs(repo_path)
     if Popen(['tar', 'xf', tarball_path, '-C', repo_path]).wait():
         raise CloneError("Can't extract tarball")
     return repo_path
