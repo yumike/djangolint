@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-{% load compress %}
+{% load compress oauth %}
 <html>
 <head>
   <meta charset="utf-8">
@@ -12,16 +12,26 @@
   <div class="container">
     <div class="help-container">
       <div class="header-bg">
-      <a href="/" class="header">
-        <h1>Djangolint</h1>
-        <p>Upgrade your Django project</p>
-      </a>
+        <div class="header">
+          <a href="/">
+            <h1>Djangolint</h1>
+            <p>Upgrade your Django project</p>
+          </a>
+          <div class="user-info">
+            {% if user.is_authenticated %}
+              <img class="user-pic" src="{% gravatar_url user.email 20 %}" alt="{{ user }}">
+              {{ user }}
+            {% else %}
+              <a href="{% github_auth_url %}" class="auth">Login with GitHub</a>
+            {% endif %}
+          </div>
+        </div>
       </div>  
       <div class="content-bg">
-      <div class="content">
-        {% block content %}
-        {% endblock %}
-      </div>
+        <div class="content">
+          {% block content %}
+          {% endblock %}
+        </div>
       </div>
     </div>
   </div>

@@ -11,7 +11,9 @@ django projects and apps.
 4. Run `python project/manage.py runserver`
 5. Run in another tab `python project/manage.py celeryd`
 6. Open in your browser http://localhost:8000/
-7. Enjoy :)
+7. Set your GitHub app credentials in environment variables: 
+   `GITHUB_ID` and `GITHUB_SECRET` 
+8. Enjoy :)
 
 ### Deployment
 
