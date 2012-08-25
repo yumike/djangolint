@@ -89,16 +89,3 @@ class Fix(models.Model):
     def save(self, *args, **kwargs):
         self.description_html = rst2html(self.description)
         super(Fix, self).save(*args, **kwargs)
-
-
-@receiver(models.signals.post_save, sender=Report)
-def delete_unused_repos(sender=Report, **kwargs):
-    if kwargs.get('raw', False):
-        return
-    report = kwargs['instance']
-    if report.stage == 'done' or report.error:
-        path = report.get_repo_path()
-        try:
-            shutil.rmtree(path)
-        except OSError:
-            pass

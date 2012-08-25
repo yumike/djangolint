@@ -1,5 +1,7 @@
 import os
+import shutil
 import requests
+from contextlib import contextmanager
 from subprocess import Popen
 from django.utils import simplejson as json
 from .settings import CONFIG
@@ -9,12 +11,15 @@ class CloneError(Exception):
     pass
 
 
+@contextmanager
 def clone(url, repo_path):
     _check_language(url)
     tarball_url = _get_tarball_url(url)
     tarball_path = _download_tarball(tarball_url, repo_path)
     _extract_tarball(tarball_path, repo_path)
     _remove_tarball(tarball_path)
+    yield repo_path
+    _remove_clone(repo_path)
 
 
 def _check_language(url):
@@ -56,3 +61,10 @@ def _extract_tarball(tarball_path, repo_path):
 
 def _remove_tarball(tarball_path):
     os.unlink(tarball_path)
+
+
+def _remove_clone(repo_path):
+    try:
+        shutil.rmtree(repo_path)
+    except OSError:
+        pass

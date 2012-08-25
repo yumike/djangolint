@@ -38,17 +38,16 @@ def exception_handle(func):
 def process_report(report):
     report.stage = 'cloning'
     report.save()
-    path = report.get_repo_path()
-    clone(report.github_url, path)
 
-    report.stage = 'parsing'
-    report.save()
-    parsed_code = parse(path)
+    with clone(report.github_url, report.get_repo_path()) as path:
+        report.stage = 'parsing'
+        report.save()
+        parsed_code = parse(path)
 
-    report.stage = 'analyzing'
-    report.save()
-    for analyzer in get_analyzers():
-        for result in analyzer(parsed_code, path).analyze():
-            save_result(report, result)
-    report.stage = 'done'
-    report.save()
+        report.stage = 'analyzing'
+        report.save()
+        for analyzer in get_analyzers():
+            for result in analyzer(parsed_code, path).analyze():
+                save_result(report, result)
+        report.stage = 'done'
+        report.save()
