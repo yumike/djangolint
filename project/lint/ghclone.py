@@ -1,5 +1,6 @@
 import os
 import shutil
+import tempfile
 import requests
 from contextlib import contextmanager
 from subprocess import Popen
@@ -12,11 +13,18 @@ class CloneError(Exception):
 
 
 @contextmanager
-def clone(url, path):
-    tarball_path = _download_tarball(url, path)
-    repo_path = _extract_tarball(tarball_path)
-    yield repo_path
-    _remove_clone(path)
+def tempdir(root=None):
+    path = tempfile.mkdtemp(dir=root)
+    yield path
+    shutil.rmtree(path)
+
+
+@contextmanager
+def clone(url):
+    with tempdir(root=CONFIG['CLONES_ROOT']) as path:
+        tarball_path = _download_tarball(url, path)
+        repo_path = _extract_tarball(tarball_path)
+        yield repo_path
 
 
 def _check_language(url):
@@ -59,10 +67,3 @@ def _extract_tarball(tarball_path):
     if Popen(['tar', 'xf', tarball_path, '-C', repo_path]).wait():
         raise CloneError("Can't extract tarball")
     return repo_path
-
-
-def _remove_clone(repo_path):
-    try:
-        shutil.rmtree(repo_path)
-    except OSError:
-        pass

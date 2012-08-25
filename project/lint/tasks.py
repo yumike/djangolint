@@ -39,7 +39,7 @@ def process_report(report):
     report.stage = 'cloning'
     report.save()
 
-    with clone(report.github_url, report.get_repo_path()) as path:
+    with clone(report.github_url) as path:
         report.stage = 'parsing'
         report.save()
         parsed_code = parse(path)
