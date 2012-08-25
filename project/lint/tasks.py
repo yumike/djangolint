@@ -1,53 +1,11 @@
-import os
-import requests
-from subprocess import Popen
-
 from celery.task import task
 from django.conf import settings
 from django.utils import simplejson as json
 
 from .analyzers.loader import get_analyzers
+from .ghclone import clone
 from .models import Fix
 from .parsers import Parser
-from .settings import CONFIG
-
-
-class DownloadError(Exception):
-    pass
-
-
-def download(url, repo_path):
-    user, repo = url.split('/')
-    # Get info about repo, we need python containing repos only
-    r = requests.get('https://api.github.com/repos/%s/languages' % url,
-                     timeout=CONFIG['GITHUB_TIMEOUT'])
-    if not r.ok or r.status_code != 200:
-        raise DownloadError('Not found')
-    data = json.loads(r.content)
-    if not 'Python' in data.keys():
-        raise DownloadError("Repo language hasn't Python code")
-
-    # Get branch to download
-    r = requests.get('https://api.github.com/repos/%s' % url,
-                     timeout=CONFIG['GITHUB_TIMEOUT'])
-    if not r.ok or r.status_code != 200:
-        raise DownloadError('Cannot fetch information about repo')
-    data = json.loads(r.content)
-    branch = data['master_branch'] or 'master'
-    tarball = 'https://github.com/%s/tarball/%s' % (url, branch)
-
-    # Donwload tarball with curl
-    if not os.path.exists(repo_path):
-        os.makedirs(repo_path)
-    filepath = os.path.join(repo_path, 'archive.tar.gz')
-    curl_string = 'curl %s --connect-timeout %d --max-filesize %d -L -s -o %s' % (
-        tarball, CONFIG['GITHUB_TIMEOUT'], CONFIG['MAX_TARBALL_SIZE'], filepath
-    )
-    if Popen(curl_string.split()).wait():
-        raise DownloadError("Can't download tarball")
-    if Popen(['tar', 'xf', filepath, '-C', repo_path]).wait():
-        raise DownloadError("Can't extract tarball")
-    os.unlink(filepath)
 
 
 def parse(path):
@@ -80,17 +38,16 @@ def exception_handle(func):
 def process_report(report):
     report.stage = 'cloning'
     report.save()
-    path = report.get_repo_path()
-    download(report.github_url, path)
 
-    report.stage = 'parsing'
-    report.save()
-    parsed_code = parse(path)
+    with clone(report.github_url) as path:
+        report.stage = 'parsing'
+        report.save()
+        parsed_code = parse(path)
 
-    report.stage = 'analyzing'
-    report.save()
-    for analyzer in get_analyzers():
-        for result in analyzer(parsed_code, path).analyze():
-            save_result(report, result)
-    report.stage = 'done'
-    report.save()
+        report.stage = 'analyzing'
+        report.save()
+        for analyzer in get_analyzers():
+            for result in analyzer(parsed_code, path).analyze():
+                save_result(report, result)
+        report.stage = 'done'
+        report.save()
