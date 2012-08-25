@@ -63,11 +63,6 @@ class Report(models.Model):
         expiration_date = timedelta(days=EXPIRATION_DAYS) + self.created_on
         return datetime.now() > expiration_date
 
-    def get_repo_path(self):
-        if self.hash:
-            return os.path.normpath(os.path.join(CONFIG['CLONES_ROOT'], self.hash))
-        return None
-
     @models.permalink
     def get_absolute_url(self):
         return ('lint_results', (), {'hash': self.hash})
@@ -89,16 +84,3 @@ class Fix(models.Model):
     def save(self, *args, **kwargs):
         self.description_html = rst2html(self.description)
         super(Fix, self).save(*args, **kwargs)
-
-
-@receiver(models.signals.post_save, sender=Report)
-def delete_unused_repos(sender=Report, **kwargs):
-    if kwargs.get('raw', False):
-        return
-    report = kwargs['instance']
-    if report.stage == 'done' or report.error:
-        path = report.get_repo_path()
-        try:
-            shutil.rmtree(path)
-        except OSError:
-            pass
