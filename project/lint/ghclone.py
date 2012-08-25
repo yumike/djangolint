@@ -21,8 +21,10 @@ def tempdir(root=None):
         if e.errno != errno.EEXIST:
             raise
     path = tempfile.mkdtemp(dir=root)
-    yield path
-    shutil.rmtree(path)
+    try:
+        yield path
+    finally:
+        shutil.rmtree(path)
 
 
 @contextmanager
