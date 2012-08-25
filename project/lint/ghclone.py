@@ -2,11 +2,14 @@ import errno
 import os
 import shutil
 import tempfile
-import requests
 from contextlib import contextmanager
 from subprocess import Popen
 from django.utils import simplejson as json
+from github import Github, GithubException
 from .settings import CONFIG
+
+
+github = Github(timeout=CONFIG['GITHUB_TIMEOUT'])
 
 
 class CloneError(Exception):
@@ -36,29 +39,26 @@ def clone(url):
         yield repo_path
 
 
-def _check_language(url):
-    r = requests.get('https://api.github.com/repos/%s/languages' % url,
-                     timeout=CONFIG['GITHUB_TIMEOUT'])
-    if not r.ok or r.status_code != 200:
-        raise CloneError('Not found')
-    data = json.loads(r.content)
-    if not 'Python' in data.keys():
+def _check_language(repo):
+    if not 'Python' in repo.get_languages():
         raise CloneError("Repo language hasn't Python code")
 
 
-def _get_tarball_url(url):
-    r = requests.get('https://api.github.com/repos/%s' % url,
-                     timeout=CONFIG['GITHUB_TIMEOUT'])
-    if not r.ok or r.status_code != 200:
-        raise CloneError('Cannot fetch information about repo')
-    data = json.loads(r.content)
-    branch = data['master_branch'] or 'master'
-    return 'https://github.com/%s/tarball/%s' % (url, branch)
+def _get_tarball_url(repo):
+    branch = repo.master_branch
+    return 'https://github.com/%s/%s/tarball/%s' % (
+        repo.owner.login, repo.name, branch
+    )
 
 
 def _download_tarball(url, path):
-    _check_language(url)
-    tarball_url = _get_tarball_url(url)
+    repo_owner, repo_name = url.split('/')
+    try:
+        repo = github.get_user(repo_owner).get_repo(repo_name)
+    except GithubException:
+        raise CloneError('Not found')
+    _check_language(repo)
+    tarball_url = _get_tarball_url(repo)
     tarball_path = os.path.join(path, 'archive.tar.gz')
     curl_string = 'curl %s --connect-timeout %d --max-filesize %d -L -s -o %s' % (
         tarball_url, CONFIG['GITHUB_TIMEOUT'], CONFIG['MAX_TARBALL_SIZE'], tarball_path
