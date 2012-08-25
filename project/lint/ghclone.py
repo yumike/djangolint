@@ -1,3 +1,4 @@
+import errno
 import os
 import shutil
 import tempfile
@@ -14,6 +15,11 @@ class CloneError(Exception):
 
 @contextmanager
 def tempdir(root=None):
+    try:
+        os.makedirs(root)
+    except OSError as e:
+        if e.errno != errno.EEXIST:
+            raise
     path = tempfile.mkdtemp(dir=root)
     yield path
     shutil.rmtree(path)
