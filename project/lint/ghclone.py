@@ -59,8 +59,6 @@ def _get_tarball_url(url):
 def _download_tarball(url, path):
     _check_language(url)
     tarball_url = _get_tarball_url(url)
-    if not os.path.exists(path):
-        os.makedirs(path)
     tarball_path = os.path.join(path, 'archive.tar.gz')
     curl_string = 'curl %s --connect-timeout %d --max-filesize %d -L -s -o %s' % (
         tarball_url, CONFIG['GITHUB_TIMEOUT'], CONFIG['MAX_TARBALL_SIZE'], tarball_path
