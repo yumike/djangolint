@@ -2,14 +2,12 @@ from __future__ import with_statement
 
 import errno
 import os
-import shutil
 import mock
 
 from django.test import TestCase
 
 from ..ghclone import CloneError, tempdir, clone
 from ..models import Report
-from ..settings import CONFIG
 
 
 class TempDirTests(TestCase):
