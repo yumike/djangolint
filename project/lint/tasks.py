@@ -1,7 +1,6 @@
 from celery.task import task
 from django.conf import settings
 from django.utils import simplejson as json
-from webhooks.models import Commit
 from .analyzers.loader import get_analyzers
 from .ghclone import clone
 from .models import Fix, Report
@@ -23,38 +22,25 @@ def save_result(report, result):
 
 
 def exception_handle(func):
-    def decorator(report_pk=None, commit_pk=None):
+    def decorator(report_pk, commit_hash=None):
         try:
-            func(report_pk, commit_pk)
+            func(report_pk, commit_hash)
         except Exception, e:
-            if report_pk is not None:
-                report = Report.objects.get(pk=report_pk)
-                report.error = '%s: %s' % (e.__class__.__name__, unicode(e))
-                report.save()
+            report = Report.objects.get(pk=report_pk)
+            report.error = '%s: %s' % (e.__class__.__name__, unicode(e))
+            report.save()
     decorator.__name__ = func.__name__
     return decorator
 
 
 @task()
 @exception_handle
-def process_report(report_pk=None, commit_pk=None):
-    if commit_pk is None and report_pk is None:
-        return
-    if commit_pk is not None:
-        commit = Commit.objects.get(pk=commit_pk)
-        if commit.report is None:
-            commit.report = Report.objects.create(github_url=commit.repo_url)
-            commit.save()
-        report = commit.report
-        head = commit.hash
-    else:
-        report = Report.objects.get(pk=report_pk)
-        head = None
-
+def process_report(report_pk, commit_hash=None):
+    report = Report.objects.get(pk=report_pk)
     report.stage = 'cloning'
     report.save()
 
-    with clone(report.github_url, head) as path:
+    with clone(report.github_url, commit_hash) as path:
         report.stage = 'parsing'
         report.save()
         parsed_code = parse(path)

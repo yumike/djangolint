@@ -67,8 +67,8 @@ class WebhookHandlerTestCase(TestCase):
         with open(PAYLOAD_PATH) as f:
             self.payload = f.read()
         self.client = Client()
-        self.task_patcher = mock.patch('webhooks.views.process_report')
-        self.process_report = self.task_patcher.start()
+        self.task_patcher = mock.patch('webhooks.views.process_commit')
+        self.process_commit = self.task_patcher.start()
 
     def testNotAllowed(self):
         response = self.client.get('/webhooks/')
@@ -95,7 +95,7 @@ class WebhookHandlerTestCase(TestCase):
             hash='2e7be88382545a9dc7a05b9d2e85a7041e311075',
             repo_name='test', repo_user='xobb1t'
         ).get()
-        self.process_report.delay.assert_called_once_with(commit_pk=commit.pk)
+        self.process_commit.delay.assert_called_once_with(commit.pk)
 
 
 class CommitSaveTestCase(TestCase):
@@ -108,8 +108,8 @@ class CommitSaveTestCase(TestCase):
         with open(PAYLOAD_PATH) as f:
             self.payload = f.read()
         self.client = Client()
-        self.task_patcher = mock.patch('webhooks.views.process_report')
-        self.process_report = self.task_patcher.start()
+        self.task_patcher = mock.patch('webhooks.views.process_commit')
+        self.process_commit = self.task_patcher.start()
 
     def testCommitCreated(self):
         with self.assertRaises(Commit.DoesNotExist):
