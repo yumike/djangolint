@@ -1,10 +1,9 @@
 from celery.task import task
 from django.conf import settings
 from django.utils import simplejson as json
-
 from .analyzers.loader import get_analyzers
 from .ghclone import clone
-from .models import Fix
+from .models import Fix, Report
 from .parsers import Parser
 
 
@@ -23,10 +22,11 @@ def save_result(report, result):
 
 
 def exception_handle(func):
-    def decorator(report):
+    def decorator(report_pk, commit_hash=None):
         try:
-            func(report)
+            func(report_pk, commit_hash)
         except Exception, e:
+            report = Report.objects.get(pk=report_pk)
             report.error = '%s: %s' % (e.__class__.__name__, unicode(e))
             report.save()
     decorator.__name__ = func.__name__
@@ -35,11 +35,12 @@ def exception_handle(func):
 
 @task()
 @exception_handle
-def process_report(report):
+def process_report(report_pk, commit_hash=None):
+    report = Report.objects.get(pk=report_pk)
     report.stage = 'cloning'
     report.save()
 
-    with clone(report.github_url) as path:
+    with clone(report.github_url, commit_hash) as path:
         report.stage = 'parsing'
         report.save()
         parsed_code = parse(path)

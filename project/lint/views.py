@@ -33,7 +33,7 @@ def create(request):
     elif form.is_valid():
         report = form.save()
         request.session['report_pk'] = report.pk
-        process_report.delay(report)
+        process_report.delay(report.pk)
         data = {'status': 'ok', 'url': report.get_absolute_url()}
     else:
         data = {'status': 'error', 'error': 'Invalid URL'}

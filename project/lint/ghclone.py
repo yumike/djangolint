@@ -32,9 +32,9 @@ def tempdir(root=None):
 
 
 @contextmanager
-def clone(url):
+def clone(url, hash=None):
     with tempdir(root=CONFIG['CLONES_ROOT']) as path:
-        tarball_path = _download_tarball(url, path)
+        tarball_path = _download_tarball(url, path, hash)
         repo_path = _extract_tarball(tarball_path)
         yield repo_path
 
@@ -44,21 +44,20 @@ def _check_language(repo):
         raise CloneError("Repo language hasn't Python code")
 
 
-def _get_tarball_url(repo):
-    branch = repo.master_branch
+def _get_tarball_url(repo, hash):
     return 'https://github.com/%s/%s/tarball/%s' % (
-        repo.owner.login, repo.name, branch
+        repo.owner.login, repo.name, hash or repo.master_branch
     )
 
 
-def _download_tarball(url, path):
+def _download_tarball(url, path, hash):
     repo_owner, repo_name = url.split('/')
     try:
         repo = github.get_user(repo_owner).get_repo(repo_name)
     except GithubException:
         raise CloneError('Not found')
     _check_language(repo)
-    tarball_url = _get_tarball_url(repo)
+    tarball_url = _get_tarball_url(repo, hash)
     tarball_path = os.path.join(path, 'archive.tar.gz')
     curl_string = 'curl %s --connect-timeout %d --max-filesize %d -L -s -o %s' % (
         tarball_url, CONFIG['GITHUB_TIMEOUT'], CONFIG['MAX_TARBALL_SIZE'], tarball_path
