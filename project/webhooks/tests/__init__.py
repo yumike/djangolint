@@ -54,6 +54,11 @@ class HookParserTestCase(TestCase):
         self.assertTrue('message' in self.parsed_data.keys())
         self.assertEqual(self.parsed_data['message'], 'Update README.md')
 
+    def testRepoUrl(self):
+        self.assertTrue('repo_url' in self.parsed_data.keys())
+        self.assertEqual(self.parsed_data['repo_url'],
+                         'https://github.com/xobb1t/test')
+
 
 class WebhookHandlerTestCase(TestCase):
 
@@ -112,6 +117,7 @@ class CommitSaveTestCase(TestCase):
         self.assertEqual(commit.committer_name, 'Dima Kukushkin')
         self.assertEqual(commit.committer_email, 'dima@kukushkin.me')
         self.assertEqual(commit.ref, 'refs/heads/master')
+        self.assertEqual(commit.repo_url, 'https://github.com/xobb1t/test')
         self.assertEqual(
             commit.compare_url,
             'https://github.com/xobb1t/test/compare/a90ff8353403...2e7be8838254'

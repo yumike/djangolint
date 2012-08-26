@@ -5,6 +5,7 @@ from django.db import models
 class Commit(models.Model):
 
     hash = models.CharField(max_length=40)
+    repo_url = models.URLField(max_length=255)
     repo_name = models.CharField(max_length=255)
     repo_user = models.CharField(max_length=255)
 

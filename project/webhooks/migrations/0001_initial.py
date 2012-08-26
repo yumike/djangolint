@@ -12,6 +12,7 @@ class Migration(SchemaMigration):
         db.create_table('webhooks_commit', (
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ('hash', self.gf('django.db.models.fields.CharField')(max_length=40)),
+            ('repo_url', self.gf('django.db.models.fields.URLField')(max_length=255)),
             ('repo_name', self.gf('django.db.models.fields.CharField')(max_length=255)),
             ('repo_user', self.gf('django.db.models.fields.CharField')(max_length=255)),
             ('ref', self.gf('django.db.models.fields.CharField')(max_length=100)),
@@ -48,6 +49,7 @@ class Migration(SchemaMigration):
             'message': ('django.db.models.fields.TextField', [], {}),
             'ref': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
             'repo_name': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
+            'repo_url': ('django.db.models.fields.URLField', [], {'max_length': '255'}),
             'repo_user': ('django.db.models.fields.CharField', [], {'max_length': '255'})
         }
     }

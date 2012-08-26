@@ -3,6 +3,7 @@ def parse_hook_data(data):
     compare_url = data.get('compare')
     ref = data.get('ref')
     repo = data.get('repository', {})
+    repo_url = repo.get('url')
     repo_name = repo.get('name')
     repo_user = repo.get('owner', {}).get('name')
 
@@ -15,6 +16,7 @@ def parse_hook_data(data):
         'hash': hash,
         'compare_url': compare_url,
         'ref': ref,
+        'repo_url': repo_url,
         'repo_name': repo_name,
         'repo_user': repo_user,
         'committer_name': committer_name,
