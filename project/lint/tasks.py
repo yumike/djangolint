@@ -4,7 +4,7 @@ from django.utils import simplejson as json
 from webhooks.models import Commit
 from .analyzers.loader import get_analyzers
 from .ghclone import clone
-from .models import Fix
+from .models import Fix, Report
 from .parsers import Parser
 
 
