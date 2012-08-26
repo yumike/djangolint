@@ -35,11 +35,22 @@ def exception_handle(func):
 
 @task()
 @exception_handle
-def process_report(report):
+def process_report(report=None, commit=None):
+    if commit is None and report is None:
+        return
+    if commit is not None:
+        if commit.report is None:
+            commit.report = Report.objects.create(github_url=commit.repo_url)
+            commit.save()
+        report = commit.report
+        head = commit.hash
+    else:
+        head = None
+
     report.stage = 'cloning'
     report.save()
 
-    with clone(report.github_url) as path:
+    with clone(report.github_url, head) as path:
         report.stage = 'parsing'
         report.save()
         parsed_code = parse(path)
