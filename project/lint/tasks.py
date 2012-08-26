@@ -23,12 +23,14 @@ def save_result(report, result):
 
 
 def exception_handle(func):
-    def decorator(report):
+    def decorator(report_pk=None, commit_pk=None):
         try:
-            func(report)
+            func(report_pk, commit_pk)
         except Exception, e:
-            report.error = '%s: %s' % (e.__class__.__name__, unicode(e))
-            report.save()
+            if report_pk is not None:
+                report = Report.objects.get(pk=report_pk)
+                report.error = '%s: %s' % (e.__class__.__name__, unicode(e))
+                report.save()
     decorator.__name__ = func.__name__
     return decorator
 
