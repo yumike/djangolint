@@ -22,4 +22,4 @@ class Commit(models.Model):
         ordering = ['-created_on']
 
     def __unicode__(self):
-        return u'{0}/{1}@{2}'.format(repo_user, repo_name, hash)
+        return u'{0}/{1}@{2}'.format(self.repo_user, self.repo_name, self.hash)
