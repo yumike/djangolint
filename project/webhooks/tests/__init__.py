@@ -93,7 +93,7 @@ class WebhookHandlerTestCase(TestCase):
             hash='2e7be88382545a9dc7a05b9d2e85a7041e311075',
             repo_name='test', repo_user='xobb1t'
         ).get()
-        process_report.delay.assert_called_once_with(commit=commit)
+        process_report.delay.assert_called_once_with(commit_pk=commit.pk)
 
 
 class CommitSaveTestCase(TestCase):

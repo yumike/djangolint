@@ -1,7 +1,7 @@
 from celery.task import task
 from django.conf import settings
 from django.utils import simplejson as json
-
+from webhooks.models import Commit
 from .analyzers.loader import get_analyzers
 from .ghclone import clone
 from .models import Fix
@@ -35,16 +35,18 @@ def exception_handle(func):
 
 @task()
 @exception_handle
-def process_report(report=None, commit=None):
-    if commit is None and report is None:
+def process_report(report_pk=None, commit_pk=None):
+    if commit_pk is None and report_pk is None:
         return
-    if commit is not None:
+    if commit_pk is not None:
+        commit = Commit.objects.get(pk=commit_pk)
         if commit.report is None:
             commit.report = Report.objects.create(github_url=commit.repo_url)
             commit.save()
         report = commit.report
         head = commit.hash
     else:
+        report = Report.objects.get(pk=report_pk)
         head = None
 
     report.stage = 'cloning'

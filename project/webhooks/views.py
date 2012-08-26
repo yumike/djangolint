@@ -24,5 +24,5 @@ def handler(request):
         hash=hash, repo_name=repo_name,
         repo_user=repo_user, defaults=hook_data
     )
-    process_report.delay(commit=commit)
+    process_report.delay(commit_pk=commit.pk)
     return HttpResponse(status=201 if created else 200)
