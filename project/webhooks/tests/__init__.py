@@ -3,7 +3,7 @@ import os
 from django.utils import simplejson as json
 from django.test import TestCase
 from django.test.client import Client
-
+from mock import patch
 from ..models import Commit
 from ..utils import parse_hook_data
 
@@ -85,6 +85,15 @@ class WebhookHandlerTestCase(TestCase):
 
         response = self.client.post('/webhooks/', {'payload': self.payload})
         self.assertEqual(response.status_code, 200)
+
+    @patch('webhooks.views.process_report')
+    def testProcessReportCalled(self, process_report):
+        response = self.client.post('/webhooks/', {'payload': self.payload})
+        commit = Commit.objects.filter(
+            hash='2e7be88382545a9dc7a05b9d2e85a7041e311075',
+            repo_name='test', repo_user='xobb1t'
+        ).get()
+        process_report.delay.assert_called_once_with(commit=commit)
 
 
 class CommitSaveTestCase(TestCase):

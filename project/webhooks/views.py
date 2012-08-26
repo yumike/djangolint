@@ -2,7 +2,7 @@ from django.http import HttpResponse, HttpResponseBadRequest
 from django.utils import simplejson as json
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
-
+from lint.tasks import process_report
 from .models import Commit
 from .utils import parse_hook_data
 
@@ -24,4 +24,5 @@ def handler(request):
         hash=hash, repo_name=repo_name,
         repo_user=repo_user, defaults=hook_data
     )
+    process_report.delay(commit=commit)
     return HttpResponse(status=201 if created else 200)
