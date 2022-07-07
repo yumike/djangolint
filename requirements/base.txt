@@ -10,7 +10,7 @@ docutils==0.9.1
 kombu==1.2.0
 pyparsing==1.5.6
 python-dateutil==1.5
-requests==0.13.7
+requests==2.20.0
 requests-oauth2==0.2.0
 
 -e git://github.com/xobb1t/PyGithub.git@7186391d9cbc47a8f1ea12e9bc34f3e36bc66ecd#egg=PyGithub
